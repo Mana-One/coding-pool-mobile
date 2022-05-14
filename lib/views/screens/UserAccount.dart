@@ -86,7 +86,7 @@ class _UserAccountState extends State<UserAccount> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
 
-      print('Succeeeeeeeess user account');
+      print('Success user account');
       return jsonDecode(response.body) ;
 
     } else {
@@ -94,28 +94,38 @@ class _UserAccountState extends State<UserAccount> {
     }
   }
 
+  bool isFollowed = false;
+  int nbFollowers = 0;
+
   @override
   void initState() {
     super.initState();
     futurePost =  getUserPublications(author.id);
     futureStats = getUserStats(author.id);
+    nbFollowers = _userStats.followers;
+    for(var post in _postData) {
+      if(post.author.username == author.username) {
+        this.isFollowed = true;
+        return;
+      }
+    }
   }
 
+
+
   follow() {
-    /*
     setState(() {
-      if( isLiked ) {
-        this.isLiked = false;
-        unlikePublication(publicationId);
-        this.nbLikes --;
+      if( isFollowed ) {
+        this.isFollowed = false;
+        unfollowUser(author.id);
+        this.nbFollowers --;
       }
       else {
-        this.isLiked = true;
-        likePublication(publicationId);
-        this.nbLikes ++;
+        this.isFollowed = true;
+        followUser(author.id);
+        this.nbFollowers ++;
       }
     });
-     */
     followUser('null');
   }
 
@@ -176,7 +186,7 @@ class _UserAccountState extends State<UserAccount> {
                           onPressed: () {
                             follow();
                           },
-                          child: Text('Follow'),
+                          child: isFollowed ? Text('Unfollow') : Text('Follow'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange[900],
                               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -241,7 +251,7 @@ class _UserAccountState extends State<UserAccount> {
                                       height: 5.0,
                                     ),
                                     Text(
-                                      _userStats.followers.toString(),
+                                      nbFollowers.toString(),
                                       style: TextStyle(
                                         fontSize: 15.0,
                                         color: Colors.grey,

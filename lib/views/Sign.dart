@@ -10,8 +10,6 @@ class Sign extends StatefulWidget {
 }
 
 class _SignState extends State<Sign> {
-  List<Widget> _widgetsSign = [];
-  int _indexSelected = 0;
 
   @override
   void initState() {

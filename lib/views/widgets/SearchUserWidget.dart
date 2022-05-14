@@ -1,22 +1,26 @@
+import 'package:coding_pool_v0/views/screens/UserAccount.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/Models.dart';
+
 class SearchUserWidget extends StatefulWidget {
-  final String username;
-  const SearchUserWidget(this.username);
+  final User user;
+  const SearchUserWidget(this.user);
 
   @override
-  State<SearchUserWidget> createState() => _SearchUserWidgetState(this.username);
+  State<SearchUserWidget> createState() => _SearchUserWidgetState(this.user);
 }
 
 class _SearchUserWidgetState extends State<SearchUserWidget> {
-  String username;
-  _SearchUserWidgetState(this.username);
+  User user;
+  _SearchUserWidgetState(this.user);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Card(
         child: ListTile(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(Author(username: user.username, id: user.id)))),
           title: Row(
             children: [
               Container(
@@ -38,7 +42,7 @@ class _SearchUserWidgetState extends State<SearchUserWidget> {
               SizedBox(
                 width: 50,
               ),
-              Text(username, style: TextStyle(fontWeight: FontWeight.w600),),
+              Text(user.username, style: TextStyle(fontWeight: FontWeight.w600),),
             ],
           ),
         ),

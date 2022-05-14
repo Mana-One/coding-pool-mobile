@@ -9,6 +9,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import '../screens/CreateNewPost.dart';
+
 class Account extends StatefulWidget {
   const Account({Key? key}) : super(key: key);
 
@@ -107,7 +109,7 @@ class _AccountState extends State<Account> {
   }
 
   publishPost() {
-    createPublication("Hello it's me");
+    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewPost()));
   }
 
   late String username = '';

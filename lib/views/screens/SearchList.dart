@@ -86,7 +86,7 @@ class _SearchListState extends State<SearchList> {
               itemCount: _users.length,
               itemBuilder: (context, index) {
                 print(_users[index].username);
-                return SearchUserWidget(_users[index].username.toString());
+                return SearchUserWidget(_users[index]);
               }
           ),
         )

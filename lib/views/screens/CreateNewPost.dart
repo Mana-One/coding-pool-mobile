@@ -17,6 +17,7 @@ class _CreateNewPostState extends State<CreateNewPost> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add new post'),
+        backgroundColor: Colors.blue.shade900,
       ),
         body: Column(
           children: [

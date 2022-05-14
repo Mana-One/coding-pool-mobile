@@ -4,6 +4,7 @@ import 'package:coding_pool_v0/views/MainScreens/Search.dart';
 import 'package:coding_pool_v0/views/MainScreens/Settings.dart';
 import 'package:coding_pool_v0/views/MainScreens/groups.dart';
 import 'package:coding_pool_v0/views/screens/PostDetails.dart';
+import 'package:coding_pool_v0/views/screens/SearchPage.dart';
 import 'package:coding_pool_v0/views/screens/SearchScreen.dart';
 import 'package:coding_pool_v0/views/screens/SettingsScreen.dart';
 import 'package:coding_pool_v0/views/screens/UserAccount.dart';
@@ -23,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
-    SearchScreen(),
+    Search(),
     Groups(),
     Account(),
     Settings(),
@@ -72,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.deepOrange.shade900,
         selectedItemColor: Colors.blue[900],
         onTap: _onItemTapped,
       ),
