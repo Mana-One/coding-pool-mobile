@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 
 import 'package:coding_pool_v0/models/Models.dart';
 import 'package:coding_pool_v0/views/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'SignIn.dart';
 
 class SignUp extends StatefulWidget {
@@ -23,6 +24,38 @@ class _SignUpState extends State<SignUp> {
   String _email = '';
   String _username = '';
   final RegExp emailRegEx = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+") ;
+  String _isUsernameUsed = 'false';
+
+  Future<String> checkUsername(String username) async {
+
+    String isUsed;
+
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await http.get(
+      Uri.parse("https://coding-pool-api.herokuapp.com/accounts/check-username/" + username),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+      },
+    );
+
+    Map<String, dynamic> map = jsonDecode(response.body);
+
+    isUsed = map['isUsernameUsed'];
+
+    setState(() {
+      _isUsernameUsed = isUsed;
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+
+      print('Succeeeeeeeess');
+      return isUsed ;
+    }
+    else {
+      throw Exception('Failed to check username');
+    }
+  }
 
   Future<void> signUp(UserSignUp userSignUp) async {
     final response = await http.post(
@@ -40,6 +73,7 @@ class _SignUpState extends State<SignUp> {
       throw Exception('Failed to sign up');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +117,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextFormField(
                         onChanged: (value) => setState(() => _username = value),
+                        validator: (value) => checkUsername(value!) == 'true' ? 'Username already exists, please enter a new username' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your username here',
                           border: OutlineInputBorder(

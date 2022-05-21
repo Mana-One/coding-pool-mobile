@@ -89,7 +89,7 @@ Future<void> changeUserInfos(String username, String wallet, String email) async
 // ne fontionne pas sur postman
 
 
-Future<void> checkUsername(String username) async {
+Future<bool> checkUsername(String username) async {
 
   final prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString('token');
