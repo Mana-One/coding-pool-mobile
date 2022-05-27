@@ -86,7 +86,7 @@ Future<void> changeUserInfos(String username, String wallet, String email) async
 }
 
 
-// ne fontionne pas sur postman
+//  fontionne sur postman => à faire !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 Future<bool> checkUsername(String username) async {

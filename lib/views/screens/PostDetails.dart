@@ -93,6 +93,8 @@ class _PostDetailsState extends State<PostDetails> {
         likePublication(publicationId);
         this.nbLikes ++;
       }
+      for( var itemPost in _commentsData)
+        print(itemPost.id);
     });
   }
 
@@ -151,7 +153,7 @@ class _PostDetailsState extends State<PostDetails> {
                                 shrinkWrap: true,
                                 children: [
                                   for( var itemPost in _commentsData)
-                                    CommentWidget(username: itemPost.leftBy.username, content: itemPost.content, createdAt: itemPost.createdAt,)
+                                    CommentWidget(commentId: itemPost.id,username: itemPost.leftBy.username, content: itemPost.content, createdAt: itemPost.createdAt,)
                                 ],
                               )
                           ),
@@ -190,7 +192,7 @@ class _PostDetailsState extends State<PostDetails> {
                     child: IconButton(
                       onPressed: () => {
                         commentPublication(publicationId, _comment),
-                        Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetails(publicationId, author, content, nbLikes, nbComments+1, isLiked)))
+                        Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetails(publicationId, author, content, nbLikes, nbComments, isLiked)))
                       },
                       icon: Icon(Icons.send), color: Colors.blue[900],),
                   )

@@ -77,13 +77,13 @@ Future<void> commentPublication(String publicationId, String content) async {
 
 // OK
 
-/*Future<void> deletePostComment(String publicationId) async {
+Future<void> deletePostComment(String commentId) async {
 
   final prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString('token');
 
   final response = await http.delete(
-    Uri.parse("https://coding-pool-api.herokuapp.com/comments" + publicationId),
+    Uri.parse("https://coding-pool-api.herokuapp.com/comments/" + commentId),
     headers: {
       HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
     },
@@ -97,7 +97,6 @@ Future<void> commentPublication(String publicationId, String content) async {
     throw Exception('Failed to delete post comment ');
   }
 }
- */
 
 // OK
 

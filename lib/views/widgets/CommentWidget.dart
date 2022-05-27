@@ -9,23 +9,25 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CommentWidget extends StatefulWidget {
-  const CommentWidget({Key? key, required this.username, required this.content, required this.createdAt}) : super(key: key);
+  const CommentWidget({Key? key,required this.commentId, required this.username, required this.content, required this.createdAt}) : super(key: key);
 
+  final String commentId;
   final String username;
   final String content;
   final String createdAt;
 
   @override
-  State<CommentWidget> createState() => _CommentWidgetState(this.username, this.content, this.createdAt);
+  State<CommentWidget> createState() => _CommentWidgetState(this.commentId, this.username, this.content, this.createdAt);
 }
 
 class _CommentWidgetState extends State<CommentWidget> {
 
+  final String commentId;
   final String username;
   final String content;
   final String createdAt;
 
-  _CommentWidgetState(this.username, this.content, this.createdAt);
+  _CommentWidgetState(this.commentId, this.username, this.content, this.createdAt);
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +63,12 @@ class _CommentWidgetState extends State<CommentWidget> {
                   ),
                   Container(
                       margin: EdgeInsets.only(right: 5.0, top: 5.0),
-                      width: 340,
+                      width: 300,
                       child: Text(content)
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 5.0),
-                    width: 340,
+                    width: 300,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -75,7 +77,8 @@ class _CommentWidgetState extends State<CommentWidget> {
                     ),
                   )
                 ],
-              )
+              ),
+              IconButton(onPressed: () => deletePostComment(commentId), icon: Icon(Icons.delete_outline))
             ],
           ),
         ),

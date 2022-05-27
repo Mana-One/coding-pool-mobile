@@ -30,7 +30,6 @@ class _SignInState extends State<SignIn> {
       Uri.parse("https://coding-pool-api.herokuapp.com/auth/login"),
       body: { 'email': user.email, 'password': user.password}
     );
-
     Map<String, dynamic> map = jsonDecode(response.body);
 
     final prefs = await SharedPreferences.getInstance();
@@ -52,7 +51,7 @@ class _SignInState extends State<SignIn> {
   }
 
 
-  late Future<String> futureSignIn;
+  late var futureSignIn;
 
   
   @override
@@ -127,11 +126,13 @@ class _SignInState extends State<SignIn> {
                             borderRadius: BorderRadius.circular(10.0)
                           ),
                           onPressed: () {
+                            print("SignIn clic");
                             if(!emailRegEx.hasMatch(_email)) null;
                             if(_password.length < 8) null;
-
+                            print("SignIn clic 2");
                             futureSignIn = signIn(UserSignIn(email: _email, password: _password));
-
+                            print(_tokenSignin);
+                            //sleep(Duration(seconds: 10));
                             if(_formKey.currentState!.validate() && futureSignIn != '' && _tokenSignin != '') {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                             } else {

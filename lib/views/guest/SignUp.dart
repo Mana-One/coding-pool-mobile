@@ -117,7 +117,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       TextFormField(
                         onChanged: (value) => setState(() => _username = value),
-                        validator: (value) => checkUsername(value!) == 'true' ? 'Username already exists, please enter a new username' : null,
+                        validator:(value) => checkUsername(value!) == 'true' ? 'Username already exists, please enter a new username' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your username here',
                           border: OutlineInputBorder(
