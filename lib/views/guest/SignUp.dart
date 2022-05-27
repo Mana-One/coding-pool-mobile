@@ -133,7 +133,10 @@ class _SignUpState extends State<SignUp> {
                         height: 10.0,
                       ),
                       TextFormField(
-                        onChanged: (value) => setState(() => _password = value),
+                        onChanged: (value) => setState(() {
+                          _password = value;
+                          signUp(UserSignUp(email: _email, username: _username, password: _password));
+                        }),
                         validator: (value) => value!.length < 8 ? 'Please Enter a password.\n8 characters minimum required with 1 tiny, 1 uppercase and 1 number' : null,
                         obscureText: _isSecret,
                         decoration: InputDecoration(
@@ -167,15 +170,9 @@ class _SignUpState extends State<SignUp> {
                         onPressed: () {
                           if(!emailRegEx.hasMatch(_email)) null;
                           if(_password.length < 8) null;
-
-                          signUp(UserSignUp(email: _email, username: _username, password: _password));
-
                           if(_formKey.currentState!.validate()) {
-                            Navigator.push(context, MaterialPageRoute(
-                                builder: (context) => HomeScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                           }
-                          print('heeellloooo new user !!!!!!!!!!');
-
                         },
                         child: Text(
                           'Sign Up',

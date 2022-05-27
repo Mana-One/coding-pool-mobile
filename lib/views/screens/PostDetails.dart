@@ -73,7 +73,7 @@ class _PostDetailsState extends State<PostDetails> {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
 
-      print('Succeeeeeeeesssssss  ');
+      print('Success get publication comments');
       return jsonDecode(response.body) ;
 
     } else {

@@ -94,7 +94,11 @@ class _SignInState extends State<SignIn> {
                           height: 10.0,
                         ),
                         TextFormField(
-                          onChanged: (value) => setState(() => _password = value),
+                          onChanged: (value) => setState(
+                                  () {
+                                    _password = value;
+                                    futureSignIn = signIn(UserSignIn(email: _email, password: _password));
+                                  }),
                           validator: (value) => value!.length < 8 ? 'Please Enter a valid password. \n8 characters minimum required with 1 tiny, 1 uppercase \nand 1 number' : null,
                           obscureText: _isSecret,
                           decoration: InputDecoration(
@@ -126,14 +130,8 @@ class _SignInState extends State<SignIn> {
                             borderRadius: BorderRadius.circular(10.0)
                           ),
                           onPressed: () {
-                            print("SignIn clic");
                             if(!emailRegEx.hasMatch(_email)) null;
                             if(_password.length < 8) null;
-                            print("SignIn clic 2");
-                            setState(() {
-                              futureSignIn = signIn(UserSignIn(email: _email, password: _password));
-                            });
-
                             print(_tokenSignin);
                             if(_formKey.currentState!.validate() && futureSignIn != '' && _tokenSignin != '') {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
