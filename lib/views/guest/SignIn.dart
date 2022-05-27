@@ -130,9 +130,11 @@ class _SignInState extends State<SignIn> {
                             if(!emailRegEx.hasMatch(_email)) null;
                             if(_password.length < 8) null;
                             print("SignIn clic 2");
-                            futureSignIn = signIn(UserSignIn(email: _email, password: _password));
+                            setState(() {
+                              futureSignIn = signIn(UserSignIn(email: _email, password: _password));
+                            });
+
                             print(_tokenSignin);
-                            //sleep(Duration(seconds: 10));
                             if(_formKey.currentState!.validate() && futureSignIn != '' && _tokenSignin != '') {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
                             } else {
