@@ -109,100 +109,99 @@ class _PostDetailsState extends State<PostDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children : [
-              Expanded(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                              child: Column(
-                                //crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Container(
-                                      child: Text(content),
-                                    ),
-                                    SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Row(
-                                      children: [
-                                        //if (!isLiked) IconButton(onPressed: () => print(nbLikes), icon: Icon(Icons.thumb_up_alt_outlined)) else IconButton(onPressed: () => print(nbLikes), icon: Icon(Icons.thumb_up_alt), color: Colors.blue,),
-                                        IconButton( onPressed: () => like(), icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
-                                        Text(nbLikes.toString()),
-                                        Container(child: Icon(Icons.insert_comment),),
-                                        //IconButton(onPressed: () => print('nbComments'), icon: Icon(Icons.insert_comment)),
-                                        Text(nbComments.toString()),
-                                      ],
-                                    ),
-                                  ]
-                              )
-                          ),
-                          Container(
-                            //flex: 1,
-                              child: ListView(
-                                shrinkWrap: true,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children : [
+            Expanded(
+                child: SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            child: Column(
+                              //crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  for( var itemPost in _commentsData)
-                                    CommentWidget(commentId: itemPost.id,username: itemPost.leftBy.username, content: itemPost.content, createdAt: itemPost.createdAt,)
-                                ],
-                              )
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-              ),
-
-              Container(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 350,
-                    margin: EdgeInsets.only(left: 5.0,bottom: 10.0),
-                    child: TextFormField(
-                      onChanged: (value) => setState(() => _comment = value),
-                      minLines: 1,
-                      maxLines: 20,
-                      decoration: InputDecoration(
-                        hintText: 'Add a comment',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.grey),
+                                  TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Container(
+                                    child: Text(content),
+                                  ),
+                                  SizedBox(
+                                    height: 5.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      IconButton( onPressed: () => like(), icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
+                                      Text(nbLikes.toString()),
+                                      Container(child: Icon(Icons.insert_comment),),
+                                      //IconButton(onPressed: () => print('nbComments'), icon: Icon(Icons.insert_comment)),
+                                      Text(nbComments.toString()),
+                                    ],
+                                  ),
+                                ]
+                            )
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                        Container(
+                          //flex: 1,
+                            child: ListView(
+                              shrinkWrap: true,
+                              children: [
+                                for( var itemPost in _commentsData)
+                                  CommentWidget(commentId: itemPost.id,username: itemPost.leftBy.username, content: itemPost.content, createdAt: itemPost.createdAt,)
+                              ],
+                            )
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(right: 3.0, left: 5.0),
-                    child: IconButton(
-                      onPressed: () => {
-                        commentPublication(publicationId, _comment),
-                        Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetails(publicationId, author, content, nbLikes, nbComments, isLiked)))
-                      },
-                      icon: Icon(Icons.send), color: Colors.blue[900],),
-                  )
+                )
+            ),
 
-                ],
-              )
-              )
-            ]
-        ),
-    );
+            Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 335,
+                      margin: EdgeInsets.only(left: 5.0,bottom: 10.0),
+                      child: TextFormField(
+                        onChanged: (value) => setState(() => _comment = value),
+                        minLines: 1,
+                        maxLines: 20,
+                        decoration: InputDecoration(
+                          hintText: 'Add a comment',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.blue.shade900),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                        child: IconButton(
+                        onPressed: () => {
+                          commentPublication(publicationId, _comment),
+                          //_commentsData.add(CommentsData(id: _comment., content: _comment, createdAt: createdAt, leftBy: leftBy)),
+                          Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetails(publicationId, author, content, nbLikes, nbComments+1, isLiked)))
+                        },
+                        icon: Icon(Icons.send), color: Colors.blue[900],),
+                    )
+
+                  ],
+                )
+            )
+          ]
+      ),
+    ));
   }
 }
 

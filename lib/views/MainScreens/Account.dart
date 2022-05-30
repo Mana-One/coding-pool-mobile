@@ -281,7 +281,7 @@ class _AccountState extends State<Account> {
                 margin: new EdgeInsets.only(right: 10, left: 15),
                 child: ElevatedButton(
                   onPressed: () {
-                    logout();
+                    print(futureStats.toString());
                   },
                   child: Row(
                     children: [
@@ -298,7 +298,7 @@ class _AccountState extends State<Account> {
 
                 ),
               ),
-              Container(
+              /*Container(
                 margin: new EdgeInsets.only(right: 10, left: 15),
                 child: ElevatedButton(
                   onPressed: () {
@@ -318,14 +318,14 @@ class _AccountState extends State<Account> {
                   ),
 
                 ),
-              ),
+              ),*/
             ],
           ),
           SizedBox(
             height: 10.0,
           ),
           Expanded(
-            flex: 1,
+            //flex: 1,
               child: ListView(
                 shrinkWrap: true,
                 children: [

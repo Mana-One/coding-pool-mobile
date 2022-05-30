@@ -26,7 +26,7 @@ class _EditUserInfosWidgetState extends State<EditUserInfosWidget> {
   String _confirmPassword = '';
 
   late Future<void> futureEditPassword;
-  late Future<void> futureEditInfos;
+  var futureEditInfos;
 
 
   @override
@@ -57,7 +57,10 @@ class _EditUserInfosWidgetState extends State<EditUserInfosWidget> {
                       height: 5,
                     ),
                     TextFormField(
-                      onChanged: (value) => setState(() => _username = value),
+                      onChanged: (value) => setState(() {
+                        _username = value;
+                        futureEditInfos = changeUserInfos(_username, _wallet, _email);
+                      }),
                       decoration: InputDecoration(
                         hintText: 'Enter your new username here',
                         border: OutlineInputBorder(
@@ -78,7 +81,10 @@ class _EditUserInfosWidgetState extends State<EditUserInfosWidget> {
                       height: 5,
                     ),
                     TextFormField(
-                      onChanged: (value) => setState(() => _email = value),
+                      onChanged: (value) => setState(() {
+                        _email = value;
+                        futureEditInfos = changeUserInfos(_username, _wallet, _email);
+                      }),
                       decoration: InputDecoration(
                         hintText: 'Enter your email here',
                         border: OutlineInputBorder(
@@ -99,7 +105,10 @@ class _EditUserInfosWidgetState extends State<EditUserInfosWidget> {
                       height: 5,
                     ),
                     TextFormField(
-                      onChanged: (value) => setState(() => _wallet = value),
+                      onChanged: (value) => setState(() {
+                        _wallet = value;
+                        futureEditInfos = changeUserInfos(_username, _wallet, _email);
+                      }),
                       decoration: InputDecoration(
                         hintText: 'Enter your new wallet here',
                         border: OutlineInputBorder(
@@ -117,15 +126,9 @@ class _EditUserInfosWidgetState extends State<EditUserInfosWidget> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-
-                          setState(() {
-                            futureEditInfos = changeUserInfos(_username, _wallet, _email);
-                          });
-
                           print(futureEditInfos.toString());
-
                           //if(_newPassword.length < 8 || _newPassword != _confirmPassword) return print('Nuuuuuuuuuuuuuuuuuuuuuul');
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserInfosWidget()));
+                          Navigator.pop(context);
                         },
                         child: Text('Save')
                     ),

@@ -62,13 +62,13 @@ class _CommentWidgetState extends State<CommentWidget> {
                     //child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => Account()));}, child: Text(username),),
                   ),
                   Container(
-                      margin: EdgeInsets.only(right: 5.0, top: 5.0),
-                      width: 300,
+                      margin: EdgeInsets.only(left: 5.0, top: 5.0),
+                      width: 280,
                       child: Text(content)
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 5.0),
-                    width: 300,
+                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
+                    width: 280,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [

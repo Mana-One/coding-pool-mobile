@@ -64,7 +64,7 @@ class _PostWidgetState extends State<PostWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  margin: EdgeInsets.only(left: 10.0, top: 10.0),
+                  margin: EdgeInsets.only(left: 5.0, top: 5.0),
                   child: Image(
                     alignment: Alignment.center,
                     image: AssetImage('lib/assets/images/bouee.png'),
@@ -73,7 +73,7 @@ class _PostWidgetState extends State<PostWidget> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 10.0),
+                  width: 110,
                   child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
                 ),
               ],
@@ -82,7 +82,7 @@ class _PostWidgetState extends State<PostWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                    margin: EdgeInsets.only(right: 10.0, top: 10.0),
+                    margin: EdgeInsets.only(top: 10.0),
                     width: 280,
                     child: Text(content)
                 ),
@@ -90,13 +90,7 @@ class _PostWidgetState extends State<PostWidget> {
                   children: [
                     IconButton( onPressed: () => like(),
 
-                        /*setState(() {
-                          !isLiked ? likePublication(publicationId) : unlikePublication(publicationId);
-                      }),
-                    !isLiked ? likePublication(publicationId) : unlikePublication(publicationId)},
-*/                      icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
-
-                    //else IconButton(onPressed: () =>  {unlikePublication(publicationId), Icon(Icons.thumb_up_alt_outlined)}, icon: Icon(Icons.thumb_up_alt), color: Colors.blue, ),
+                    icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
 
                     Text(nbLikes.toString()),
                     IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetails(publicationId,author,content,nbLikes,nbComments,this.isLiked))), icon: Icon(Icons.insert_comment)),

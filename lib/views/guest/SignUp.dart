@@ -137,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                           _password = value;
                           signUp(UserSignUp(email: _email, username: _username, password: _password));
                         }),
-                        validator: (value) => value!.length < 8 ? 'Please Enter a password.\n8 characters minimum required with 1 tiny, 1 uppercase and 1 number' : null,
+                        validator: (value) => value!.length < 8 ? 'Please Enter a password.\n8 characters minimum required with 1 tiny, 1 uppercase and \n1 number' : null,
                         obscureText: _isSecret,
                         decoration: InputDecoration(
                           suffixIcon: InkWell(

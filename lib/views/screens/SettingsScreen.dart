@@ -38,7 +38,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Text('Account', style: TextStyle(color: Colors.black45, fontSize: 20, fontWeight: FontWeight.bold)),
                 SizedBox(
-                  width: 200,
+                  width: 180,
                 ),
                 OutlineButton(
                   shape: RoundedRectangleBorder(
