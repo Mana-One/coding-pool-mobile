@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
 import 'package:coding_pool_v0/views/guest/SignIn.dart';
+import 'package:coding_pool_v0/views/screens/StatsScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _AccountState extends State<Account> {
 
   late var futurePost;
   late var futureStats;
-  UserStats _connectedserStats = UserStats(id: '', username: '', memberSince: '', followers: 0, following: 0, programs: 0, competitions_entered: 0, competitions_won: 0);
+  UserStats _connectedUserStats = UserStats(id: '', username: '', memberSince: '', followers: 0, following: 0, programs: 0, competitions_entered: 0, competitions_won: 0);
   List<PostData> _postData = [];
 
   Future<UserStats> getConnectedUserStats() async {
@@ -42,7 +43,7 @@ class _AccountState extends State<Account> {
     print(UserStats.fromJson(map).username + 'mes statttttttt');
 
     setState(() {
-      _connectedserStats = UserStats.fromJson(map);
+      _connectedUserStats = UserStats.fromJson(map);
     });
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -149,7 +150,7 @@ class _AccountState extends State<Account> {
                           height: 8.0,
                         ),
                         Text(
-                          _connectedserStats.username, style: TextStyle(
+                          _connectedUserStats.username, style: TextStyle(
                             fontSize: 25.0,
                             color: Colors.white
                         ),
@@ -214,7 +215,7 @@ class _AccountState extends State<Account> {
                                     height: 5.0,
                                   ),
                                   Text(
-                                    _connectedserStats.followers.toString(),
+                                    _connectedUserStats.followers.toString(),
                                     style: TextStyle(
                                       fontSize: 15.0,
                                       color: Colors.grey,
@@ -238,7 +239,7 @@ class _AccountState extends State<Account> {
                                     height: 5.0,
                                   ),
                                   Text(
-                                    _connectedserStats.following.toString(),
+                                    _connectedUserStats.following.toString(),
                                     style: TextStyle(
                                       fontSize: 15.0,
                                       color: Colors.grey,
@@ -262,7 +263,7 @@ class _AccountState extends State<Account> {
                 margin: new EdgeInsets.only(left: 10, right: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    //publishPost();
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewPost()));
                   },
                   child: Row(
                     children: [
@@ -281,7 +282,7 @@ class _AccountState extends State<Account> {
                 margin: new EdgeInsets.only(right: 10, left: 15),
                 child: ElevatedButton(
                   onPressed: () {
-                    print(futureStats.toString());
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen()));
                   },
                   child: Row(
                     children: [

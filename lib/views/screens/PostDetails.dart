@@ -109,8 +109,9 @@ class _PostDetailsState extends State<PostDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(
-      body: Column(
+    return SafeArea(
+        child: Scaffold(
+          body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children : [
@@ -190,6 +191,7 @@ class _PostDetailsState extends State<PostDetails> {
                         child: IconButton(
                         onPressed: () => {
                           commentPublication(publicationId, _comment),
+                          _commentsData.add(CommentsData(id: '', content: _comment, createdAt: '', leftBy: Author(id: '', username: ''))),
                           //_commentsData.add(CommentsData(id: _comment., content: _comment, createdAt: createdAt, leftBy: leftBy)),
                           Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetails(publicationId, author, content, nbLikes, nbComments+1, isLiked)))
                         },
@@ -201,7 +203,8 @@ class _PostDetailsState extends State<PostDetails> {
             )
           ]
       ),
-    ));
+        )
+    );
   }
 }
 

@@ -171,7 +171,7 @@ class _SignUpState extends State<SignUp> {
                           if(!emailRegEx.hasMatch(_email)) null;
                           if(_password.length < 8) null;
                           if(_formKey.currentState!.validate()) {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
                           }
                         },
                         child: Text(
