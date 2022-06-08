@@ -40,10 +40,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(
                   width: 200,
                 ),
-                OutlineButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  ),
+                ElevatedButton(
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.white70)),
                     child: Text('Sign out', style: TextStyle(fontSize: 15, letterSpacing: 2, color: Colors.black45),),
                     onPressed: () {
                       logout();
@@ -97,7 +95,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
             ),
-            Card(
+            /*Card(
                 margin: const EdgeInsets.all(5.0),
                 color: Colors.white70,
                 child: ListTile(
@@ -114,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
                   },
                 )
-            ),
+            ),*/
             /*Card(
               margin: const EdgeInsets.all(5.0),
               color: Colors.white70,

@@ -39,8 +39,6 @@ class _AccountState extends State<Account> {
 
     Map<String, dynamic> map = jsonDecode(response.body);
 
-    print(UserStats.fromJson(map).username + 'mes statttttttt');
-
     setState(() {
       _connectedserStats = UserStats.fromJson(map);
     });
@@ -76,7 +74,6 @@ class _AccountState extends State<Account> {
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
       PostData postData = PostData.fromJson(mapPost);
-      print(postData.content);
       posts.add(postData);
     }
 
@@ -101,7 +98,7 @@ class _AccountState extends State<Account> {
     futureStats = getConnectedUserStats();
   }
 
-  logout() async{
+  logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', '');
     prefs.commit();
@@ -281,7 +278,7 @@ class _AccountState extends State<Account> {
                 margin: new EdgeInsets.only(right: 10, left: 15),
                 child: ElevatedButton(
                   onPressed: () {
-                    logout();
+                    //Navigator.push(context, MaterialPageRoute(builder: builder))
                   },
                   child: Row(
                     children: [
@@ -298,7 +295,7 @@ class _AccountState extends State<Account> {
 
                 ),
               ),
-              Container(
+              /*Container(
                 margin: new EdgeInsets.only(right: 10, left: 15),
                 child: ElevatedButton(
                   onPressed: () {
@@ -318,7 +315,7 @@ class _AccountState extends State<Account> {
                   ),
 
                 ),
-              ),
+              ),*/
             ],
           ),
           SizedBox(
