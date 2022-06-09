@@ -30,28 +30,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SizedBox(
               height: 10,
             ),
-          Container(
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 20,
-                ),
-                Text('Account', style: TextStyle(color: Colors.black45, fontSize: 20, fontWeight: FontWeight.bold)),
-                SizedBox(
-                  width: 180,
-                ),
-                OutlineButton(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
+            Container(
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 20,
                   ),
-                    child: Text('Sign out', style: TextStyle(fontSize: 15, letterSpacing: 2, color: Colors.black45),),
-                    onPressed: () {
-                      logout();
-                    }
-                ),
-              ],
+                  Text('Account', style: TextStyle(color: Colors.black45, fontSize: 20, fontWeight: FontWeight.bold)),
+                  SizedBox(
+                    width: 200,
+                  ),
+                  ElevatedButton(
+                      style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.white70)),
+                      child: Text('Sign out', style: TextStyle(fontSize: 15, letterSpacing: 2, color: Colors.black45),),
+                      onPressed: () {
+                        logout();
+                      }
+                  ),
+                ],
+              ),
             ),
-          ),
             Container(
               height: 0.2,
               width: 390,
@@ -62,30 +60,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
               height: 5,
             ),
             Card(
-              margin: const EdgeInsets.all(5.0),
-              color: Colors.white70,
-              child: ListTile(
-                    title: Text("Edit account informations", style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                    leading: Icon(
-                        Icons.account_circle,
-                        color: Colors.blue.shade900
-                    ),
-                    trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.blue.shade900
-                    ),
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserInfosWidget()));
-                    },
-                )
-            ),
-            Card(
-              margin: const EdgeInsets.all(5.0),
-              color: Colors.white70,
-              child: ListTile(
-                  title: Text("Change password", style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
+                margin: const EdgeInsets.all(5.0),
+                color: Colors.white70,
+                child: ListTile(
+                  title: Text("Edit account informations", style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
                   leading: Icon(
-                      Icons.lock,
+                      Icons.account_circle,
                       color: Colors.blue.shade900
                   ),
                   trailing: Icon(
@@ -93,9 +73,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.blue.shade900
                   ),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditUserInfosWidget()));
                   },
+                )
+            ),
+            Card(
+              margin: const EdgeInsets.all(5.0),
+              color: Colors.white70,
+              child: ListTile(
+                title: Text("Change password", style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
+                leading: Icon(
+                    Icons.lock,
+                    color: Colors.blue.shade900
                 ),
+                trailing: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.blue.shade900
+                ),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
+                },
+              ),
             ),
             /*Card(
                 margin: const EdgeInsets.all(5.0),
@@ -166,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.blue.shade900
                   ),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
                   },
                 )
             ),
@@ -181,7 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.blue.shade900
                 ),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
                 },
               ),
             ),
@@ -196,7 +194,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       color: Colors.blue.shade900
                   ),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
                   },
                 )
             ),
@@ -211,7 +209,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.blue.shade900
                 ),
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (context) => EditPasswordWidget()));
                 },
               ),
             ),
@@ -222,56 +220,3 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
-
-
-/*
-
-Container(
-              height: 100,
-              width: 400,
-              child: Card(
-                color: Colors.blue.shade900,
-                child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Card(
-                            color: Colors.white,
-                            child: Text('Username : ', style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                          ),
-                          Card(
-                              color: Colors.white,
-                              child: Text('Username : ', style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Card(
-                              color: Colors.white,
-                              child: Text('Username : ', style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                          ),
-                          Card(
-                              color: Colors.white,
-                              child: Text('Username : ', style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Card(
-                              color: Colors.white,
-                              child: Text('Username : ', style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                          ),
-                          Card(
-                              color: Colors.white,
-                              child: Text('Username : ', style: TextStyle(color: Colors.blue.shade900,fontSize: 15, fontWeight: FontWeight.w500),),
-                          )
-                        ],
-                      ),
-                    ]
-                ),
-              ),
-            ),
-
- */

@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
 import 'package:coding_pool_v0/views/guest/SignIn.dart';
-import 'package:coding_pool_v0/views/screens/StatsScreen.dart';
+import 'package:coding_pool_v0/views/screens/ConnectedUserStats.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
-import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,8 +38,6 @@ class _AccountState extends State<Account> {
     );
 
     Map<String, dynamic> map = jsonDecode(response.body);
-
-    print(UserStats.fromJson(map).username + 'mes statttttttt');
 
     setState(() {
       _connectedUserStats = UserStats.fromJson(map);
@@ -83,6 +80,7 @@ class _AccountState extends State<Account> {
 
     setState(() {
       _postData = posts;
+
     });
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -95,11 +93,14 @@ class _AccountState extends State<Account> {
     }
   }
 
+  late UserStats connectedUserStats;
+
   @override
   void initState() {
     super.initState();
     futurePost =  getUserPublications();
     futureStats = getConnectedUserStats();
+    connectedUserStats = _connectedUserStats;
   }
 
   logout() async{
@@ -112,8 +113,6 @@ class _AccountState extends State<Account> {
   publishPost() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewPost()));
   }
-
-  late String username = '';
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +281,7 @@ class _AccountState extends State<Account> {
                 margin: new EdgeInsets.only(right: 10, left: 15),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ConnectedUserStats(userStats: _connectedUserStats)));
                   },
                   child: Row(
                     children: [

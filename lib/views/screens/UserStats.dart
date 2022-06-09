@@ -1,15 +1,25 @@
+import 'package:coding_pool_v0/models/Models.dart';
 import 'package:flutter/material.dart';
 
-class StatsScreen extends StatefulWidget {
-  const StatsScreen({Key? key}) : super(key: key);
+class UsersStats extends StatefulWidget {
+  const UsersStats({Key? key, required this.userStats}) : super(key: key);
+
+  final UserStats userStats;
 
   @override
-  State<StatsScreen> createState() => _StatsScreenState();
+  State<UsersStats> createState() => _UsersStatsState(this.userStats);
 }
 
-class _StatsScreenState extends State<StatsScreen> {
+class _UsersStatsState extends State<UsersStats> {
+
+  final UserStats userStats;
+  _UsersStatsState(this.userStats);
+
   @override
   Widget build(BuildContext context) {
+
+    print(userStats.username);
+
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -23,7 +33,7 @@ class _StatsScreenState extends State<StatsScreen> {
           body: Center(
             child: Column(
               children: [
-                Text('Name', style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w500),),
+                Text(userStats.username, style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.w500),),
                 SizedBox(
                   height: 50.0,
                 ),
@@ -31,7 +41,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     SizedBox(width: 30,),
                     Text('Followers : ', style: TextStyle(color: Colors.blue.shade900, fontSize: 25, fontWeight: FontWeight.w500)),
-                    Text('0', style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
+                    Text(this.userStats.followers.toString(), style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
                   ],
                 ),
                 SizedBox(
@@ -41,7 +51,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     SizedBox(width: 30,),
                     Text('Following : ', style: TextStyle(color: Colors.blue.shade900, fontSize: 25, fontWeight: FontWeight.w500),),
-                    Text('0', style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
+                    Text(this.userStats.following.toString(), style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
                   ],
                 ),
                 SizedBox(
@@ -51,7 +61,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     SizedBox(width: 30,),
                     Text('Programs : ', style: TextStyle(color: Colors.blue.shade900, fontSize: 25, fontWeight: FontWeight.w500),),
-                    Text('0', style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
+                    Text(this.userStats.programs.toString(), style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
                   ],
                 ),
                 SizedBox(
@@ -61,7 +71,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     SizedBox(width: 30,),
                     Text('Competitions entered : ', style: TextStyle(color: Colors.blue.shade900, fontSize: 25, fontWeight: FontWeight.w500),),
-                    Text('0', style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
+                    Text(this.userStats.competitions_entered.toString(), style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
                   ],
                 ),
                 SizedBox(
@@ -71,7 +81,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     SizedBox(width: 30,),
                     Text('Competitions won : ', style: TextStyle(color: Colors.blue.shade900, fontSize: 25, fontWeight: FontWeight.w500),),
-                    Text('0', style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
+                    Text(this.userStats.competitions_won.toString(), style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
                   ],
                 ),
                 SizedBox(
@@ -81,7 +91,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     SizedBox(width: 30,),
                     Text('Member since : ', style: TextStyle(color: Colors.blue.shade900, fontSize: 25, fontWeight: FontWeight.w500),),
-                    Text('0', style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
+                    Text(this.userStats.memberSince.toString(), style: TextStyle(color: Colors.orange.shade900, fontSize: 25, fontWeight: FontWeight.w500),)
                   ],
                 ),
               ],

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
 import 'package:coding_pool_v0/views/HomeScreen.dart';
 import 'package:coding_pool_v0/views/guest/SignUp.dart';
+import 'package:coding_pool_v0/web/AuthenticationService.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,26 +26,18 @@ class _SignInState extends State<SignIn> {
   final RegExp emailRegEx = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+") ;
 
 
-  Future<String> signIn(UserSignIn user) async {
-    final response = await http.post(
-      Uri.parse("https://coding-pool-api.herokuapp.com/auth/login"),
-      body: { 'email': user.email, 'password': user.password}
-    );
-    Map<String, dynamic> map = jsonDecode(response.body);
+  signInUser(UserSignIn user) async {
 
+    var response = signIn(user);
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', map['access_token']);
-
-    print(prefs.getString('token'));
 
     setState(() {
       _tokenSignin = prefs.getString('token').toString();
     });
 
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response == 200 || response == 201) {
       print('Success Login');
-      return jsonDecode(response.body);
     } else {
       throw Exception('Failed to sign in');
     }
@@ -97,7 +90,7 @@ class _SignInState extends State<SignIn> {
                           onChanged: (value) => setState(
                                   () {
                                     _password = value;
-                                    futureSignIn = signIn(UserSignIn(email: _email, password: _password));
+                                    futureSignIn = signInUser(UserSignIn(email: _email, password: _password));
                                   }),
                           validator: (value) => value!.length < 8 ? 'Please Enter a valid password. \n8 characters minimum required with 1 tiny, 1 uppercase \nand 1 number' : null,
                           obscureText: _isSecret,

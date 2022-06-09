@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/views/screens/UserStats.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
@@ -96,6 +97,7 @@ class _UserAccountState extends State<UserAccount> {
 
   bool isFollowed = false;
   int nbFollowers = 0;
+  late UserStats userStats;
 
   @override
   void initState() {
@@ -103,6 +105,7 @@ class _UserAccountState extends State<UserAccount> {
     futurePost =  getUserPublications(author.id);
     futureStats = getUserStats(author.id);
     nbFollowers = _userStats.followers;
+    userStats = _userStats;
     for(var post in _postData) {
       if(post.author.username == author.username) {
         this.isFollowed = true;
@@ -179,23 +182,9 @@ class _UserAccountState extends State<UserAccount> {
                           ),
                         ],
                       ),
-
                       Container(
-                        margin: new EdgeInsets.only(right: 10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            follow();
-                          },
-                          child: isFollowed ? Text('Unfollow') : Text('Follow'),
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange[900],
-                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                              textStyle: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-
-                        ),
-                      ),
+                        width: 40,
+                      )
                     ],
                   ),
                     SizedBox(
@@ -292,6 +281,65 @@ class _UserAccountState extends State<UserAccount> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  margin: new EdgeInsets.only(right: 10),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      follow();
+                    },
+                    child: isFollowed ? Text('Unfollow') : Text('Follow'),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.deepOrange[900],
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        textStyle: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold)),
+
+                  ),
+                ),
+                Container(
+                  margin: new EdgeInsets.only(right: 10, left: 15),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UsersStats(userStats: this._userStats)));
+                    },
+                    child: Row(
+                      children: [
+                      Text('Stats'),
+                      ],
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.deepOrange[900],
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                      textStyle: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            /*
+            Container(
+                        margin: new EdgeInsets.only(right: 10),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            follow();
+                          },
+                          child: isFollowed ? Text('Unfollow') : Text('Follow'),
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.deepOrange[900],
+                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                              textStyle: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold)),
+
+                        ),
+                      ),
+             */
             Expanded(
                 flex: 1,
                 child: ListView(

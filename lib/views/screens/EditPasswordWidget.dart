@@ -1,5 +1,6 @@
 import 'package:coding_pool_v0/main.dart';
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/views/MainScreens/Settings.dart';
 import 'package:coding_pool_v0/web/UserService.dart';
 import 'package:flutter/material.dart';
 
@@ -131,7 +132,7 @@ class _EditPasswordWidgetState extends State<EditPasswordWidget> {
                               if(_newPassword.length < 8 || _newPassword != _confirmPassword) return null;
                               futureEditPassword = changeUserPassword(new ChangePassword(oldPassword: _oldPassword, newPassword: _newPassword, confirmPassword: _confirmPassword));
                               if(_formKey.currentState!.validate())
-                                Navigator.pop(context);
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
                             },
                             child: Text('Save', style: TextStyle(color: Colors.white),)
                         )
