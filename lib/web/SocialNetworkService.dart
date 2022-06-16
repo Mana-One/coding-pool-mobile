@@ -3,7 +3,42 @@ import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
 
+
+Future<dynamic> getPublications() async {
+  List<PostData> posts = [];
+
+  final prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+
+  final response = await http.get(
+    Uri.parse("https://coding-pool-api.herokuapp.com/publications/timeline/home?limit=20&offset=0"),
+    headers: {
+      HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+    },
+  );
+
+  Map<String, dynamic> map = jsonDecode(response.body);
+
+  List<dynamic> listResponse = map['data'] ;
+
+  for(int i=0; i<listResponse.length; i++) {
+    Map<String, dynamic> mapPost = listResponse[i];
+    PostData postData = PostData.fromJson(mapPost);
+    posts.add(postData);
+  }
+
+  globals.timelinePostsData = posts;
+
+  if (response.statusCode == 200 || response.statusCode == 201) {
+
+    return jsonDecode(response.body) ;
+
+  } else {
+    throw Exception('Failed to fetch home timeline');
+  }
+}
 
 //OK
 
@@ -180,6 +215,7 @@ Future<Post> getConnectedUserPublications(List<PostData> posts) async {
 }
 
 
+/*
 // ok dans UserAccount.dart
 Future<PostData> getUserPublications(List<PostData> posts, String userId) async {
 
@@ -213,6 +249,7 @@ Future<PostData> getUserPublications(List<PostData> posts, String userId) async 
     throw Exception('Failed to fetch user timeline');
   }
 }
+*/
 
 // OK
 

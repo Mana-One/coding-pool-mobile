@@ -1,5 +1,3 @@
-import 'package:coding_pool_v0/views/MainScreens/Settings.dart';
-
 class User {
   final String id;
   final String username;

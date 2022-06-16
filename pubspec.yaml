@@ -55,6 +55,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_native_splash: ^2.1.6
+  recharge: ^0.1.0
+  back_button_interceptor: ^6.0.0
 
 flutter_native_splash:
   color: "#42a5f5"

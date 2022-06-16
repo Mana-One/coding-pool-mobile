@@ -1,9 +1,13 @@
-import 'package:coding_pool_v0/services/like/LikeService.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/viewss/screens/PostDetails.dart';
+import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
+import 'package:http/http.dart' as http;
+import 'package:coding_pool_v0/viewss/MainScreens/Account.dart';
+import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
-import '../../models/Author.dart';
-import 'package:coding_pool_v0/services/authentication/AuthenticationService.dart';
-
-import '../screens/account/UserAccountScreen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PostWidget extends StatefulWidget {
 
@@ -23,8 +27,6 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
 
-  LikeService likeService = LikeService();
-
   final String publicationId;
   final Author author;
   final String content;
@@ -38,12 +40,12 @@ class _PostWidgetState extends State<PostWidget> {
     setState(() {
       if( isLiked ) {
         this.isLiked = false;
-        likeService.unlikePost(publicationId);
+        unlikePublication(publicationId);
         this.nbLikes --;
       }
       else {
         this.isLiked = true;
-        likeService.unlikePost(publicationId);
+        likePublication(publicationId);
         this.nbLikes ++;
       }
     });
@@ -52,7 +54,7 @@ class _PostWidgetState extends State<PostWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
+      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetails(publicationId, author, content, nbLikes, nbComments, isLiked)));},
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +74,7 @@ class _PostWidgetState extends State<PostWidget> {
                 ),
                 Container(
                   width: 110,
-                  child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
+                  child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
                 ),
               ],
             ),
@@ -88,10 +90,10 @@ class _PostWidgetState extends State<PostWidget> {
                   children: [
                     IconButton( onPressed: () => like(),
 
-                        icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
+                    icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
 
                     Text(nbLikes.toString()),
-                    IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId,author,content,nbLikes,nbComments,this.isLiked))), icon: Icon(Icons.insert_comment)),
+                    IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetails(publicationId,author,content,nbLikes,nbComments,this.isLiked))), icon: Icon(Icons.insert_comment)),
                     Text(nbComments.toString()),
                   ],
                 ),
@@ -112,10 +114,8 @@ class _PostWidgetState extends State<PostWidget> {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-/*class PubWidget extends StatelessWidget {
+class PubWidget extends StatelessWidget {
   const PubWidget({Key? key, required this.publicationId, required this.username, required this.content, required this.nbLikes, required this.nbComments, required this.isLiked}) : super(key: key);
-
-  LikeService likeService = LikeService();
 
   final String publicationId;
   final String username;
@@ -146,7 +146,7 @@ class _PostWidgetState extends State<PostWidget> {
               Container(
                 margin: EdgeInsets.only(left: 10.0),
                 child: TextButton(
-                  onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(author)));}, child: Text(username),),
+                  onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => Account()));}, child: Text(username),),
               ),
             ],
           ),
@@ -161,7 +161,7 @@ class _PostWidgetState extends State<PostWidget> {
               Row(
                 children: [
                   IconButton( onPressed: () => {
-                    !isLiked ? likePublication(publicationId) : likeunlikePublication(publicationId)},
+                      !isLiked ? likePublication(publicationId) : unlikePublication(publicationId)},
                       icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.blue,)),
 
                   //else IconButton(onPressed: () =>  {unlikePublication(publicationId), Icon(Icons.thumb_up_alt_outlined)}, icon: Icon(Icons.thumb_up_alt), color: Colors.blue, ),
@@ -177,5 +177,5 @@ class _PostWidgetState extends State<PostWidget> {
       ),
     );
   }
-}*/
+}
 
