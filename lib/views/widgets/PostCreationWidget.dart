@@ -34,7 +34,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
 
   publish() {
     if(_postContent == '') return;
-    postService.createPublication(_postContent);
+    postService.createPost(_postContent);
     _postContent = '';
     Navigator.pop(context);
   }

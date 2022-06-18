@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'dart:io';
 
 class LikeService {
-  Future<void> likePost(String publicationId) async {
+  LikeService();
+
+  Future<http.Response> likePost(String publicationId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -16,15 +18,10 @@ class LikeService {
       },
     );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Success');
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to like post');
-    }
+    return response;
   }
 
-  Future<void> unlikePost(String publicationId) async {
+  Future<http.Response> unlikePost(String publicationId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -37,12 +34,6 @@ class LikeService {
       },
     );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Succeeeeeeeesssssssssss');
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to unlike post');
-    }
+    return response;
   }
 }

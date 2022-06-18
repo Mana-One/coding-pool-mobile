@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/viewss/guest/SignIn.dart';
 import 'package:coding_pool_v0/viewss/screens/ConnectedUserStats.dart';
 import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
@@ -20,6 +21,8 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  
+  CommentController commentController = CommentController();
 
   late var futurePost;
   late var futureStats;
@@ -105,6 +108,7 @@ class _AccountState extends State<Account> {
   }
 
   publishPost() {
+    commentController.getPostComments("dc810ae0-c7e7-11ec-8d8d-0f9c9bad8d99");
     Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewPost()));
   }
 
@@ -275,7 +279,8 @@ class _AccountState extends State<Account> {
                 margin: new EdgeInsets.only(left: 10, right: 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewPost()));
+                    publishPost();
+                    //Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNewPost()));
                   },
                   child: Row(
                     children: [

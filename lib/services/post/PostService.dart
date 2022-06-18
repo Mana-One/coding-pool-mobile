@@ -5,8 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostService {
+  PostService();
 
-  Future<void> createPublication(String content) async {
+  Future<http.Response> createPost(String content) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -19,19 +20,10 @@ class PostService {
       },
     );
 
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Succeeeeeeeess user account');
-      return jsonDecode(response.body) ;
-
-    } else {
-      throw Exception('Failed to create publication');
-    }
+    return response;
   }
 
-  Future<dynamic> getConnectedUserPublications() async {
-    List<PostData> posts = [];
+  Future<http.Response> fetchConnectedUserTimeline() async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -43,36 +35,11 @@ class PostService {
       },
     );
 
-    Map<String, dynamic> map = jsonDecode(response.body);
+    return response;
 
-    List<dynamic> listResponse = map['data'] ;
-
-    for(int i=0; i<listResponse.length; i++) {
-      Map<String, dynamic> mapPost = listResponse[i];
-      PostData postData = PostData.fromJson(mapPost);
-      print(postData.content);
-      posts.add(postData);
-    }
-/*
-
-    setState(() {
-      _postData = posts;
-
-    });
-*/
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Succeeeeeeeess');
-      return jsonDecode(response.body) ;
-
-    } else {
-      throw Exception('Failed to fetch own timeline');
-    }
   }
 
-  Future<dynamic> getUserPublications(String userId) async {
-    List<PostData> posts = [];
+  Future<http.Response> fetchUserTimeline(String userId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -84,34 +51,12 @@ class PostService {
       },
     );
 
-    Map<String, dynamic> map = jsonDecode(response.body);
+    return response;
 
-    List<dynamic> listResponse = map['data'] ;
-
-    for(int i=0; i<listResponse.length; i++) {
-      Map<String, dynamic> mapPost = listResponse[i];
-      PostData postData = PostData.fromJson(mapPost);
-      print(postData.content);
-      posts.add(postData);
-    }
-/*
-    setState(() {
-      _postData = posts;
-    });
-*/
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Success user account');
-      return jsonDecode(response.body) ;
-
-    } else {
-      throw Exception('Failed to fetch user timeline');
-    }
   }
 
 
-  Future<dynamic> getPublications() async {
-    List<PostData> posts = [];
+  Future<http.Response> fetchHomeTimeline() async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -123,27 +68,7 @@ class PostService {
       },
     );
 
-    Map<String, dynamic> map = jsonDecode(response.body);
-
-    List<dynamic> listResponse = map['data'] ;
-
-    for(int i=0; i<listResponse.length; i++) {
-      Map<String, dynamic> mapPost = listResponse[i];
-      PostData postData = PostData.fromJson(mapPost);
-      posts.add(postData);
-    }
-/*
-    setState(() {
-      _postData = posts;
-    });
-*/
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      return jsonDecode(response.body) ;
-
-    } else {
-      throw Exception('Failed to fetch home timeline');
-    }
+    return response;
   }
 
 }

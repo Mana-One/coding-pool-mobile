@@ -7,7 +7,9 @@ import '../../models/Comment.dart';
 import '../../models/CommentData.dart';
 
 class CommentService {
-  Future<void> commentPost(String publicationId, String content) async {
+  CommentService();
+
+  Future<http.Response> commentPost(String publicationId, String content) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -20,16 +22,10 @@ class CommentService {
       },
     );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Succeeeeeeeesssssssssss');
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to comment post');
-    }
+    return response;
   }
 
-  Future<void> UncommentPost(String commentId) async {
+  Future<http.Response> UncommentPost(String commentId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -41,19 +37,10 @@ class CommentService {
       },
     );
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Succeeeeeeeesssssssssss');
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to delete post comment ');
-    }
+    return response;
   }
 
-  Future<Comment> getPublicationComments(String publicationId) async {
-    List<CommentData> comments = [];
-
-    //await recharge.init();
+  Future<http.Response> getPublicationComments(String publicationId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -65,30 +52,6 @@ class CommentService {
       },
     );
 
-    print(jsonDecode(response.body));
-
-    Map<String, dynamic> map = jsonDecode(response.body);
-
-    List<dynamic> listResponse = map['data'] ;
-
-    for(int i=0; i<listResponse.length; i++) {
-      Map<String, dynamic> mapPost = listResponse[i];
-      CommentData comment = CommentData.fromJson(mapPost);
-      print(comment.content);
-      comments.add(comment);
-    }
-/*
-    setState(() {
-      _commentsData = comments;
-    });
-*/
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Success get publication comments');
-      return jsonDecode(response.body) ;
-
-    } else {
-      throw Exception('Failed to fetch own timeline');
-    }
+    return response;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:coding_pool_v0/services/follow/FollowService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,8 +10,6 @@ import 'package:coding_pool_v0/models/Globals.dart' as globals;
 import '../../../models/Author.dart';
 import '../../../models/PostData.dart';
 import '../../../models/UserStats.dart';
-import '../../../services/follow/FollowService.dart';
-import '../../../services/follow/UnfollowService.dart';
 import '../../widgets/PostWidget.dart';
 import 'UserStatsScreen.dart';
 
@@ -24,6 +23,8 @@ class UserAccountScreen extends StatefulWidget {
 }
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
+
+  FollowService followService = FollowService();
 
   final Author author;
   _UserAccountScreenState(this.author);
@@ -137,12 +138,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     setState(() {
       if( isFollowed ) {
         this.isFollowed = false;
-        unfollowUser(author.id);
+        followService.unfollowUser(author.id);
         this.nbFollowers --;
       }
       else {
         this.isFollowed = true;
-        followUser(author.id);
+        followService.followUser(author.id);
         this.nbFollowers ++;
       }
     });
