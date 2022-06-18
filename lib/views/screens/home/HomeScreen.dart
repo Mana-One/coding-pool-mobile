@@ -1,13 +1,7 @@
 import 'package:coding_pool_v0/services/post/PostController.dart';
-import 'package:coding_pool_v0/services/post/PostService.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'dart:io';
 import '../../../models/PostData.dart';
-import '../../widgets/PostCreationWidget.dart';
 import '../../widgets/PostWidget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,57 +17,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late Future<List<PostData>> userPosts;
 
-  late final futurePost;
-
-  List<PostData> _postData = [];
-
-  Future<dynamic> getPublications() async {
-    List<PostData> posts = [];
-
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
-    final response = await http.get(
-      Uri.parse("https://coding-pool-api.herokuapp.com/publications/timeline/home?limit=20&offset=0"),
-      headers: {
-        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
-      },
-    );
-
-    Map<String, dynamic> map = jsonDecode(response.body);
-
-    List<dynamic> listResponse = map['data'] ;
-
-    for(int i=0; i<listResponse.length; i++) {
-      Map<String, dynamic> mapPost = listResponse[i];
-      PostData postData = PostData.fromJson(mapPost);
-      posts.add(postData);
-    }
-
-    setState(() {
-      _postData = posts;
-    });
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-
-      return jsonDecode(response.body) ;
-
-    } else {
-      throw Exception('Failed to fetch home timeline');
-    }
-  }
-
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    print("BACK BUTTON!"); // Do some stuff.
+    print("BACK BUTTON!");
     return true;
   }
 
   @override
   void initState() {
     super.initState();
-    futurePost =  getPublications();
     BackButtonInterceptor.add(myInterceptor);
-    print(futurePost.toString());
   }
 
   @override

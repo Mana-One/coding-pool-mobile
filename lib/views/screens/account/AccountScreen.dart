@@ -20,7 +20,6 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
 
-  CommentController commentController = CommentController();
   UserController userController = UserController();
   PostController postController = PostController();
 
@@ -29,7 +28,6 @@ class _AccountScreenState extends State<AccountScreen> {
   late Future<int> connectedUserPostsNumber;
 
   publishPost() {
-    commentController.getPostComments("dc810ae0-c7e7-11ec-8d8d-0f9c9bad8d99");
     Navigator.push(context, MaterialPageRoute(builder: (context) => PostCreationWidget()));
   }
 
@@ -41,8 +39,6 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   void initState() {
     super.initState();
-    //futurePost =  getUserPublications();
-    //futureStats = getConnectedUserStats();
     BackButtonInterceptor.add(myInterceptor);
   }
 

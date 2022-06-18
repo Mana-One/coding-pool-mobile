@@ -1,4 +1,5 @@
 import 'package:coding_pool_v0/services/like/LikeService.dart';
+import 'package:coding_pool_v0/views/widgets/PostDetailsWidget.dart';
 import 'package:flutter/material.dart';
 import '../../models/Author.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationService.dart';
@@ -53,7 +54,7 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
+        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
         child: Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
