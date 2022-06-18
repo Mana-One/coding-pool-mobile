@@ -1,5 +1,6 @@
-import 'package:coding_pool_v0/models/Models.dart';
 import 'package:flutter/material.dart';
+
+import '../../models/UserStats.dart';
 
 class ConnectedUserStats extends StatefulWidget {
   const ConnectedUserStats({Key? key, required this.userStats}) : super(key: key);

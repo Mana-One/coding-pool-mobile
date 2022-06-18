@@ -18,8 +18,8 @@ int nbComment = 0;
 
 //var recharge = Recharge(path: ".");
 
-class PostDetails extends StatefulWidget {
-  const PostDetails(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
+class details extends StatefulWidget {
+  const details(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
   final String publicationId;
   final Author author;
@@ -29,10 +29,10 @@ class PostDetails extends StatefulWidget {
   final bool isLiked;
 
   @override
-  State<PostDetails> createState() => _PostDetailsState(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
+  State<details> createState() => _detailsState(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 }
 
-class _PostDetailsState extends State<PostDetails> {
+class _detailsState extends State<details> {
 
   String publicationId;
   Author author;
@@ -41,7 +41,7 @@ class _PostDetailsState extends State<PostDetails> {
   int nbComments;
   bool isLiked;
 
-  _PostDetailsState(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
+  _detailsState(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
   CommentController commentController = CommentController();
 

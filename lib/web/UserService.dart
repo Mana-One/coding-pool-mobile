@@ -220,3 +220,76 @@ Future<UserStats> getConnectedUserStats() async {
     throw Exception('Failed to fetch own stats');
   }
 }
+
+
+/*Future<UserStats> getConnectedUserStats() async {
+
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await http.get(
+      Uri.parse("https://coding-pool-api.herokuapp.com/users/me"),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+      },
+    );
+
+    Map<String, dynamic> map = jsonDecode(response.body);
+
+    print("following" + UserStats.fromJson(map).following.toString());
+    print("following" + jsonDecode(response.body).toString());
+
+    setState(() {
+      _connectedUserStats = UserStats.fromJson(map);
+    });
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+
+      print('Succeeeeeeeess user stats');
+
+      return UserStats.fromJson(map);
+
+    } else {
+      throw Exception('Failed to fetch own stats');
+    }
+  }*/
+
+
+/*Future<dynamic> getUserPublications() async {
+    List<PostData> posts = [];
+
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await http.get(
+      Uri.parse("https://coding-pool-api.herokuapp.com/publications/timeline/me?limit=20&offset=0"),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+      },
+    );
+
+    Map<String, dynamic> map = jsonDecode(response.body);
+
+    List<dynamic> listResponse = map['data'] ;
+
+    for(int i=0; i<listResponse.length; i++) {
+      Map<String, dynamic> mapPost = listResponse[i];
+      PostData postData = PostData.fromJson(mapPost);
+      print(postData.content);
+      posts.add(postData);
+    }
+
+    setState(() {
+      _postData = posts;
+
+    });
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+
+      print('Succeeeeeeeess');
+      return jsonDecode(response.body) ;
+
+    } else {
+      throw Exception('Failed to fetch own timeline');
+    }
+  }*/

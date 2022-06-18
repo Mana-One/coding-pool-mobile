@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/ChangePassword.dart';
+import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/user/UserService.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

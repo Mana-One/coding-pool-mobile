@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
+import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
 import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ class PostDetails extends StatefulWidget {
 
 class _PostDetailsState extends State<PostDetails> {
 
+  LikeController likeController = LikeController();
+
    String publicationId;
    Author author;
    String content;
@@ -54,12 +57,12 @@ class _PostDetailsState extends State<PostDetails> {
     setState(() {
       if( isLiked ) {
         this.isLiked = false;
-        unlikePublication(publicationId);
+        likeController.unlikePost(publicationId);
         this.nbLikes --;
       }
       else {
         this.isLiked = true;
-        likePublication(publicationId);
+        likeController.likePost(publicationId);
         this.nbLikes ++;
       }
     });

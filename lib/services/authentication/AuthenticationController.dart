@@ -10,30 +10,33 @@ class AuthenticationController with ChangeNotifier {
   AuthenticationController();
   AuthenticationService authenticationService = AuthenticationService();
 
-  Future<String> signIn(UserSignIn user) async {
-    print("server call");
-    final response = await http.post(
-        Uri.parse("https://coding-pool-api.herokuapp.com/auth/login"),
-        body: { 'email': user.email, 'password': user.password}
-    );
+  Future<String?> signIn(UserSignIn user) async {
+
+    final response = await authenticationService.signIn(user);
+
     Map<String, dynamic> map = jsonDecode(response.body);
 
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', map['access_token']);
 
+    String? token = prefs.getString('access_token');
+
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('success ----');
-      return "OK";
+      globals.token = token;
+      print('success signIn ' + globals.token.toString());
+      return token;
     } else {
-      return "KO";
+      throw Exception('Failed to sign in');
     }
   }
 
   Future<void> signUp(UserSignUp userSignUp) async {
-    final response = await http.post(
-        Uri.parse("https://coding-pool-api.herokuapp.com/accounts/register"),
-        body: { 'email': userSignUp.email, 'username': userSignUp.username, 'password': userSignUp.password}
-    );
+
+    final response = await authenticationService.signUp(userSignUp);
+
+    print(response.body);
+    print(response.statusCode);
+    print(userSignUp.username + userSignUp.email);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success sign up');
@@ -47,17 +50,14 @@ class AuthenticationController with ChangeNotifier {
 
     bool isUsed;
 
-    final response = await http.get(Uri.parse("https://coding-pool-api.herokuapp.com/accounts/check-username/" + username),);
+    final response = await authenticationService.checkUsername(username);
 
     Map<String, dynamic> map = jsonDecode(response.body);
-
     isUsed = map['isUsernameUsed'];
-
     globals.isUsernameUsed = isUsed;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print(isUsed.toString());
-      return isUsed ;
+      return isUsed;
     }
     else {
       throw Exception('Failed to check username');

@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/PostData.dart';
 import 'package:coding_pool_v0/services/post/PostService.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PostController {
   PostController();
@@ -21,7 +18,7 @@ class PostController {
     }
   }
 
-  Future<dynamic> fetchConnectedUserTimeline() async {
+  Future<List<PostData>> fetchConnectedUserTimeline() async {
     List<PostData> posts = [];
 
     final response = await postService.fetchConnectedUserTimeline();
@@ -38,13 +35,26 @@ class PostController {
     }
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Succeeeeeeeess fetch my timeline');
-      return jsonDecode(response.body) ;
+      return posts;
     } else {
       throw Exception('Failed to fetch own timeline');
     }
   }
 
-  Future<dynamic> fetchUserTimeline(String userId) async {
+  Future<int> getConnectedUserPostsNumber() async {
+    int postsNb = 0;
+    final response = await postService.fetchConnectedUserTimeline();
+    Map<String, dynamic> map = jsonDecode(response.body);
+    postsNb = map['total'] ;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Succeeeeeeeess get my posts number');
+      return postsNb;
+    } else {
+      throw Exception('Failed to get own posts number');
+    }
+  }
+
+  Future<List<PostData>> fetchUserTimeline(String userId) async {
     List<PostData> posts = [];
 
     final response = await postService.fetchUserTimeline(userId);
@@ -63,10 +73,23 @@ class PostController {
     if (response.statusCode == 200 || response.statusCode == 201) {
 
       print('Success user account');
-      return jsonDecode(response.body) ;
+      return posts;
 
     } else {
       throw Exception('Failed to fetch user timeline');
+    }
+  }
+
+  Future<int> getUserPostsNumber(String userId) async {
+    int postsNb = 0;
+    final response = await postService.fetchUserTimeline(userId);
+    Map<String, dynamic> map = jsonDecode(response.body);
+    postsNb = map['total'] ;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Succeeeeeeeess get posts number');
+      return postsNb;
+    } else {
+      throw Exception('Failed to get posts number');
     }
   }
 

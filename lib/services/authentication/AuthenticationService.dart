@@ -8,12 +8,18 @@ class AuthenticationService {
   AuthenticationService();
 
   Future<http.Response> signIn(UserSignIn user) async {
-    final response = await http.post(Uri.parse("https://coding-pool-api.herokuapp.com/auth/login"));
+    final response = await http.post(
+        Uri.parse("https://coding-pool-api.herokuapp.com/auth/login"),
+        body: { 'email': user.email, 'password': user.password}
+    );
+
     return response;
   }
 
-  Future<http.Response> signUp(UserSignIn user) async {
-    final response = await http.post(Uri.parse("https://coding-pool-api.herokuapp.com/auth/register"));
+  Future<http.Response> signUp(UserSignUp user) async {
+    final response = await http.post(Uri.parse("https://coding-pool-api.herokuapp.com/accounts/register"),
+        body: { 'email': user.email, 'username': user.username, 'password': user.password}
+    );
     return response;
   }
 

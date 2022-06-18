@@ -3,6 +3,8 @@ import 'package:coding_pool_v0/viewss/screens/EditPasswordWidget.dart';
 import 'package:coding_pool_v0/viewss/screens/EditUserInfosWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
+
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   logout() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', '');
+    setState(() => globals.token = '');
     prefs.commit();
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
   }

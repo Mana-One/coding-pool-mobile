@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/services/follow/FollowController.dart';
 import 'package:coding_pool_v0/viewss/screens/UserStats.dart';
 import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
-import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,6 +21,8 @@ class UserAccount extends StatefulWidget {
 }
 
 class _UserAccountState extends State<UserAccount> {
+
+  FollowController followController = FollowController();
 
   final Author author;
   _UserAccountState(this.author);
@@ -134,12 +136,12 @@ class _UserAccountState extends State<UserAccount> {
     setState(() {
       if( isFollowed ) {
         this.isFollowed = false;
-        unfollowUser(author.id);
+        followController.unfollowUser(author.id);
         this.nbFollowers --;
       }
       else {
         this.isFollowed = true;
-        followUser(author.id);
+        followController.followUser(author.id);
         this.nbFollowers ++;
       }
     });

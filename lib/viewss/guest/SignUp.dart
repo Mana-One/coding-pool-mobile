@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:io';
 
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:coding_pool_v0/viewss/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,25 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+
+  AuthenticationController authenticationController = AuthenticationController();
+
+  //String _tokenSignup = '';
+
+  signUpUser(UserSignUp user) async {
+
+    if(!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    var response = authenticationController.signUp(user);
+    final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+
+  }
+
   bool _isSecret = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _password = '';
@@ -110,7 +130,7 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _password = value;
-                          signUp(UserSignUp(email: _email, username: _username, password: _password));
+                          //authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password));
                         }),
                         validator: (value) => value!.length < 8 ? 'Please Enter a password.\n8 characters minimum required with 1 tiny, 1 uppercase and \n1 number' : null,
                         obscureText: _isSecret,
@@ -143,11 +163,7 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(10.0)
                         ),
                         onPressed: () {
-                          if(!emailRegEx.hasMatch(_email)) null;
-                          if(_password.length < 8) null;
-                          if(_formKey.currentState!.validate()) {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
-                          }
+                          signUpUser(UserSignUp(email: _email, username: _username, password: _password));
                         },
                         child: Text(
                           'Sign Up',

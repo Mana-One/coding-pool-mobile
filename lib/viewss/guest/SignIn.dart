@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
+import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/services/user/UserService.dart';
 import 'package:coding_pool_v0/viewss/HomeScreen.dart';
 import 'package:coding_pool_v0/viewss/guest/SignUp.dart';
 import 'package:coding_pool_v0/web/AuthenticationService.dart';
@@ -19,6 +22,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+
+  AuthenticationController authenticationController = AuthenticationController();
+
   bool _isSecret = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _password = '';
@@ -49,10 +55,11 @@ class _SignInState extends State<SignIn> {
       return;
     }
 
-    var response = signIn(user);
+    var response = authenticationController.signIn(user);
     final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
 
-    if(prefs.getString('token').toString() != '') {
+    if( token != '') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar( content: Text("Wrong email or password"), ));

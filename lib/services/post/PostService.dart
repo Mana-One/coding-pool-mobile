@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:coding_pool_v0/models/Models.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,7 +34,6 @@ class PostService {
     );
 
     return response;
-
   }
 
   Future<http.Response> fetchUserTimeline(String userId) async {
@@ -52,7 +49,6 @@ class PostService {
     );
 
     return response;
-
   }
 
 

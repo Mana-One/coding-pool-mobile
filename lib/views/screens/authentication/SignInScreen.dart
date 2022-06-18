@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import '../../../models/Models.dart';
+import '../../../services/authentication/AuthenticationController.dart';
 import 'SignUpScreen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
 
-  AuthenticationService authenticationService = AuthenticationService();
+  AuthenticationController authenticationController = AuthenticationController();
 
   bool _isSecret = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -48,10 +49,11 @@ class _SignInScreenState extends State<SignInScreen> {
       return;
     }
 
-    var response = authenticationService.signIn(user);
+    var response = authenticationController.signIn(user);
     final prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString('token').toString();
 
-    if(prefs.getString('token').toString() != '') {
+    if( token != '') {
       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeTimelineScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar( content: Text("Wrong email or password"), ));
