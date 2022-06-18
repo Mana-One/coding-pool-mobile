@@ -1,5 +1,4 @@
 import 'package:coding_pool_v0/viewss/guest/SignIn.dart';
-import 'package:coding_pool_v0/viewss/guest/SignUp.dart';
 import 'package:flutter/material.dart';
 
 class Sign extends StatefulWidget {

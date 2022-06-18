@@ -8,14 +8,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'dart:io';
 
-class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+class HomeOld extends StatefulWidget {
+  const HomeOld({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeOld> createState() => _HomeOldState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeOldState extends State<HomeOld> {
   late final futurePost;
 
   List<PostData> _postData = [];

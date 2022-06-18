@@ -6,14 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
 
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+class SettingScreen extends StatefulWidget {
+  const SettingScreen({Key? key}) : super(key: key);
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<SettingScreen> createState() => _SettingScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingScreenState extends State<SettingScreen> {
 
   logout() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();

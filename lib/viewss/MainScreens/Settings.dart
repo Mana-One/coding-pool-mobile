@@ -17,7 +17,7 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    return SettingsScreen();
+    return SettingScreen();
   }
 }
 

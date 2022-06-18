@@ -93,7 +93,7 @@ class PostController {
     }
   }
 
-  Future<dynamic> fetchHomeTimeline() async {
+  Future<List<PostData>> fetchHomeTimeline() async {
 
     List<PostData> posts = [];
 
@@ -110,7 +110,7 @@ class PostController {
 
   if (response.statusCode == 200 || response.statusCode == 201) {
       print('succeeeess fetch home timeline');
-      return jsonDecode(response.body) ;
+      return posts;
 
     } else {
       throw Exception('Failed to fetch home timeline');

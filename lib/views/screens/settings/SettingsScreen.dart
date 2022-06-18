@@ -23,6 +23,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    print('settings screen');
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

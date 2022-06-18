@@ -1,3 +1,7 @@
+import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
+import 'package:coding_pool_v0/views/screens/groups/GroupsScreen.dart';
+import 'package:coding_pool_v0/views/screens/home/HomeScreen.dart';
+import 'package:coding_pool_v0/views/screens/settings/SettingsScreen.dart';
 import 'package:coding_pool_v0/viewss/MainScreens/Account.dart';
 import 'package:coding_pool_v0/viewss/MainScreens/Home.dart';
 import 'package:coding_pool_v0/viewss/MainScreens/Search.dart';
@@ -11,23 +15,25 @@ import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeState extends State<Home> {
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black);
+
+  static const TextStyle optionStyle = TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black);
+
   static const List<Widget> _widgetOptions = <Widget>[
-    Home(),
+    HomeScreen(),
     Search(),
-    Groups(),
-    Account(),
-    Settings(),
+    GroupsScreen(),
+    AccountScreen(),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -53,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Home'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
@@ -75,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.deepOrange.shade900,
         selectedItemColor: Colors.blue[900],
+        selectedLabelStyle: optionStyle,
         onTap: _onItemTapped,
       ),
     );

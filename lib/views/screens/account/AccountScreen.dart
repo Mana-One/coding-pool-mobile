@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
-class Account extends StatefulWidget {
-  const Account({Key? key}) : super(key: key);
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({Key? key}) : super(key: key);
 
   @override
-  State<Account> createState() => _AccountState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _AccountState extends State<Account> {
+class _AccountScreenState extends State<AccountScreen> {
 
   CommentController commentController = CommentController();
   UserController userController = UserController();
@@ -58,6 +58,8 @@ class _AccountState extends State<Account> {
     connectedUserPosts = postController.fetchConnectedUserTimeline();
     connectedUserStats = userController.getConnectedUserStats();
     connectedUserPostsNumber = postController.getConnectedUserPostsNumber();
+
+    print('Account screen');
 
     return Scaffold(
         body: Column(

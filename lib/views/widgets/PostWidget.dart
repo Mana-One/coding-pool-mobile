@@ -51,53 +51,55 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 5.0, top: 5.0),
-                  child: Image(
-                    alignment: Alignment.center,
-                    image: AssetImage('lib/assets/images/bouee.png'),
-                    height: 80,
-                    width: 80,
+    return Material(
+      child: InkWell(
+        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
+        child: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 5.0, top: 5.0),
+                    child: Image(
+                      alignment: Alignment.center,
+                      image: AssetImage('lib/assets/images/bouee.png'),
+                      height: 80,
+                      width: 80,
+                    ),
                   ),
-                ),
-                Container(
-                  width: 110,
-                  child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    margin: EdgeInsets.only(top: 10.0),
-                    width: 280,
-                    child: Text(content)
-                ),
-                Row(
-                  children: [
-                    IconButton( onPressed: () => like(),
+                  Container(
+                    width: 110,
+                    child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900],),),),
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                      margin: EdgeInsets.only(top: 10.0),
+                      width: 280,
+                      child: Text(content)
+                  ),
+                  Row(
+                    children: [
+                      IconButton( onPressed: () => like(),
 
-                        icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
+                          icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
 
-                    Text(nbLikes.toString()),
-                    IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId,author,content,nbLikes,nbComments,this.isLiked))), icon: Icon(Icons.insert_comment)),
-                    Text(nbComments.toString()),
-                  ],
-                ),
-              ],
-            )
-          ],
+                      Text(nbLikes.toString()),
+                      IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostWidget(publicationId,author,content,nbLikes,nbComments,this.isLiked))), icon: Icon(Icons.insert_comment)),
+                      Text(nbComments.toString()),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -5,7 +5,7 @@ import 'package:coding_pool_v0/models/Models.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:coding_pool_v0/services/user/UserService.dart';
-import 'package:coding_pool_v0/viewss/HomeScreen.dart';
+import 'package:coding_pool_v0/viewss/Home.dart';
 import 'package:coding_pool_v0/viewss/guest/SignUp.dart';
 import 'package:coding_pool_v0/web/AuthenticationService.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +60,7 @@ class _SignInState extends State<SignIn> {
     String token = prefs.getString('token').toString();
 
     if( token != '') {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar( content: Text("Wrong email or password"), ));
     }

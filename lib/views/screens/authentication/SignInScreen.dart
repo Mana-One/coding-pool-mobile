@@ -1,5 +1,4 @@
-import 'package:coding_pool_v0/views/screens/home_timeline/HomeTimelineScreen.dart';
-import 'package:coding_pool_v0/services/authentication/AuthenticationService.dart';
+import 'package:coding_pool_v0/views/screens/home/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -54,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
     String token = prefs.getString('token').toString();
 
     if( token != '') {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeTimelineScreen()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar( content: Text("Wrong email or password"), ));
     }

@@ -19,7 +19,7 @@ class _UserStatsScreenState extends State<UserStatsScreen> {
   @override
   Widget build(BuildContext context) {
 
-    print(userStats.username);
+    print('user stats screen');
 
     return SafeArea(
         child: Scaffold(
