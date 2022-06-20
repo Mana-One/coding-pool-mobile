@@ -1,13 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/SignIn.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
-import 'package:coding_pool_v0/services/user/UserController.dart';
-import 'package:coding_pool_v0/services/user/UserService.dart';
-import 'package:coding_pool_v0/viewss/Home.dart';
-import 'package:coding_pool_v0/viewss/guest/SignUp.dart';
-import 'package:coding_pool_v0/web/AuthenticationService.dart';
+import 'package:coding_pool_v0/views/Home.dart';
+import 'package:coding_pool_v0/views/screens/authentication/SignUpScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -199,7 +193,7 @@ class _SignInState extends State<SignIn> {
                             fontSize: 15.0
                         ),
                       ),
-                      TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));}, child: Text('Register here.'),),
+                      TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));}, child: Text('Register here.'),),
                     ],
                   ),
                 ],

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:coding_pool_v0/main.dart';
+import 'package:coding_pool_v0/views/main.dart';
 import 'package:coding_pool_v0/models/User.dart';
 import 'package:coding_pool_v0/viewss/screens/SearchScreen.dart';
 import 'package:coding_pool_v0/viewss/widgets/SearchUserWidget.dart';

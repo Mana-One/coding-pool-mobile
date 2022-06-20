@@ -1,5 +1,5 @@
 import 'package:coding_pool_v0/services/post/PostController.dart';
-import 'package:coding_pool_v0/viewss/Home.dart';
+import 'package:coding_pool_v0/views/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 

@@ -1,7 +1,6 @@
 import 'package:coding_pool_v0/models/User.dart';
 import 'package:coding_pool_v0/services/search/SearchController.dart';
 import 'package:coding_pool_v0/views/widgets/UserSearchWidget.dart';
-import 'package:coding_pool_v0/viewss/widgets/SearchUserWidget.dart';
 import 'package:flutter/material.dart';
 
 class SearchUser extends SearchDelegate {

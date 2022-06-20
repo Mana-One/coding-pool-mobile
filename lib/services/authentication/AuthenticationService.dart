@@ -1,5 +1,6 @@
+import 'package:coding_pool_v0/models/SignIn.dart';
+import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:http/http.dart' as http;
-import '../../models/Models.dart';
 
 class AuthenticationService {
   AuthenticationService();

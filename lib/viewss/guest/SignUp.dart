@@ -1,15 +1,11 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
-
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
-import 'package:coding_pool_v0/viewss/Home.dart';
+import 'package:coding_pool_v0/views/screens/authentication/SignInScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../web/AuthenticationService.dart';
-import 'SignIn.dart';
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
 
 
@@ -37,7 +33,7 @@ class _SignUpState extends State<SignUp> {
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token').toString();
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
 
   }
 
@@ -109,7 +105,7 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _username = value;
-                          checkUsername(value);
+                          authenticationController.checkUsername(value);
                         }) ,
                         validator:(value) => globals.isUsernameUsed == true ? 'Username already exists, please enter another' : null,
                         decoration: InputDecoration(
@@ -186,7 +182,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     TextButton(onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignIn()));}, child: Text('Login here.'),),
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));}, child: Text('Login here.'),),
                   ],
                 ),
               ],

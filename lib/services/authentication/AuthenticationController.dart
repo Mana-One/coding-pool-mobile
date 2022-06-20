@@ -1,9 +1,9 @@
 import 'dart:convert';
+import 'package:coding_pool_v0/models/SignIn.dart';
+import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
-import '../../models/Models.dart';
 import 'AuthenticationService.dart';
 
 class AuthenticationController with ChangeNotifier {

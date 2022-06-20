@@ -1,9 +1,7 @@
-import 'package:coding_pool_v0/views/screens/home/HomeScreen.dart';
-import 'package:coding_pool_v0/viewss/Home.dart';
+import 'package:coding_pool_v0/views/Home.dart';
+import 'package:coding_pool_v0/models/SignIn.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import '../../../models/Models.dart';
 import '../../../services/authentication/AuthenticationController.dart';
 import 'SignUpScreen.dart';
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
