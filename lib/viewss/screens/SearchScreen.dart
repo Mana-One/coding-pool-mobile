@@ -8,14 +8,14 @@ import '../../models/Models.dart';
 
 ///////////////// à tester
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+class SearchScreenold extends StatefulWidget {
+  const SearchScreenold({Key? key}) : super(key: key);
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<SearchScreenold> createState() => _SearchScreenoldState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenoldState extends State<SearchScreenold> {
 
   TextEditingController _textController = TextEditingController();
   //List<String> initialList = ["Chat", "Chien", "Rat", "Cheval", "Ours"];

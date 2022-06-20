@@ -10,13 +10,15 @@ class SearchController {
   SearchController();
   SearchService searchService = SearchService();
 
-  void searchUser(String user) async {
+  Future<List<User>> searchUser(String user) async {
 
     final response = await searchService.searchUser(user);
+
     Map<String, dynamic> map = jsonDecode(response.body);
     List<dynamic> listResponse = map['data'] ;
 
     List<User> results = [];
+
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapUsers = listResponse[i];
       User user = User.fromJson(mapUsers);
@@ -25,7 +27,7 @@ class SearchController {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('succcceeeeessss fetch searched users');
-      return jsonDecode(response.body);
+      return results;
     } else {
       throw Exception('Failed to fetch searched users');
     }

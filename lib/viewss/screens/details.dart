@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/models/Comment.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
 import 'package:coding_pool_v0/web/SocialNetworkService.dart';
@@ -10,7 +12,6 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:http/http.dart' as http;
 
 import '../../models/CommentData.dart';
-import '../../models/Models.dart';
 import '../widgets/CommentWidget.dart';
 
 
@@ -47,10 +48,10 @@ class _detailsState extends State<details> {
 
   late final futurePost;
   String _comment = '';
-  List<CommentsData> _commentsData = [];
+  List<CommentData> _commentsData = [];
 
   Future<Comment> getPublicationComments(String publicationId) async {
-    List<CommentsData> comments = [];
+    List<CommentData> comments = [];
 
     //await recharge.init();
 
@@ -72,7 +73,7 @@ class _detailsState extends State<details> {
 
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
-      CommentsData comment = CommentsData.fromJson(mapPost);
+      CommentData comment = CommentData.fromJson(mapPost);
       print(comment.id);
       comments.add(comment);
     }

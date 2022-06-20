@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
@@ -11,7 +12,6 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:http/http.dart' as http;
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
 import '../../models/CommentData.dart';
-import '../../models/Models.dart';
 import '../widgets/CommentWidget.dart';
 
 
@@ -50,7 +50,7 @@ class _PostDetailsState extends State<PostDetails> {
 
   late Future<List<CommentData>> _futurePost;
    String _comment = '';
-  List<CommentsData> _commentsData = [];
+  List<CommentData> _commentsData = [];
 
 
   like() {

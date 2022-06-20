@@ -1,4 +1,7 @@
+import 'package:coding_pool_v0/services/search/SearchController.dart';
+import 'package:coding_pool_v0/views/screens/search/SearchUser.dart';
 import 'package:coding_pool_v0/views/widgets/UserSearchWidget.dart';
+import 'package:coding_pool_v0/viewss/widgets/SearchUserWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -15,10 +18,16 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
 
+  SearchController searchController = SearchController();
+
+  late Future<List<User>> searchedUsers;
+
   final _formKey = GlobalKey<FormState>();
 
   var _autoValidate = AutovalidateMode.disabled;
   var _search;
+
+  final searchText = TextEditingController();
 
   List<User> _users = [];
 
@@ -64,81 +73,23 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          title: Text('Search user', style: TextStyle(color: Colors.blue.shade900),),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              color: Colors.deepOrange.shade900,
+              onPressed: () {
+                showSearch(context: context, delegate: SearchUser());
+              },
+              icon: Icon(Icons.search_sharp),
+            )
+          ],
+        ),
         body: SingleChildScrollView(
           child: Center(
-            child: Form(
-              key: _formKey,
-              autovalidateMode: _autoValidate,
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.search, color: Colors.deepOrange.shade900,),
-                        hintText: 'Enter name of user to search',
-                        border:  OutlineInputBorder(),
-                        filled: true,
-                        errorStyle: TextStyle(fontSize: 15.0)
-                    ),
-
-                    validator: (value) {
-                      if(value!.isEmpty) {
-                        return 'Please enter a search term';
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        _search = value;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: RawMaterialButton(
-                        onPressed: () {
-                          final isValid = _formKey.currentState!.validate();
-                          if ( isValid ) {
-                            searchUser( _search);
-                          }
-                          else {
-                            setState(() {
-                              _autoValidate = AutovalidateMode.always;
-                            });
-                          }
-                        },
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5.0)
-                        ),
-                        fillColor: Colors.deepOrange.shade900,
-                        child: Padding(
-                          padding:  EdgeInsets.all(15.0),
-                          child: Text(
-                            'Search',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0
-                            ),
-                          ),
-                        )
-                    ),
-                  ),
-                  //_users != null ? Text('Found ${_users.length} users') : Text('No user found'),
-                  Container(
-                    height: 530,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _users.length,
-                        itemBuilder: (context, index) {
-                          return UserSearchWidget(_users[index]);
-                        }
-                    ),
-                  )
-                ],
-              ),
-            ),
+            child: Container()
           ),
         ),
       ),

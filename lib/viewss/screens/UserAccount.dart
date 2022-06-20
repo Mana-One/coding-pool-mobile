@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/models/PostData.dart';
+import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/follow/FollowController.dart';
 import 'package:coding_pool_v0/viewss/screens/UserStats.dart';
 import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
@@ -30,7 +32,7 @@ class _UserAccountState extends State<UserAccount> {
   late final futurePost;
   late final futureStats;
   List<PostData> _postData = [];
-  UserStats _userStats = UserStats(id: '', username: '', memberSince: '', followers: 0, following: 0, programs: 0, competitions_entered: 0, competitions_won: 0);
+  UserStats _userStats = UserStats(id: '', username: '', memberSince: '', followers: 0, following: 0, programs: 0, competitions_entered: 0, competitions_won: 0, isFollowing: false);
 
   Future<UserStats> getUserStats(String userId) async {
 

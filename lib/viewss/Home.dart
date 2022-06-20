@@ -1,17 +1,8 @@
 import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
 import 'package:coding_pool_v0/views/screens/groups/GroupsScreen.dart';
 import 'package:coding_pool_v0/views/screens/home/HomeScreen.dart';
+import 'package:coding_pool_v0/views/screens/search/SearchScreen.dart';
 import 'package:coding_pool_v0/views/screens/settings/SettingsScreen.dart';
-import 'package:coding_pool_v0/viewss/MainScreens/Account.dart';
-import 'package:coding_pool_v0/viewss/MainScreens/Home.dart';
-import 'package:coding_pool_v0/viewss/MainScreens/Search.dart';
-import 'package:coding_pool_v0/viewss/MainScreens/Settings.dart';
-import 'package:coding_pool_v0/viewss/MainScreens/groups.dart';
-import 'package:coding_pool_v0/viewss/screens/PostDetails.dart';
-import 'package:coding_pool_v0/viewss/screens/SearchPage.dart';
-import 'package:coding_pool_v0/viewss/screens/SearchScreen.dart';
-import 'package:coding_pool_v0/viewss/screens/SettingsScreen.dart';
-import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,7 +21,7 @@ class _HomeState extends State<Home> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
-    Search(),
+    SearchScreen(),
     GroupsScreen(),
     AccountScreen(),
     SettingsScreen(),
@@ -50,6 +41,7 @@ class _HomeState extends State<Home> {
         elevation: 0,
         title: svgLogoText,
         centerTitle: true,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),

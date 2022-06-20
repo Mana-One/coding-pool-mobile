@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/viewss/screens/PostDetails.dart';
 import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';

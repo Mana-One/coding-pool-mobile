@@ -1,4 +1,4 @@
-import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:flutter/material.dart';
 
 class UsersStats extends StatefulWidget {
