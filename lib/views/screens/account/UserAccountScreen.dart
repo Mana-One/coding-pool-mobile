@@ -1,18 +1,13 @@
-import 'dart:convert';
-import 'dart:io';
+import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/models/PostData.dart';
+import 'package:coding_pool_v0/models/UserStats.dart';
+import 'package:coding_pool_v0/services/follow/FollowController.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:http/http.dart' as http;
-import 'package:coding_pool_v0/models/Globals.dart' as globals;
-import '../../../models/Author.dart';
-import '../../../models/PostData.dart';
-import '../../../models/UserStats.dart';
-import '../../../services/follow/FollowController.dart';
-import '../../widgets/PostWidget.dart';
 import 'UserStatsScreen.dart';
 
 

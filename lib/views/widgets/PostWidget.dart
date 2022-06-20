@@ -1,10 +1,8 @@
+import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/services/like/LikeService.dart';
+import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostDetailsWidget.dart';
 import 'package:flutter/material.dart';
-import '../../models/Author.dart';
-import 'package:coding_pool_v0/services/authentication/AuthenticationService.dart';
-
-import '../screens/account/UserAccountScreen.dart';
 
 class PostWidget extends StatefulWidget {
 

@@ -1,8 +1,8 @@
+import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:coding_pool_v0/views/Home.dart';
 import 'package:coding_pool_v0/models/SignIn.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import '../../../services/authentication/AuthenticationController.dart';
 import 'SignUpScreen.dart';
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
 
@@ -31,8 +31,6 @@ class _SignInScreenState extends State<SignInScreen> {
   final RegExp passwordRegEx1 = RegExp(r"[a-z]");
   final RegExp passwordRegEx2 = RegExp(r"[A-Z]");
   final RegExp passwordRegEx3 = RegExp(r"[0-9]");
-
-  String a = "abcdEFG123";
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     print("BACK BUTTON!"); // Do some stuff.

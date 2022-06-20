@@ -1,7 +1,7 @@
+import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/models/User.dart';
+import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:flutter/material.dart';
-import '../../models/Author.dart';
-import '../../models/User.dart';
-import '../screens/account/UserAccountScreen.dart';
 
 class UserSearchWidget extends StatefulWidget {
   final User user;

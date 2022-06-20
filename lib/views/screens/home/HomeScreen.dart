@@ -1,8 +1,8 @@
+import 'package:coding_pool_v0/models/PostData.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
+import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import '../../../models/PostData.dart';
-import '../../widgets/PostWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

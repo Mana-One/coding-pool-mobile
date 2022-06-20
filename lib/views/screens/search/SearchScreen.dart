@@ -1,13 +1,11 @@
+import 'package:coding_pool_v0/models/User.dart';
 import 'package:coding_pool_v0/services/search/SearchController.dart';
 import 'package:coding_pool_v0/views/screens/search/SearchUser.dart';
-import 'package:coding_pool_v0/views/widgets/UserSearchWidget.dart';
-import 'package:coding_pool_v0/viewss/widgets/SearchUserWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
-import '../../../models/User.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);

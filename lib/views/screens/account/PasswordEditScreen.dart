@@ -1,6 +1,6 @@
-import 'package:coding_pool_v0/models/Models.dart';
-import 'package:coding_pool_v0/viewss/MainScreens/Settings.dart';
-import 'package:coding_pool_v0/web/UserService.dart';
+import 'package:coding_pool_v0/models/ChangePassword.dart';
+import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/viewss/screens/SettingsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
@@ -13,6 +13,9 @@ class PasswordEditScreen extends StatefulWidget {
 }
 
 class _PasswordEditScreenState extends State<PasswordEditScreen> {
+
+  UserController userController = UserController();
+
   bool _isSecret1 = true;
   bool _isSecret2 = true;
   bool _isSecret3 = true;
@@ -30,8 +33,8 @@ class _PasswordEditScreenState extends State<PasswordEditScreen> {
     if(!_formKey.currentState!.validate()) {
       return;
     }
-    changeUserPassword(changePassword);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()));
+    userController.changeUserPassword(changePassword);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen()));
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
@@ -155,6 +158,7 @@ class _PasswordEditScreenState extends State<PasswordEditScreen> {
                         SizedBox(
                           height: 5,
                         ),
+
                         ElevatedButton(
                             style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),

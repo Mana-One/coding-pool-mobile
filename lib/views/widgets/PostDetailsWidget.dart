@@ -1,20 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/models/CommentData.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
-import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
-import 'package:coding_pool_v0/viewss/widgets/CommentWidget.dart';
-import 'package:coding_pool_v0/web/SocialNetworkService.dart';
+import 'package:coding_pool_v0/views/widgets/CommentWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:http/http.dart' as http;
-import 'package:coding_pool_v0/models/Globals.dart' as globals;
-import '../../models/CommentData.dart';
-import '../widgets/CommentWidget.dart';
 
 class PostDetailsWidget extends StatefulWidget {
   const PostDetailsWidget(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);

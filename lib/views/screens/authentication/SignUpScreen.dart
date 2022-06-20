@@ -2,7 +2,7 @@ import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
-import '../../../models/Globals.dart' as globals;
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
 import 'SignInScreen.dart';
 
 class SignUpScreen extends StatefulWidget {
