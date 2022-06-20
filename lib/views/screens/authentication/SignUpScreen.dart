@@ -1,3 +1,4 @@
+import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationService.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -17,35 +18,30 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
 
-  AuthenticationService authenticationService = AuthenticationService();
+  AuthenticationController authenticationController = AuthenticationController();
+
+  late Future<void> signUp;
 
   bool _isSecret = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   String _password = '';
+  final passwordText = TextEditingController();
   String _email = '';
+  final emailText = TextEditingController();
   String _username = '';
+  final usernameText = TextEditingController();
+
   final RegExp emailRegEx = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+") ;
-
-  Future<void> signUp(UserSignUp userSignUp) async {
-    final response = await http.post(
-        Uri.parse("https://coding-pool-api.herokuapp.com/accounts/register"),
-        body: { 'email': userSignUp.email, 'username': userSignUp.username, 'password': userSignUp.password}
-    );
-
-    print(response.body);
-    print(response.statusCode);
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Success sign up');
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to sign up');
-    }
-  }
-
+  final RegExp passwordRegEx1 = RegExp(r"[a-z]");
+  final RegExp passwordRegEx2 = RegExp(r"[A-Z]");
+  final RegExp passwordRegEx3 = RegExp(r"[0-9]");
 
   @override
   Widget build(BuildContext context) {
+
+    print("Sign up screen");
+
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -68,7 +64,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: [
                       TextFormField(
                         onChanged: (value) => setState(() => _email = value),
-                        validator: (value) => value!.isEmpty || !emailRegEx.hasMatch(value) ? 'Please enter a valid email' : null,
+                        controller: emailText,
+                        validator: (value) => value!.isEmpty || !emailRegEx.hasMatch(value) ? 'Please enter a valid email.' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your email here',
                           border: OutlineInputBorder(
@@ -87,9 +84,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _username = value;
-                          authenticationService.checkUsername(value);
+                          authenticationController.checkUsername(value);
                         }) ,
-                        validator:(value) => globals.isUsernameUsed == true ? 'Username already exists, please enter another' : null,
+                        controller: usernameText,
+                        validator:(value) => globals.isUsernameUsed == true ? 'Username already exists, please enter another one.' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your username here',
                           border: OutlineInputBorder(
@@ -108,9 +106,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _password = value;
-                          signUp(UserSignUp(email: _email, username: _username, password: _password));
+                          authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password));
                         }),
-                        validator: (value) => value!.length < 8 ? 'Please Enter a password.\n8 characters minimum required with 1 tiny, 1 uppercase and \n1 number' : null,
+                        controller: passwordText,
+                        validator: (value) => value!.length < 8 || !value.contains(passwordRegEx1) || !value.contains(passwordRegEx2) || !value.contains(passwordRegEx3) ? 'Please Enter a valid password. \n8 characters minimum required with at least: \n - a lowercase. \n - an uppercase. \n - a number.' : null,
                         obscureText: _isSecret,
                         decoration: InputDecoration(
                           suffixIcon: InkWell(
@@ -133,25 +132,48 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: 20.0,
                       ),
-                      RaisedButton(
-                        padding: EdgeInsets.symmetric(vertical: 15.0),
-                        elevation: 0,
-                        color: Theme.of(context).primaryColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0)
-                        ),
-                        onPressed: () {
-                          if(!emailRegEx.hasMatch(_email)) null;
-                          if(_password.length < 8) null;
-                          if(_formKey.currentState!.validate()) {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
-                          }
-                        },
-                        child: Text(
-                          'Sign Up',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      )
+                      FutureBuilder(
+                          future: authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password)),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            return snapshot.data != null
+                                ? RaisedButton(
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
+                              elevation: 0,
+                              color: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)
+                              ),
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
+                                usernameText.clear();
+                                emailText.clear();
+                                passwordText.clear();
+                              },
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                                : RaisedButton(
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
+                              elevation: 0,
+                              color: Theme.of(context).primaryColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0)
+                              ),
+                              onPressed: () {
+                                if(_formKey.currentState!.validate()) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar( content: Text("Please retry"), ));
+                                }
+                              },
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                          }),
+
                     ],
                   ),
                 ),

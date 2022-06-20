@@ -23,7 +23,7 @@ class CommentController {
     }
   }
 
-  Future<void> UncommentPost(String commentId) async {
+  Future<void> uncommentPost(String commentId) async {
 
     final response = await commentService.UncommentPost(commentId);
 

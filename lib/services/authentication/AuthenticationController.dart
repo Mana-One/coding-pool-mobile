@@ -10,27 +10,25 @@ class AuthenticationController with ChangeNotifier {
   AuthenticationController();
   AuthenticationService authenticationService = AuthenticationService();
 
-  Future<String?> signIn(UserSignIn user) async {
+  Future<String> signIn(UserSignIn user) async {
 
     final response = await authenticationService.signIn(user);
-
     Map<String, dynamic> map = jsonDecode(response.body);
 
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', map['access_token']);
-
     String? token = prefs.getString('access_token');
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      globals.token = token;
+      globals.token = map['access_token'];
       print('success signIn ' + globals.token.toString());
-      return token;
+      return globals.token.toString();
     } else {
       throw Exception('Failed to sign in');
     }
   }
 
-  Future<void> signUp(UserSignUp userSignUp) async {
+  Future<String> signUp(UserSignUp userSignUp) async {
 
     final response = await authenticationService.signUp(userSignUp);
 
@@ -40,7 +38,7 @@ class AuthenticationController with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success sign up');
-      return jsonDecode(response.body);
+      return "Signed Up";
     } else {
       throw Exception('Failed to sign up');
     }
@@ -57,6 +55,7 @@ class AuthenticationController with ChangeNotifier {
     globals.isUsernameUsed = isUsed;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
+      print(isUsed.toString());
       return isUsed;
     }
     else {

@@ -16,11 +16,6 @@ import 'package:coding_pool_v0/models/Globals.dart' as globals;
 import '../../models/CommentData.dart';
 import '../widgets/CommentWidget.dart';
 
-
-int nbComment = 0;
-
-//var recharge = Recharge(path: ".");
-
 class PostDetailsWidget extends StatefulWidget {
   const PostDetailsWidget(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
@@ -37,7 +32,6 @@ class PostDetailsWidget extends StatefulWidget {
 
 class _PostDetailsWidgetState extends State<PostDetailsWidget> {
 
-  LikeController likeController = LikeController();
 
   String publicationId;
   Author author;
@@ -49,11 +43,12 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
   _PostDetailsWidgetState(this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
   CommentController commentController = CommentController();
+  LikeController likeController = LikeController();
 
-  late Future<List<CommentData>> _futurePost;
+  late Future<List<CommentData>> postComments;
+
   String _comment = '';
-  List<CommentData> _commentsData = [];
-
+  final fieldText = TextEditingController();
 
   like() {
     setState(() {
@@ -71,22 +66,21 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
   }
 
   comment(String contentComment) {
-    commentPublication(this.publicationId, contentComment);
+    commentController.commentPost(this.publicationId, contentComment);
     nbComments++;
-    Navigator.pop(context);
-    //Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetails(publicationId, author, content, nbLikes, nbComments, isLiked)));
+    setState(() => _comment = '');
+    //Navigator.pop(context);
+    //Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    print("BACK BUTTON!"); // Do some stuff.
+    print("BACK BUTTON!");
     return true;
   }
 
   @override
   void initState() {
     super.initState();
-    //futurePost =  getPublicationComments(this.publicationId);
-    _futurePost = commentController.getPostComments(this.publicationId);
     BackButtonInterceptor.add(myInterceptor);
   }
 
@@ -98,6 +92,9 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    postComments = commentController.getPostComments(this.publicationId);
+    print('comment details screen');
 
     return SafeArea(
         child: Scaffold(
@@ -143,7 +140,6 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                                           IconButton( onPressed: () => like(), icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
                                           Text(nbLikes.toString()),
                                           Container(child: Icon(Icons.insert_comment),),
-                                          //IconButton(onPressed: () => print('nbComments'), icon: Icon(Icons.insert_comment)),
                                           Text(nbComments.toString()),
                                         ],
                                       ),
@@ -152,13 +148,25 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                             ),
                             Container(
                               //flex: 1,
-                                child: ListView(
-                                  shrinkWrap: true,
-                                  children: [
-                                    for( var itemPost in globals.comments)
-                                      CommentsWidget(username: itemPost.leftBy.username, content: itemPost.content, createdAt: itemPost.createdAt,)
-                                  ],
-                                )
+                                child: FutureBuilder(
+                                    future: postComments,
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<List<CommentData>> snapshot) {
+                                      return snapshot.data != null
+                                          ? ListView(
+                                        shrinkWrap: true,
+                                        children: [
+                                          for( var itemPost in snapshot.data as List<CommentData>)
+                                            CommentWidget(username: itemPost.leftBy.username, content: itemPost.content, createdAt: itemPost.createdAt, commentId: itemPost.id,)
+                                        ],
+                                      )
+                                          : Container(
+                                          alignment: Alignment.center,
+                                          child: const CircularProgressIndicator(
+                                            color: Color(3),
+                                          ));
+                                    }),
+
                             ),
                           ],
                         ),
@@ -175,6 +183,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                           margin: EdgeInsets.only(left: 5.0,bottom: 10.0),
                           child: TextFormField(
                             onChanged: (value) => setState(() => _comment = value),
+                            controller: fieldText,
                             minLines: 1,
                             maxLines: 20,
                             decoration: InputDecoration(
@@ -194,7 +203,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                           child: IconButton(
                             onPressed: () => {
                               comment(_comment),
-                              _comment = '',
+                              this.fieldText.clear()
                               //_commentsData.add(CommentsData(id: _comment., content: _comment, createdAt: createdAt, leftBy: leftBy)),
                             },
                             icon: Icon(Icons.send), color: Colors.blue[900],),

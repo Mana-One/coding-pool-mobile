@@ -1,4 +1,4 @@
-import 'package:coding_pool_v0/viewss/guest/SignIn.dart';
+import 'package:coding_pool_v0/views/screens/authentication/SignInScreen.dart';
 import 'package:flutter/material.dart';
 
 class Sign extends StatefulWidget {
@@ -19,7 +19,7 @@ class _SignState extends State<Sign> {
 
   @override
   Widget build(BuildContext context) {
-    return SignIn();
+    return SignInScreen();
   }
 }
 

@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
+
 
 class PostService {
   PostService();
@@ -60,7 +62,7 @@ class PostService {
     final response = await http.get(
       Uri.parse("https://coding-pool-api.herokuapp.com/publications/timeline/home?limit=20&offset=0"),
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+        HttpHeaders.authorizationHeader: 'Bearer '+ globals.token.toString(),
       },
     );
 

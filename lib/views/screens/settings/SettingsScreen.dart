@@ -2,6 +2,8 @@ import 'package:coding_pool_v0/views/screens/account/PasswordEditScreen.dart';
 import 'package:coding_pool_v0/views/screens/account/UserInfosEditScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
+
 
 import '../authentication/SignInScreen.dart';
 
@@ -17,6 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   logout() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', '');
+    globals.token = '';
     prefs.commit();
     Navigator.push(context, MaterialPageRoute(builder: (context) => SignInScreen()));
   }

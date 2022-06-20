@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
+import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/viewss/screens/PostDetails.dart';
 import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
 import 'package:http/http.dart' as http;
@@ -31,13 +32,18 @@ class _CommentWidgetState extends State<CommentWidget> {
 
   _CommentWidgetState(this.commentId, this.username, this.content, this.createdAt);
 
+  CommentController commentController = CommentController();
+
   deleteComment(String commentId) {
-    deletePostComment(commentId);
+    commentController.uncommentPost(commentId);
     nbComment --;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    print('comment widget');
+
     return InkWell(
       child: Card(
         color: Colors.grey[200],
@@ -87,7 +93,6 @@ class _CommentWidgetState extends State<CommentWidget> {
               ),
               IconButton(onPressed: () {
                             deleteComment(commentId);
-                            Navigator.pop(context);
                           },
                           icon: Icon(Icons.delete_outline)
               )
@@ -105,7 +110,7 @@ class _CommentWidgetState extends State<CommentWidget> {
 
 ///// Old
 
-class CommentsWidget extends StatelessWidget {
+/*class CommentsWidget extends StatelessWidget {
   const CommentsWidget({Key? key, required this.username, required this.content, required this.createdAt}) : super(key: key);
 
   final String username;
@@ -165,4 +170,4 @@ class CommentsWidget extends StatelessWidget {
       ),
     );
   }
-}
+}*/

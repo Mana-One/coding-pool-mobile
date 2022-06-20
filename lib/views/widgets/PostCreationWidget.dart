@@ -1,4 +1,5 @@
-import 'package:coding_pool_v0/services/post/PostService.dart';
+import 'package:coding_pool_v0/services/post/PostController.dart';
+import 'package:coding_pool_v0/viewss/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
@@ -11,9 +12,10 @@ class PostCreationWidget extends StatefulWidget {
 
 class _PostCreationWidgetState extends State<PostCreationWidget> {
 
-  PostService postService = PostService();
+  PostController postController = PostController();
 
   String _postContent = '';
+  final postText = TextEditingController();
 
   @override
   void initState() {
@@ -34,9 +36,8 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
 
   publish() {
     if(_postContent == '') return;
-    postService.createPost(_postContent);
-    _postContent = '';
-    Navigator.pop(context);
+    postController.createPost(_postContent);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 
   @override
@@ -56,6 +57,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
               margin: EdgeInsets.only(left: 5.0,bottom: 10.0),
               child: TextFormField(
                 onChanged: (value) => setState(() => _postContent = value),
+                controller: postText,
                 minLines: 1,
                 maxLines: 20,
                 decoration: InputDecoration(
@@ -78,6 +80,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
                       textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
                   onPressed: () {
                     publish();
+                    postText.clear();
                   },
                   child: Text('Publish', style: TextStyle(color: Colors.white),)
               ),

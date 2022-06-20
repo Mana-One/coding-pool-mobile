@@ -1,3 +1,4 @@
+import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:coding_pool_v0/services/user/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
@@ -11,11 +12,14 @@ class UserInfosEditScreen extends StatefulWidget {
 
 class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
 
-  UserService userService = UserService();
+  UserController userController = UserController();
 
   String _username = '';
+  final usernameText = TextEditingController();
   String _email = '';
+  final emailText = TextEditingController();
   String _wallet = '';
+  final walletText = TextEditingController();
 
   late Future<void> futureEditPassword;
   var futureEditInfos;
@@ -38,7 +42,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
   }
 
   updateInfos() {
-    userService.changeUserInfos(_username, _wallet, _email);
+    userController.changeUserInfos(_username, _wallet, _email);
     Navigator.pop(context);
   }
 
@@ -75,6 +79,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                         _username = value;
                         //futureEditInfos = changeUserInfos(_username, _wallet, _email);
                       }),
+                      controller: usernameText,
                       decoration: InputDecoration(
                         hintText: 'Enter your new username here',
                         border: OutlineInputBorder(
@@ -99,6 +104,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                         _email = value;
                         //futureEditInfos = changeUserInfos(_username, _wallet, _email);
                       }),
+                      controller: emailText,
                       decoration: InputDecoration(
                         hintText: 'Enter your email here',
                         border: OutlineInputBorder(
@@ -122,6 +128,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                       onChanged: (value) => setState(() {
                         _wallet = value;
                       }),
+                      controller: walletText,
                       decoration: InputDecoration(
                         hintText: 'Enter your new wallet here',
                         border: OutlineInputBorder(
@@ -140,6 +147,9 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                     ElevatedButton(
                         onPressed: () {
                           updateInfos();
+                          usernameText.clear();
+                          emailText.clear();
+                          walletText.clear();
                         },
                         child: Text('Save')
                     ),

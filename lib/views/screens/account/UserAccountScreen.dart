@@ -258,14 +258,14 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             if(snapshot.data!.isFollowing) {
-                              setState(() => this.isFollowed = true);
+                              this.isFollowed = true;
                             }
                             else {
-                              setState(() => this.isFollowed = false);
+                              this.isFollowed = false;
                             }
                             follow();
                           },
-                          child: isFollowed ? Text('Follow') : Text('Unollow'),
+                          child: snapshot.data!.isFollowing ? Text('Unfollow') : Text('Follow'),
                           style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange[900],
                               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),

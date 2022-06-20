@@ -15,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PostController postController = PostController();
 
-  late Future<List<PostData>> userPosts;
+  late Future<List<PostData>> homePosts;
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     print("BACK BUTTON!");
@@ -37,12 +37,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
-    userPosts = postController.fetchHomeTimeline();
+    homePosts = postController.fetchHomeTimeline();
 
     print('Home screen');
 
     return FutureBuilder(
-        future: userPosts,
+        future: homePosts,
         builder: (BuildContext context,
             AsyncSnapshot<List<PostData>> snapshot) {
           return snapshot.data != null
