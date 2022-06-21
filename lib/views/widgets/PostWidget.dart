@@ -1,4 +1,5 @@
 import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/services/like/LikeService.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostDetailsWidget.dart';
@@ -22,7 +23,7 @@ class PostWidget extends StatefulWidget {
 
 class _PostWidgetState extends State<PostWidget> {
 
-  LikeService likeService = LikeService();
+  LikeController likeController = LikeController();
 
   final String publicationId;
   final Author author;
@@ -37,12 +38,12 @@ class _PostWidgetState extends State<PostWidget> {
     setState(() {
       if( isLiked ) {
         this.isLiked = false;
-        likeService.unlikePost(publicationId);
+        likeController.unlikePost(publicationId);
         this.nbLikes --;
       }
       else {
         this.isLiked = true;
-        likeService.unlikePost(publicationId);
+        likeController.likePost(publicationId);
         this.nbLikes ++;
       }
     });

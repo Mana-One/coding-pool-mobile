@@ -4,6 +4,7 @@ import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/follow/FollowController.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/views/Home.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -116,7 +117,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                                 icon: Icon(Icons.arrow_back_ios, color: Colors.deepOrange[900], size: 30.0,),
                               ),
                             ),
-
                             Column(
                               children: [
                                 Container(
@@ -136,7 +136,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                               ],
                             ),
                             Container(
-                              width: 40,
+                              child: IconButton(
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+                                },
+                                icon: Icon(Icons.home, color: Colors.deepOrange[900], size: 30.0,),
+                              ),
                             )
                           ],
                         ),
@@ -292,24 +297,6 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                       ),
                     ],
                   ),
-                  /*
-            Container(
-                        margin: new EdgeInsets.only(right: 10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            follow();
-                          },
-                          child: isFollowed ? Text('Unfollow') : Text('Follow'),
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.deepOrange[900],
-                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                              textStyle: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-
-                        ),
-                      ),
-             */
                   Expanded(
                       flex: 1,
                       child: FutureBuilder(
