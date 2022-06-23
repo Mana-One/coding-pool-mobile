@@ -5,6 +5,8 @@ import 'package:coding_pool_v0/services/user/UserService.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/UserInfos.dart';
+
 class UserController {
   UserController();
   UserService userService = UserService();
@@ -25,6 +27,21 @@ class UserController {
     Map<String, dynamic> map = jsonDecode(response.body);
     return UserStats.fromJson(map);
 
+  }
+
+  Future<UserInfos> getConnectedUserInfos() async {
+    final response = await userService.getConnectedUserInfos();
+
+    Map<String, dynamic> map = jsonDecode(response.body);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+
+      print('Succeeeeeeeess fetch connected user infos');
+      return UserInfos.fromJson(map);
+
+    } else {
+      throw Exception('Failed to fetch own infos');
+    }
   }
 
   Future<void> changeUserPassword(ChangePassword changePassword) async {

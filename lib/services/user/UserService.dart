@@ -35,7 +35,20 @@ class UserService {
     );
 
     return response;
+  }
 
+  Future<http.Response> getConnectedUserInfos() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await http.get(
+      Uri.parse("https://coding-pool-api.herokuapp.com/accounts/me"),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+      },
+    );
+
+    return response;
   }
 
   Future<http.Response> changeUserPassword(ChangePassword changePassword) async {

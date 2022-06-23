@@ -1,4 +1,7 @@
+import 'package:coding_pool_v0/models/UserInfos.dart';
+import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
+import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:flutter/material.dart';
 
 
@@ -24,6 +27,10 @@ class _CommentWidgetState extends State<CommentWidget> {
   _CommentWidgetState(this.commentId, this.username, this.content, this.createdAt);
 
   CommentController commentController = CommentController();
+  UserController userController = UserController();
+
+  late Future<UserStats> connectedUserInfos;
+
 
   deleteComment(String commentId) {
     commentController.uncommentPost(commentId);
@@ -81,15 +88,32 @@ class _CommentWidgetState extends State<CommentWidget> {
                   )
                 ],
               ),
-              IconButton(onPressed: () {
-                deleteComment(commentId);
-              },
-                  icon: Icon(Icons.delete_outline)
-              )
+              FutureBuilder(
+                  future: _isMe(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<bool> snapshot) {
+                    return snapshot.data == true
+                        ?
+                    IconButton(onPressed: () {
+                      deleteComment(commentId);
+                    },
+                        icon: Icon(Icons.delete_outline)
+                    ) : IconButton(onPressed: () {
+                      //deleteComment(commentId);
+                    },
+                        icon: Icon(Icons.delete_outline, color: Colors.grey[200],));
+                  })
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<bool> _isMe() async {
+    final response = await userController.getConnectedUserStats();
+    final name = response.username;
+    print(name);
+    return name == username;
   }
 }
