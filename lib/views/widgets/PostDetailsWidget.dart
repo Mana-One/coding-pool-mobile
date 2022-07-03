@@ -60,9 +60,12 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
   comment(String contentComment) {
     commentController.commentPost(this.publicationId, contentComment);
     nbComments++;
-    setState(() => _comment = '');
+    setState(() {
+      _comment = '';
+      //postComments = commentController.getPostComments(this.publicationId);
+    } );
     //Navigator.pop(context);
-    //Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));
+    Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
@@ -165,7 +168,6 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                       ),
                     )
                 ),
-
                 Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -194,7 +196,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                         Container(
                           child: IconButton(
                             onPressed: () => {
-                              comment(_comment),
+                              setState(() => comment(_comment)),
                               this.fieldText.clear()
                               //_commentsData.add(CommentsData(id: _comment., content: _comment, createdAt: createdAt, leftBy: leftBy)),
                             },
