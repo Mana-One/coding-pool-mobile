@@ -58,21 +58,24 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
   }
 
   comment(String contentComment) {
-    commentController.commentPost(this.publicationId, contentComment);
+    commentController.commentPost(this.publicationId, contentComment).whenComplete(() => setState(() { postComments = commentController.getPostComments(this.publicationId); }));
     nbComments++;
     setState(() {
       _comment = '';
-      //postComments = commentController.getPostComments(this.publicationId);
     } );
     //Navigator.pop(context);
-    Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));
+    //Navigator.push(context,MaterialPageRoute(builder:(context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)), // this mainpage is your page to refres
+    // );
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     print("BACK BUTTON!");
     return true;
   }
-
+//liquidpulltorefresh
   @override
   void initState() {
     super.initState();
