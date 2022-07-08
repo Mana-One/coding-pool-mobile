@@ -2,14 +2,18 @@ import 'package:coding_pool_v0/models/UserInfos.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
 import 'package:flutter/material.dart';
+
+import '../../models/Author.dart';
 
 
 class CommentWidget extends StatefulWidget {
   const CommentWidget({Key? key,required this.commentId, required this.username, required this.content, required this.createdAt}) : super(key: key);
 
   final String commentId;
-  final String username;
+  final Author username;
   final String content;
   final String createdAt;
 
@@ -20,7 +24,7 @@ class CommentWidget extends StatefulWidget {
 class _CommentWidgetState extends State<CommentWidget> {
 
   final String commentId;
-  final String username;
+  final Author username;
   final String content;
   final String createdAt;
 
@@ -30,11 +34,6 @@ class _CommentWidgetState extends State<CommentWidget> {
   UserController userController = UserController();
 
   late Future<UserStats> connectedUserInfos;
-
-
-  deleteComment(String commentId) {
-    commentController.uncommentPost(commentId);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,46 +45,48 @@ class _CommentWidgetState extends State<CommentWidget> {
         color: Colors.grey[200],
         child: Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 5.0, top: 5.0),
-                    child: Image(
-                      alignment: Alignment.center,
-                      image: AssetImage('lib/assets/images/bouee.png'),
-                      height: 45,
-                      width: 45,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(left: 5.0),
-                    child: Text(username, style: TextStyle(color: Colors.blue[900]), textAlign: TextAlign.left,),
-                    //child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => Account()));}, child: Text(username),),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 5.0, top: 5.0),
+                        child: Image(
+                          alignment: Alignment.center,
+                          image: AssetImage('lib/assets/images/bouee.png'),
+                          height: 50,
+                          width: 50,
+                        ),
+                      ),
+                      Container(
+                        //child: Text(username.username, style: TextStyle(color: Colors.blue[900]), textAlign: TextAlign.left,),
+                        child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(username)));}, child: Text(username.username),),
+                      ),
+                    ],
                   ),
-                  Container(
-                      margin: EdgeInsets.only(left: 5.0, top: 5.0),
-                      width: 280,
-                      child: Text(content)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.only(left: 5.0, top: 10.0),
+                          child: Text(content)
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 5.0, top: 10.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(createdAt.substring(0,10), style: TextStyle(color: Colors.grey),),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5.0, left: 5.0),
-                    width: 280,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(createdAt.substring(0,10), style: TextStyle(color: Colors.grey),),
-                      ],
-                    ),
-                  )
                 ],
               ),
               FutureBuilder(
@@ -97,7 +98,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                     IconButton(onPressed: () {
                       deleteComment(commentId);
                     },
-                        icon: Icon(Icons.delete_outline)
+                        icon: Icon(Icons.delete_outline, color: Colors.deepOrange.shade900)
                     ) : IconButton(onPressed: () {
                       //deleteComment(commentId);
                     },
@@ -110,10 +111,15 @@ class _CommentWidgetState extends State<CommentWidget> {
     );
   }
 
+  deleteComment(String commentId) {
+    commentController.uncommentPost(commentId);
+    Navigator.pop(context);
+  }
+
   Future<bool> _isMe() async {
     final response = await userController.getConnectedUserStats();
-    final name = response.username;
-    print(name);
-    return name == username;
+    final id = response.id;
+    print(id);
+    return id == username.id;
   }
 }

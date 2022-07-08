@@ -98,7 +98,7 @@ class _HomeOldState extends State<HomeOld> {
                 shrinkWrap: true,
                 itemCount: _postData.length,
                 itemBuilder: (BuildContext context, int index){
-                  return PostWidget(_postData[index].id, _postData[index].author, _postData[index].content, _postData[index].likes, _postData[index].comments, _postData[index].isLiked);
+                  return PostWidget(_postData[index].createdAt, _postData[index].id, _postData[index].author, _postData[index].content, _postData[index].likes, _postData[index].comments, _postData[index].isLiked);
 
                 }
             ),

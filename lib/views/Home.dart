@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     SearchScreen(),
-    GroupsScreen(),
+    //GroupsScreen(),
     AccountScreen(),
     SettingsScreen(),
   ];
@@ -76,10 +76,10 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.search),
             label: 'Search',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'Groups',
-          ),
+          // BottomNavigationBarItem(
+          //   icon: Icon(Icons.group),
+          //   label: 'Groups',
+          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Account',

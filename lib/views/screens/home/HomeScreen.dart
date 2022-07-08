@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index){
-                        return PostWidget(snapshot.data![index].id, snapshot.data![index].author, snapshot.data![index].content, snapshot.data![index].likes, snapshot.data![index].comments, snapshot.data![index].isLiked);
+                        return PostWidget(snapshot.data![index].createdAt, snapshot.data![index].id, snapshot.data![index].author, snapshot.data![index].content, snapshot.data![index].likes, snapshot.data![index].comments, snapshot.data![index].isLiked);
                       }
               )
               : Scaffold(

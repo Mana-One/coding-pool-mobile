@@ -52,8 +52,10 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
+        title: Text('Edit Account Informations', style: TextStyle(color: Colors.blue.shade900),),
+        centerTitle: true,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.blue.shade900,),
+            icon: Icon(Icons.arrow_back_ios, color: Colors.deepOrange.shade900,),
             onPressed: () { Navigator.pop(context); }
         ),
       ),
@@ -150,7 +152,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                           emailText.clear();
                           walletText.clear();
                         },
-                        child: Text('Save')
+                        child: Text('Save', style: TextStyle(color: Colors.white),),
                     ),
                     SizedBox(
                       height: 5,

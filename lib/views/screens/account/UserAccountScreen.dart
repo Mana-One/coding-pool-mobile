@@ -308,7 +308,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                               children: [
                                 for (var itemPost
                                 in snapshot.data as List<PostData>)
-                                  PostWidget(itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
+                                  PostWidget(itemPost.createdAt, itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
                               ],
                             )
                                 : Container(

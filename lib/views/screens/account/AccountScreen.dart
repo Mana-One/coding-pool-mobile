@@ -79,13 +79,11 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Row(
+                        children: [
+                          Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-
-                            ),
-                            Column(
+                             Column(
                               children: [
                                 Container(
                                   width: 200,
@@ -101,9 +99,6 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                                 ),
                               ],
-                            ),
-                            Container(
-
                             ),
                           ],
                         ),
@@ -303,7 +298,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       children: [
                         for (var itemPost
                         in snapshot.data as List<PostData>)
-                          PostWidget(itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
+                          PostWidget(itemPost.createdAt, itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
                       ],
                     )
                         : Container(
