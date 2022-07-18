@@ -10,25 +10,25 @@ import '../../models/Author.dart';
 
 
 class CommentWidget extends StatefulWidget {
-  const CommentWidget({Key? key,required this.commentId, required this.username, required this.content, required this.createdAt}) : super(key: key);
+  const CommentWidget({Key? key, required this.commentId, required this.user, required this.content, required this.createdAt}) : super(key: key);
 
   final String commentId;
-  final Author username;
+  final Author user;
   final String content;
   final String createdAt;
 
   @override
-  State<CommentWidget> createState() => _CommentWidgetState(this.commentId, this.username, this.content, this.createdAt);
+  State<CommentWidget> createState() => _CommentWidgetState(this.commentId, this.user, this.content, this.createdAt);
 }
 
 class _CommentWidgetState extends State<CommentWidget> {
 
   final String commentId;
-  final Author username;
+  final Author user;
   final String content;
   final String createdAt;
 
-  _CommentWidgetState(this.commentId, this.username, this.content, this.createdAt);
+  _CommentWidgetState(this.commentId, this.user, this.content, this.createdAt);
 
   CommentController commentController = CommentController();
   UserController userController = UserController();
@@ -55,17 +55,44 @@ class _CommentWidgetState extends State<CommentWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 5.0, top: 5.0),
-                        child: Image(
+                        margin: EdgeInsets.only(left: 5.0, top: 10.0),
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            image: DecorationImage(image : user.picture != ''
+                                ? Image.network(
+                              user.picture,
+                              height: 60,
+                              width: 60,
+                              fit: BoxFit.fill,
+                            ).image
+                                : Image(
+                              alignment: Alignment.center,
+                              image: AssetImage('lib/assets/images/bouee.png'),
+                              height: 80,
+                              width: 80,
+                            ).image,
+                                fit: BoxFit.fill
+                            )
+                        ),
+                        /*child: user.picture != '' ?
+                        Image.network(
+                          user.picture,
+                          height: 45,
+                          width: 45,
+                          fit: BoxFit.fill,
+                        ) :
+                        Image(
                           alignment: Alignment.center,
                           image: AssetImage('lib/assets/images/bouee.png'),
-                          height: 50,
-                          width: 50,
-                        ),
+                          height: 45,
+                          width: 45,
+                        ),*/
                       ),
                       Container(
                         //child: Text(username.username, style: TextStyle(color: Colors.blue[900]), textAlign: TextAlign.left,),
-                        child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(username)));}, child: Text(username.username),),
+                        child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(user)));}, child: Text(user.username),),
                       ),
                     ],
                   ),
@@ -120,6 +147,6 @@ class _CommentWidgetState extends State<CommentWidget> {
     final response = await userController.getConnectedUserStats();
     final id = response.id;
     print(id);
-    return id == username.id;
+    return id == user.id;
   }
 }

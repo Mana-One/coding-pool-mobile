@@ -6,13 +6,15 @@ import 'dart:io';
 class FollowService {
   FollowService();
 
+  String url = "https://api.coding-pool.ovh/";
+
   Future<http.Response> followUser(String userId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await http.post(
-      Uri.parse("https://coding-pool-api.herokuapp.com/users/follow/" + userId),
+      Uri.parse(url + "users/follow/" + userId),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
       },
@@ -27,7 +29,7 @@ class FollowService {
     String? token = prefs.getString('token');
 
     final response = await http.delete(
-      Uri.parse("https://coding-pool-api.herokuapp.com/users/unfollow/" + publicationId),
+      Uri.parse(url + "users/unfollow/" + publicationId),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
       },

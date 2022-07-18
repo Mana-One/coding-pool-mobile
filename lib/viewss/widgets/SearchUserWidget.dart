@@ -20,7 +20,7 @@ class _SearchUserWidgetState extends State<SearchUserWidget> {
     return Container(
       child: Card(
         child: ListTile(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(Author(username: user.username, id: user.id)))),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(Author(username: user.username, id: user.id, picture: '')))),
           title: Row(
             children: [
               Container(

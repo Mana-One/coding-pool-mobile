@@ -120,10 +120,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             Column(
                               children: [
                                 Container(
-                                  width: 250,
-                                  child: svgLogoDeco,
+                                  width: 80,
+                                  height: 80,
+                                  child: Image.network(snapshot.data!.picture),
                                 ),
-
                                 SizedBox(
                                   height: 8.0,
                                 ),
@@ -355,7 +355,10 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             children: [
                               Container(
                                 width: 250,
-                                child: svgLogoDeco,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    image: DecorationImage(image : Image.network(author.picture).image, fit: BoxFit.fill)
+                                ),
                               ),
 
                               SizedBox(

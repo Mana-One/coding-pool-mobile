@@ -46,21 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (BuildContext context,
             AsyncSnapshot<List<PostData>> snapshot) {
           return snapshot.data != null
-              ? ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index){
-                        return PostWidget(snapshot.data![index].createdAt, snapshot.data![index].id, snapshot.data![index].author, snapshot.data![index].content, snapshot.data![index].likes, snapshot.data![index].comments, snapshot.data![index].isLiked);
-                      }
-              )
-              : Scaffold(
-                    body: Container(
-                            alignment: Alignment.center,
-                            child: const CircularProgressIndicator(
-                              color: Colors.deepOrange,
-                            )
-                    )
-          );
+              ? ListView(
+            children: [
+              for (var itemPost
+              in snapshot.data as List<PostData>)
+                PostWidget(itemPost.createdAt, itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
+            ],
+          )
+              : Container(
+              alignment: Alignment.center,
+              child: const CircularProgressIndicator(
+                color: Colors.orange,
+              ));
         });
 
   }

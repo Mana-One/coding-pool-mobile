@@ -106,12 +106,14 @@ class PostController {
       Map<String, dynamic> mapPost = listResponse[i];
       PostData postData = PostData.fromJson(mapPost);
       posts.add(postData);
-    }
+      print(postData.author);
+    };
+
+    print(response.statusCode);
 
   if (response.statusCode == 200 || response.statusCode == 201) {
       print('succeeeess fetch home timeline');
       return posts;
-
     } else {
       throw Exception('Failed to fetch home timeline');
     }

@@ -12,3 +12,5 @@ List<CommentData> comments = [];
 String? token = '';
 int myPostsNb = 0;
 int userPostsNb = 0;
+
+enum ImageSourceType { gallery, camera }

@@ -41,6 +41,8 @@ class _PostWidgetState extends State<PostWidget> {
 
     double cellContentWidth = MediaQuery.of(context).size.width - 110;
 
+    print(author.picture);
+
     return Material(
       child: InkWell(
         onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
@@ -54,13 +56,40 @@ class _PostWidgetState extends State<PostWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(left: 5.0, top: 5.0, right: 10.0),
-                    child: Image(
-                      alignment: Alignment.center,
-                      image: AssetImage('lib/assets/images/bouee.png'),
-                      height: 80,
-                      width: 80,
+                    margin: EdgeInsets.only(left: 5.0, top: 15.0, right: 10.0),
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        image: DecorationImage(image : author.picture != ''
+                            ? Image.network(
+                          author.picture,
+                          height: 60,
+                          width: 60,
+                          fit: BoxFit.fill,
+                        ).image
+                            : Image(
+                          alignment: Alignment.center,
+                          image: AssetImage('lib/assets/images/bouee.png'),
+                          height: 80,
+                          width: 80,
+                        ).image,
+                            fit: BoxFit.fill
+                        )
                     ),
+                    /*child: author.picture != ''
+                        ? Image.network(
+                          author.picture,
+                          height: 60,
+                          width: 60,
+                          fit: BoxFit.fill,
+                    )
+                        : Image(
+                            alignment: Alignment.center,
+                            image: AssetImage('lib/assets/images/bouee.png'),
+                            height: 80,
+                            width: 80,
+                          ),*/
                   ),
                   Container(
                     width: 80,

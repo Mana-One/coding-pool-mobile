@@ -26,7 +26,7 @@ class SearchController {
     }
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('succcceeeeessss fetch searched users');
+      print('success fetch searched users');
       return results;
     } else {
       throw Exception('Failed to fetch searched users');

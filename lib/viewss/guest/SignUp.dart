@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:coding_pool_v0/views/screens/authentication/SignInScreen.dart';
@@ -61,6 +62,8 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  late Future<bool> username;
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +108,9 @@ class _SignUpState extends State<SignUp> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _username = value;
-                          authenticationController.checkUsername(value);
+                          username = authenticationController.checkUsername(value);
                         }) ,
-                        validator:(value) => globals.isUsernameUsed == true ? 'Username already exists, please enter another' : null,
+                        validator:(value) => username == true ? 'Username already exists, please enter another' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your username here',
                           border: OutlineInputBorder(
@@ -159,7 +162,7 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(10.0)
                         ),
                         onPressed: () {
-                          signUpUser(UserSignUp(email: _email, username: _username, password: _password));
+                          signUpUser(UserSignUp(email: _email, username: _username, password: _password, picture: File('')));
                         },
                         child: Text(
                           'Sign Up',
@@ -192,6 +195,7 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+
 }
 
 

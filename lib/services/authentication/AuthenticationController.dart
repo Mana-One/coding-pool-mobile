@@ -34,7 +34,6 @@ class AuthenticationController with ChangeNotifier {
 
     print(response.body);
     print(response.statusCode);
-    print(userSignUp.username + userSignUp.email);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success sign up');

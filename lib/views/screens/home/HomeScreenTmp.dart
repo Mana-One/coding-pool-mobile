@@ -1,41 +1,33 @@
 import 'package:coding_pool_v0/models/Globals.dart';
 import 'package:coding_pool_v0/models/PostData.dart';
-import 'package:coding_pool_v0/models/UserInfos.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
-import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
-import 'package:coding_pool_v0/views/Home.dart';
-import 'package:coding_pool_v0/views/screens/account/UserStatsScreen.dart';
-import 'package:coding_pool_v0/views/widgets/PostCreationWidget.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class AccountScreen extends StatefulWidget {
-  const AccountScreen({Key? key}) : super(key: key);
+class HomeScreenTmp extends StatefulWidget {
+  const HomeScreenTmp({Key? key}) : super(key: key);
 
   @override
-  State<AccountScreen> createState() => _AccountScreenState();
+  State<HomeScreenTmp> createState() => _HomeScreenTmpState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _HomeScreenTmpState extends State<HomeScreenTmp> {
 
-  UserController userController = UserController();
   PostController postController = PostController();
+  UserController userController = UserController();
 
   late Future<List<PostData>> connectedUserPosts;
   late Future<UserStats> connectedUserStats;
   late Future<int> connectedUserPostsNumber;
 
-  publishPost() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => PostCreationWidget()));
-  }
+  late Future<List<PostData>> homePosts;
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    print("BACK BUTTON!"); // Do some stuff.
+    print("BACK BUTTON!");
     return true;
   }
 
@@ -54,11 +46,12 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
 
+    homePosts = postController.fetchHomeTimeline();
     connectedUserPosts = postController.fetchConnectedUserTimeline();
     connectedUserStats = userController.getConnectedUserStats();
     connectedUserPostsNumber = postController.getConnectedUserPostsNumber();
 
-    print('Account screen');
+    print('Home screen');
 
     return Scaffold(
         body: Column(
@@ -84,32 +77,27 @@ class _AccountScreenState extends State<AccountScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                             Column(
-                              children: [
-                                Container(
-                                  width: 80,
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    image: DecorationImage(image : Image.network(snapshot.data!.picture, ).image, fit: BoxFit.fill)
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    width: 200,
+                                    child: svgLogoNoText,
                                   ),
-                                  //child: Image.network(snapshot.data!.picture, fit: BoxFit.fill,)
-                                ),
-                                SizedBox(
-                                  height: 8.0,
-                                ),
-                                Text(
-                                  snapshot.data!.username, style: TextStyle(
-                                    fontSize: 25.0,
-                                    color: Colors.white
-                                ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                                  SizedBox(
+                                    height: 8.0,
+                                  ),
+                                  Text(
+                                    snapshot.data!.username, style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.white
+                                  ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 10.0,
                           ),
@@ -230,7 +218,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   margin: new EdgeInsets.only(left: 10, right: 20),
                   child: ElevatedButton(
                     onPressed: () {
-                      publishPost();
+                      //publishPost();
                       //Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                     },
                     child: Row(
@@ -255,7 +243,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         return snapshot.data != null
                             ? ElevatedButton(
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserStatsScreen(userStats: snapshot.data as UserStats)));
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => UserStatsScreen(userStats: snapshot.data as UserStats)));
                           },
                           child: Row(
                             children: [
@@ -329,6 +317,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ],
         )
     );
+
   }
 }
 

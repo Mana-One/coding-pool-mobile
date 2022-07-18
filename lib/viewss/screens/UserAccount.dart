@@ -32,7 +32,7 @@ class _UserAccountState extends State<UserAccount> {
   late final futurePost;
   late final futureStats;
   List<PostData> _postData = [];
-  UserStats _userStats = UserStats(id: '', username: '', memberSince: '', followers: 0, following: 0, programs: 0, competitions_entered: 0, competitions_won: 0, isFollowing: false);
+  UserStats _userStats = UserStats(id: '', username: '', picture: '', memberSince: '', followers: 0, following: 0, programs: 0, competitions_entered: 0, competitions_won: 0, isFollowing: false);
 
   Future<UserStats> getUserStats(String userId) async {
 

@@ -9,13 +9,15 @@ import '../../models/CommentData.dart';
 class CommentService {
   CommentService();
 
+  String url = "https://api.coding-pool.ovh/";
+
   Future<http.Response> commentPost(String publicationId, String content) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await http.post(
-      Uri.parse("https://coding-pool-api.herokuapp.com/comments"),
+      Uri.parse(url + "comments"),
       body: {'content': content, 'publicationId': publicationId},
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
@@ -31,7 +33,7 @@ class CommentService {
     String? token = prefs.getString('token');
 
     final response = await http.delete(
-      Uri.parse("https://coding-pool-api.herokuapp.com/comments/" + commentId),
+      Uri.parse(url + "comments/" + commentId),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
       },
@@ -46,7 +48,7 @@ class CommentService {
     String? token = prefs.getString('token');
 
     final response = await http.get(
-      Uri.parse("https://coding-pool-api.herokuapp.com/comments?limit=20&offset=0&publicationId=" + publicationId),
+      Uri.parse(url + "comments?limit=20&offset=0&publicationId=" + publicationId),
       headers: {
         HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
       },

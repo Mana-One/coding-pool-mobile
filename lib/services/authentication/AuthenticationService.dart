@@ -5,9 +5,11 @@ import 'package:http/http.dart' as http;
 class AuthenticationService {
   AuthenticationService();
 
+  String url = "https://api.coding-pool.ovh/";
+
   Future<http.Response> signIn(UserSignIn user) async {
     final response = await http.post(
-        Uri.parse("https://coding-pool-api.herokuapp.com/auth/login"),
+        Uri.parse(url + "auth/login"),
         body: { 'email': user.email, 'password': user.password}
     );
 
@@ -15,14 +17,14 @@ class AuthenticationService {
   }
 
   Future<http.Response> signUp(UserSignUp user) async {
-    final response = await http.post(Uri.parse("https://coding-pool-api.herokuapp.com/accounts/register"),
-        body: { 'email': user.email, 'username': user.username, 'password': user.password}
+    final response = await http.post(Uri.parse(url + "accounts/register"),
+        body: { 'email': user.email, 'username': user.username, 'password': user.password, 'picture': user.picture}
     );
     return response;
   }
 
   Future<http.Response> checkUsername(String username) async {
-    final response = await http.get(Uri.parse("https://coding-pool-api.herokuapp.com/accounts/check-username/"));
+    final response = await http.get(Uri.parse(url + "accounts/check-username/"));
     return response;
   }
 

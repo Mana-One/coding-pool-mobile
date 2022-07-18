@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   AuthenticationController authenticationController = AuthenticationController();
 
   late Future<void> signUp;
+  late Future<bool> username;
 
   bool _isSecret = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -81,10 +84,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _username = value;
-                          authenticationController.checkUsername(value);
+                          username = authenticationController.checkUsername(value);
                         }) ,
-                        controller: usernameText,
-                        validator:(value) => globals.isUsernameUsed == true ? 'Username already exists, please enter another one.' : null,
+                        validator:(value) => username == true ? 'Username already exists, please enter another' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your username here',
                           border: OutlineInputBorder(
@@ -103,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       TextFormField(
                         onChanged: (value) => setState(() {
                           _password = value;
-                          authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password));
+                          authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password, picture: File('')));
                         }),
                         controller: passwordText,
                         validator: (value) => value!.length < 8 || !value.contains(passwordRegEx1) || !value.contains(passwordRegEx2) || !value.contains(passwordRegEx3) ? 'Please Enter a valid password. \n8 characters minimum required with at least: \n - a lowercase. \n - an uppercase. \n - a number.' : null,
@@ -130,7 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20.0,
                       ),
                       FutureBuilder(
-                          future: authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password)),
+                          future: authenticationController.signUp(UserSignUp(email: _email, username: _username, password: _password, picture: File(''))),
                           builder: (BuildContext context,
                               AsyncSnapshot<String> snapshot) {
                             return snapshot.data != null
@@ -170,7 +172,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             );
                           }),
-
                     ],
                   ),
                 ),

@@ -20,22 +20,20 @@ class _UserSearchWidgetState extends State<UserSearchWidget> {
     return Container(
       child: Card(
         child: ListTile(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(Author(username: user.username, id: user.id)))),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(Author(username: user.username, id: user.id, picture: '')))),
           title: Row(
             children: [
               Container(
                 height: 60,
                 width: 60,
                 decoration: BoxDecoration(
-                  color: Colors.blue.shade900,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
-                  child: Image(
-                    alignment: Alignment.center,
-                    image: AssetImage('lib/assets/images/bouee.png'),
-                    height: 45,
-                    width: 45,
+                  child: Image.network(user.picture,
+                    height: 80,
+                    width: 80,
+                    fit: BoxFit.fill,
                   ),
                 ),
               ),

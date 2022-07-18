@@ -1,5 +1,4 @@
 import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
-import 'package:coding_pool_v0/views/screens/groups/GroupsScreen.dart';
 import 'package:coding_pool_v0/views/screens/home/HomeScreen.dart';
 import 'package:coding_pool_v0/views/screens/search/SearchScreen.dart';
 import 'package:coding_pool_v0/views/screens/settings/SettingsScreen.dart';
@@ -24,7 +23,6 @@ class _HomeState extends State<Home> {
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
     SearchScreen(),
-    //GroupsScreen(),
     AccountScreen(),
     SettingsScreen(),
   ];
@@ -76,10 +74,6 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.search),
             label: 'Search',
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.group),
-          //   label: 'Groups',
-          // ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Account',

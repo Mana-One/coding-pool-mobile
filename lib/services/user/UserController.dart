@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:coding_pool_v0/models/ChangePassword.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/user/UserService.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/UserInfos.dart';
@@ -56,13 +58,14 @@ class UserController {
     }
   }
 
-  Future<void> changeUserInfos(String username, String wallet, String email) async {
+  Future<void> changeUserInfos(String username, String email, String picture) async {
 
-    final response = await userService.changeUserInfos(username, wallet, email);
+    final response = await userService.changeUserInfos(username, email, picture);
+
+    print(response.stream);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success change user infos');
-      return jsonDecode(response.body) ;
     }
     else {
       throw Exception('Failed to change user infos');

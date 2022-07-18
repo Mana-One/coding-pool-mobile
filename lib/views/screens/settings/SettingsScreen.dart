@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:coding_pool_v0/views/screens/account/PasswordEditScreen.dart';
 import 'package:coding_pool_v0/views/screens/account/UserInfosEditScreen.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.deepOrange.shade900
                 ),
                 onPressed: (BuildContext context) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserInfosEditScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserInfosEditScreen(File(''))));
                 },
               ),
               SettingsTile(

@@ -1,15 +1,25 @@
+import 'dart:io';
+
+import 'package:coding_pool_v0/models/Globals.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/views/Home.dart';
+import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
+import 'package:coding_pool_v0/views/screens/account/ImageFromGalleryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserInfosEditScreen extends StatefulWidget {
-  const UserInfosEditScreen({Key? key}) : super(key: key);
+  const UserInfosEditScreen(this._picture);
+  final _picture;
 
   @override
-  State<UserInfosEditScreen> createState() => _UserInfosEditScreenState();
+  State<UserInfosEditScreen> createState() => _UserInfosEditScreenState(this._picture);
 }
 
 class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
+  _UserInfosEditScreenState(this._picture);
+  final _picture;
 
   UserController userController = UserController();
 
@@ -17,8 +27,6 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
   final usernameText = TextEditingController();
   String _email = '';
   final emailText = TextEditingController();
-  String _wallet = '';
-  final walletText = TextEditingController();
 
   late Future<void> futureEditPassword;
   var futureEditInfos;
@@ -41,13 +49,21 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
   }
 
   updateInfos() {
-    userController.changeUserInfos(_username, _wallet, _email);
-    Navigator.pop(context);
+    userController.changeUserInfos(_username, _email, _picture);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  }
+
+  void _handleURLButtonPress(BuildContext context, var type) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ImageFromGalleryScreen(type)));
   }
 
 
   @override
   Widget build(BuildContext context) {
+
+    print('picture : ' + _picture.toString());
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -121,26 +137,29 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                     SizedBox(
                       height: 5,
                     ),
-                    Text('Wallet'),
+                    Text('Picture'),
                     SizedBox(
                       height: 5,
                     ),
-                    TextFormField(
-                      onChanged: (value) => setState(() {
-                        _wallet = value;
-                      }),
-                      controller: walletText,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your new wallet here',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.grey),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            _handleURLButtonPress(context, ImageSourceType.gallery);
+                          },
+                          child: Text('Pick from gallery', style: TextStyle(color: Colors.white),),
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                        SizedBox(
+                          width: 5,
                         ),
-                      ),
+                        ElevatedButton(
+                          onPressed: () {
+                            _handleURLButtonPress(context, ImageSourceType.camera);
+                          },
+                          child: Text('Pick from camera', style: TextStyle(color: Colors.white),),
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 5,
@@ -150,9 +169,11 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                           updateInfos();
                           usernameText.clear();
                           emailText.clear();
-                          walletText.clear();
                         },
                         child: Text('Save', style: TextStyle(color: Colors.white),),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
+                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
                     ),
                     SizedBox(
                       height: 5,

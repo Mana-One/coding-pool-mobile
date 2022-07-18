@@ -50,6 +50,8 @@ class CommentController {
       comments.add(comment);
     }
 
+    print(response.body);
+
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success get post comments');
       return comments;

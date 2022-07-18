@@ -84,6 +84,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                                       Row(
                                         children: [
                                           Container(
+                                            width: 40,
                                             child: IconButton(
                                               onPressed: () {
                                                 Navigator.pop(context);
@@ -91,14 +92,16 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                                               icon: Icon(Icons.arrow_back_ios, color: Colors.deepOrange[900], size: 30.0,),
                                             ),
                                           ),
-                                          SizedBox(width: 120,),
                                           TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(author)));}, child: Text(author.username, style: TextStyle(color: Colors.blue[900], fontSize: 25),),),
+                                          SizedBox(width: 40,),
                                         ],
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       ),
                                       SizedBox(
                                         height: 5.0,
                                       ),
                                       Container(
+                                        margin: EdgeInsets.all(10),
                                         child: Text(content, style: TextStyle(fontSize: 18),),
                                       ),
                                       SizedBox(
@@ -107,9 +110,9 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                                       Row(
                                         children: [
                                           IconButton( onPressed: () => like(), icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
-                                          Text(nbLikes.toString()),
+                                          Text(nbLikes.toString() + '  '),
                                           Container(child: Icon(Icons.insert_comment),),
-                                          Text(nbComments.toString()),
+                                          Text('  ' + nbComments.toString()),
                                         ],
                                       ),
                                     ]
@@ -126,7 +129,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                                         shrinkWrap: true,
                                         children: [
                                           for( var itemPost in snapshot.data as List<CommentData>)
-                                            CommentWidget(username: itemPost.leftBy, content: itemPost.content, createdAt: itemPost.createdAt, commentId: itemPost.id,)
+                                            CommentWidget(user: itemPost.leftBy, content: itemPost.content, createdAt: itemPost.createdAt, commentId: itemPost.id,)
                                         ],
                                       )
                                           : Container(
@@ -145,6 +148,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                 Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           width: 335,
