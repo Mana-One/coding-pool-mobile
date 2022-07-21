@@ -1,6 +1,6 @@
-import 'package:coding_pool_v0/views/screens/EditPasswordWidget.dart';
-import 'package:coding_pool_v0/views/screens/EditUserInfosWidget.dart';
-import 'package:coding_pool_v0/views/screens/SettingsScreen.dart';
+import 'package:coding_pool_v0/viewss/screens/EditPasswordWidget.dart';
+import 'package:coding_pool_v0/viewss/screens/EditUserInfosWidget.dart';
+import 'package:coding_pool_v0/viewss/screens/SettingsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

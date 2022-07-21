@@ -1,7 +1,7 @@
 import 'package:coding_pool_v0/models/Models.dart';
-import 'package:coding_pool_v0/views/screens/CreateNewPost.dart';
+import 'package:coding_pool_v0/viewss/screens/CreateNewPost.dart';
 import 'package:flutter/material.dart';
-import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
+import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,5 +1,5 @@
 import 'package:coding_pool_v0/models/Models.dart';
-import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
+import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
 import 'package:coding_pool_v0/web/UserService.dart';
 import 'package:flutter/material.dart';
 

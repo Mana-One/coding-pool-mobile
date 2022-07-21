@@ -1,5 +1,5 @@
-import 'package:coding_pool_v0/views/HomeScreen.dart';
-import 'package:coding_pool_v0/views/Sign.dart';
+import 'package:coding_pool_v0/viewss/HomeScreen.dart';
+import 'package:coding_pool_v0/viewss/Sign.dart';
 
 import 'package:flutter/material.dart';
 

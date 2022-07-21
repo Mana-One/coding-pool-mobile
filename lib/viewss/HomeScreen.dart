@@ -1,13 +1,13 @@
-import 'package:coding_pool_v0/views/MainScreens/Account.dart';
-import 'package:coding_pool_v0/views/MainScreens/Home.dart';
-import 'package:coding_pool_v0/views/MainScreens/Search.dart';
-import 'package:coding_pool_v0/views/MainScreens/Settings.dart';
-import 'package:coding_pool_v0/views/MainScreens/groups.dart';
-import 'package:coding_pool_v0/views/screens/PostDetails.dart';
-import 'package:coding_pool_v0/views/screens/SearchPage.dart';
-import 'package:coding_pool_v0/views/screens/SearchScreen.dart';
-import 'package:coding_pool_v0/views/screens/SettingsScreen.dart';
-import 'package:coding_pool_v0/views/screens/UserAccount.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/Account.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/Home.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/Search.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/Settings.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/groups.dart';
+import 'package:coding_pool_v0/viewss/screens/PostDetails.dart';
+import 'package:coding_pool_v0/viewss/screens/SearchPage.dart';
+import 'package:coding_pool_v0/viewss/screens/SearchScreen.dart';
+import 'package:coding_pool_v0/viewss/screens/SettingsScreen.dart';
+import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

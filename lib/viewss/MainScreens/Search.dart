@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:coding_pool_v0/main.dart';
 import 'package:coding_pool_v0/models/Models.dart';
-import 'package:coding_pool_v0/views/screens/SearchPage.dart';
-import 'package:coding_pool_v0/views/screens/SearchScreen.dart';
-import 'package:coding_pool_v0/views/widgets/SearchUserWidget.dart';
-import 'package:coding_pool_v0/views/widgets/UserStatsWidget.dart';
+import 'package:coding_pool_v0/viewss/screens/SearchPage.dart';
+import 'package:coding_pool_v0/viewss/screens/SearchScreen.dart';
+import 'package:coding_pool_v0/viewss/widgets/SearchUserWidget.dart';
+import 'package:coding_pool_v0/viewss/widgets/UserStatsWidget.dart';
 import 'package:coding_pool_v0/web/UserService.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;

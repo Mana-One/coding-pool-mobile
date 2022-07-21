@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
-import 'package:coding_pool_v0/views/MainScreens/Account.dart';
-import 'package:coding_pool_v0/views/screens/UserAccount.dart';
-import 'package:coding_pool_v0/views/widgets/CommentWidget.dart';
-import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/Account.dart';
+import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
+import 'package:coding_pool_v0/viewss/widgets/CommentWidget.dart';
+import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
 import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/Models.dart';
-import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
+import 'package:coding_pool_v0/viewss/widgets/PostWidget.dart';
 import 'package:coding_pool_v0/web/SocialNetworkService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

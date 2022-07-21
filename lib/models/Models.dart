@@ -1,4 +1,4 @@
-import 'package:coding_pool_v0/views/MainScreens/Settings.dart';
+import 'package:coding_pool_v0/viewss/MainScreens/Settings.dart';
 
 class User {
   final String id;
