@@ -2,7 +2,8 @@ import 'package:coding_pool_v0/models/UserInfos.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
-import 'package:coding_pool_v0/viewss/screens/UserAccount.dart';
+import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
+import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:coding_pool_v0/models/Globals.dart' as globals;
 import 'package:flutter/material.dart';
 
@@ -92,7 +93,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                       ),
                       Container(
                         //child: Text(username.username, style: TextStyle(color: Colors.blue[900]), textAlign: TextAlign.left,),
-                        child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccount(user)));}, child: Text(user.username),),
+                        child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(user)));}, child: Text(user.username, style: TextStyle(color: Colors.blue[900]))),
                       ),
                     ],
                   ),

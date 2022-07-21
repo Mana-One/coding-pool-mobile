@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:coding_pool_v0/models/Globals.dart';
 import 'package:coding_pool_v0/models/PostData.dart';
 import 'package:coding_pool_v0/models/UserInfos.dart';
@@ -58,6 +60,12 @@ class _AccountScreenState extends State<AccountScreen> {
     connectedUserStats = userController.getConnectedUserStats();
     connectedUserPostsNumber = postController.getConnectedUserPostsNumber();
 
+    setState(
+        () {
+          print(connectedUserStats);
+        }
+    );
+
     print('Account screen');
 
     return Scaffold(
@@ -66,8 +74,9 @@ class _AccountScreenState extends State<AccountScreen> {
             FutureBuilder(
                 future: connectedUserStats,
                 builder: (BuildContext context,
-                    AsyncSnapshot<UserStats> snapshot) {
-                  return snapshot.data != null
+                    AsyncSnapshot snapshot) {
+                  print(snapshot.error);
+                  return snapshot.hasData
                       ? Container(
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -93,9 +102,10 @@ class _AccountScreenState extends State<AccountScreen> {
                                   height: 80,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
-                                    image: DecorationImage(image : Image.network(snapshot.data!.picture, ).image, fit: BoxFit.fill)
+                                    image: DecorationImage(image : Image.network(snapshot.data!.picture).image, fit: BoxFit.fill
                                   ),
                                   //child: Image.network(snapshot.data!.picture, fit: BoxFit.fill,)
+                                ),
                                 ),
                                 SizedBox(
                                   height: 8.0,
@@ -215,11 +225,12 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                   )
-                      : Container(
-                    /*alignment: Alignment.center,
+                      :
+                  Container(
+                    alignment: Alignment.center,
                         child: const CircularProgressIndicator(
-                          color: Color(3),
-                        )*/
+                          color: Colors.deepOrange,
+                        )
                   );
                 }),
 
@@ -316,16 +327,6 @@ class _AccountScreenState extends State<AccountScreen> {
                         ));
                   }),
             )
-            /*Expanded(
-            //flex: 1,
-              child: ListView(
-                shrinkWrap: true,
-                children: [
-                  for( var itemPost in posts)
-                    PostWidget(itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
-                ],
-              )
-          ),*/
           ],
         )
     );

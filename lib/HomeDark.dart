@@ -1,7 +1,6 @@
 import 'package:coding_pool_v0/models/PostData.dart';
 import 'package:coding_pool_v0/views/Sign.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
-import 'package:coding_pool_v0/viewss/screens/CreateNewPost.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

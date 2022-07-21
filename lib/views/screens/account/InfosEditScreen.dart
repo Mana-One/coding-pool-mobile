@@ -1,27 +1,26 @@
+import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
+import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:coding_pool_v0/models/Globals.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:coding_pool_v0/views/Home.dart';
 import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
-import 'package:coding_pool_v0/views/screens/account/ImageFromGalleryScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:image_picker/image_picker.dart';
 
-class UserInfosEditScreen extends StatefulWidget {
-  const UserInfosEditScreen(this._picture);
-  final _picture;
+class InfosEditScreen extends StatefulWidget {
+  const InfosEditScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserInfosEditScreen> createState() => _UserInfosEditScreenState(this._picture);
+  State<InfosEditScreen> createState() => _InfosEditScreenState();
 }
 
-class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
-  _UserInfosEditScreenState(this._picture);
-  final _picture;
+class _InfosEditScreenState extends State<InfosEditScreen> {
 
   UserController userController = UserController();
+  AuthenticationController authenticationController = AuthenticationController();
 
   String _username = '';
   final usernameText = TextEditingController();
@@ -29,7 +28,14 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
   final emailText = TextEditingController();
 
   late Future<void> futureEditPassword;
+  late Future<bool> username;
   var futureEditInfos;
+
+  File? image;
+
+  PickedFile? _picture;
+
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -48,22 +54,32 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
     return true;
   }
 
-  updateInfos() {
-    userController.changeUserInfos(_username, _email, _picture);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  Future pickImage(ImageSource imageSource) async {
+    final image = await _picker.pickImage(source: imageSource);
+    if(image == null) return '';
+
+    final imageTemporary = File(image.path);
+
+    print(image.path);
+
+    setState(() {
+      this.image = imageTemporary;
+      this._picture = PickedFile(image.path);
+    } );
+
   }
 
-  void _handleURLButtonPress(BuildContext context, var type) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ImageFromGalleryScreen(type)));
+  updateInfos() {
+    if(_picture != null) {
+      userController.changeUserInfos(_username, _email, _picture!.path);
+    }
+    userController.changeUserInfos(_username, _email, '');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 
 
   @override
   Widget build(BuildContext context) {
-
-    print('picture : ' + _picture.toString());
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -94,8 +110,9 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                     TextFormField(
                       onChanged: (value) => setState(() {
                         _username = value;
-                        //futureEditInfos = changeUserInfos(_username, _wallet, _email);
+                        username = authenticationController.checkUsername(value);
                       }),
+                      validator: (value) => username != false ? 'Username already exists, please enter another' : null,
                       controller: usernameText,
                       decoration: InputDecoration(
                         hintText: 'Enter your new username here',
@@ -119,7 +136,6 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                     TextFormField(
                       onChanged: (value) => setState(() {
                         _email = value;
-                        //futureEditInfos = changeUserInfos(_username, _wallet, _email);
                       }),
                       controller: emailText,
                       decoration: InputDecoration(
@@ -146,7 +162,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            _handleURLButtonPress(context, ImageSourceType.gallery);
+                            pickImage(ImageSource.gallery);
                           },
                           child: Text('Pick from gallery', style: TextStyle(color: Colors.white),),
                         ),
@@ -155,7 +171,7 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                         ),
                         ElevatedButton(
                           onPressed: () {
-                            _handleURLButtonPress(context, ImageSourceType.camera);
+                            pickImage(ImageSource.camera);
                           },
                           child: Text('Pick from camera', style: TextStyle(color: Colors.white),),
                         ),
@@ -165,15 +181,15 @@ class _UserInfosEditScreenState extends State<UserInfosEditScreen> {
                       height: 5,
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          updateInfos();
-                          usernameText.clear();
-                          emailText.clear();
-                        },
-                        child: Text('Save', style: TextStyle(color: Colors.white),),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
-                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
+                      onPressed: () {
+                        updateInfos();
+                        usernameText.clear();
+                        emailText.clear();
+                      },
+                      child: Text('Save', style: TextStyle(color: Colors.white),),
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
+                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
                     ),
                     SizedBox(
                       height: 5,

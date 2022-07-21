@@ -32,12 +32,11 @@ class AuthenticationController with ChangeNotifier {
 
     final response = await authenticationService.signUp(userSignUp);
 
-    print(response.body);
     print(response.statusCode);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success sign up');
-      return "Signed Up";
+      return "OK";
     } else {
       throw Exception('Failed to sign up');
     }

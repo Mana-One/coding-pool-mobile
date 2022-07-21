@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:coding_pool_v0/views/screens/account/InfosEditScreen.dart';
 import 'package:coding_pool_v0/views/screens/account/PasswordEditScreen.dart';
-import 'package:coding_pool_v0/views/screens/account/UserInfosEditScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     color: Colors.deepOrange.shade900
                 ),
                 onPressed: (BuildContext context) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => UserInfosEditScreen(File(''))));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => InfosEditScreen()));
                 },
               ),
               SettingsTile(

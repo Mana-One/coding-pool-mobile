@@ -1,6 +1,6 @@
 import 'package:coding_pool_v0/models/ChangePassword.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
-import 'package:coding_pool_v0/viewss/screens/SettingsScreen.dart';
+import 'package:coding_pool_v0/views/screens/settings/SettingsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
@@ -34,7 +34,7 @@ class _PasswordEditScreenState extends State<PasswordEditScreen> {
       return;
     }
     userController.changeUserPassword(changePassword);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsScreen()));
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {

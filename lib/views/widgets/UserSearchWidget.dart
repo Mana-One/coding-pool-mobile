@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/models/User.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
@@ -20,7 +22,7 @@ class _UserSearchWidgetState extends State<UserSearchWidget> {
     return Container(
       child: Card(
         child: ListTile(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(Author(username: user.username, id: user.id, picture: '')))),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(Author(username: user.username, id: user.id, picture: user.picture)))),
           title: Row(
             children: [
               Container(

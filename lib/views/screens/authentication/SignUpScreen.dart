@@ -19,7 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   AuthenticationController authenticationController = AuthenticationController();
 
-  late Future<void> signUp;
+  late Future<String> signUp;
   late Future<bool> username;
 
   bool _isSecret = true;
@@ -82,10 +82,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 10.0,
                       ),
                       TextFormField(
-                        onChanged: (value) => setState(() {
+                        onChanged: (value)  {
                           _username = value;
                           username = authenticationController.checkUsername(value);
-                        }) ,
+                        } ,
                         validator:(value) => username == true ? 'Username already exists, please enter another' : null,
                         decoration: InputDecoration(
                           hintText: 'Enter your username here',

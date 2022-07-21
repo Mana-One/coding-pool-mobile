@@ -15,16 +15,17 @@ class UserController {
 
   Future<UserStats> getConnectedUserStats() async {
 
+    print('user controller');
+
     final response = await userService.getConnectedUserStats();
 
     Map<String, dynamic> map;
     map = jsonDecode(response.body);
-
     return UserStats.fromJson(map);
   }
 
   Future<UserStats> getUserStats(String userId) async {
-    
+
     final response = await userService.getUserStats(userId);
     Map<String, dynamic> map = jsonDecode(response.body);
     return UserStats.fromJson(map);

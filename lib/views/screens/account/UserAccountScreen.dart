@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/models/PostData.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
@@ -101,7 +103,7 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                     ),
                     child: Container(
                       width: double.infinity,
-                      height: 220.0,
+                      height: 250.0,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -119,10 +121,18 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                             ),
                             Column(
                               children: [
+                                SizedBox(
+                                  height: 20,
+                                ),
                                 Container(
                                   width: 80,
                                   height: 80,
-                                  child: Image.network(snapshot.data!.picture),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      //Image.network(snapshot.data!.picture, ).image, _picture == null ? AssetImage('lib/assets/images/bouee.png') : Image.file(File(_picture!.path)).image,
+                                      image: DecorationImage(image : Image.network(snapshot.data!.picture).image, fit: BoxFit.fill)
+                                      ),
+                                  //child: Image.network(snapshot.data!.picture),
                                 ),
                                 SizedBox(
                                   height: 8.0,

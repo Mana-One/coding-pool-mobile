@@ -45,6 +45,8 @@ class CommentController {
 
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
+      print(mapPost);
+
       CommentData comment = CommentData.fromJson(mapPost);
       print(comment.content);
       comments.add(comment);

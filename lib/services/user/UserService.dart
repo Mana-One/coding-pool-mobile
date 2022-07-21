@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:coding_pool_v0/models/ChangePassword.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,12 +68,35 @@ class UserService {
         HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
       },
     );
-
     return response;
-
   }
 
-  Future<http.Response> updateUserInfos(String username, String email, File picture) async {
+  Future<http.StreamedResponse> changeUserInfos(String username, String email, String picture) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    var request = http.MultipartRequest('PUT', Uri.parse(url + "accounts/me"));
+    request.headers.addAll({"Authorization": "Bearer $token", "Content-type": "multipart/form-data"});
+    request.fields['username'] = username;
+    request.fields['email'] = email;
+
+    if(picture != '') {
+      request.files.add(
+          await http.MultipartFile.fromPath(
+            'picture',
+            picture,
+          )
+      );
+    } else {
+      request.fields['picture'] = '';
+    }
+
+    var response = await request.send();
+    return response;
+  }
+
+/*Future<http.Response> updateUserInfos(String username, String email, File picture) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -90,8 +114,8 @@ class UserService {
 
     return response;
   }
-
-  Future<http.StreamedResponse> changeInfos(String username, String email, File picture) async {
+*/
+  /*Future<http.StreamedResponse> changeInfos(String username, String email, File picture) async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
@@ -110,8 +134,9 @@ class UserService {
     return response;
 
   }
+*/
 
-  Future changeUserInfos(String username, String email, String picture) async {
+  /*Future changeUserInfos(String username, String email, String picture) async {
     var request = http.MultipartRequest('POST', Uri.parse(url + "accounts/me"));
     request.files.add(
         http.MultipartFile(
@@ -123,49 +148,6 @@ class UserService {
     );
     var res = await request.send();
   }
-
-  /*Future<http.StreamedResponse> changeUserInfos(String username, String email, File picture) async {
-
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
-    //create multipart request for POST or PATCH method
-    var request = http.MultipartRequest("PUT", Uri.parse("https://coding-pool-api.herokuapp.com/accounts/me"));
-    request.headers.addAll({"Authorization": "Bearer " + token.toString()});
-    //add text fields
-    request.fields["username"] = username;
-    request.fields["email"] = email;
-    //create multipart using filepath, string or bytes
-    var pic = await http.MultipartFile.fromPath("picture", picture.path);
-    //add multipart to request
-    request.files.add(pic);
-    var response = await request.send();
-
-    //Get the response from the server
-    var responseData = await response.stream.toBytes();
-    var responseString = String.fromCharCodes(responseData);
-    print(responseString);
-
-    return response;
-  }*/
-
-  // _asyncFileUpload(String username, String email, File picture) async{
-  //   //create multipart request for POST or PATCH method
-  //   var request = http.MultipartRequest("PUT", Uri.parse("https://coding-pool-api.herokuapp.com/accounts/me"));
-  //   request.headers.addAll({"Authorization": "Bearer " + token.toString()});
-  //   //add text fields
-  //   request.fields["username"] = username;
-  //   request.fields["email"] = email;
-  //   //create multipart using filepath, string or bytes
-  //   var pic = await http.MultipartFile.fromPath("file_field", picture.path);
-  //   //add multipart to request
-  //   request.files.add(pic);
-  //   var response = await request.send();
-  //
-  //   //Get the response from the server
-  //   var responseData = await response.stream.toBytes();
-  //   var responseString = String.fromCharCodes(responseData);
-  //   print(responseString);
-  // }
+  */
 
 }
