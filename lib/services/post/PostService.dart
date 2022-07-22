@@ -25,6 +25,21 @@ class PostService {
     return response;
   }
 
+  Future<http.Response> deletePost(String postId) async {
+
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    final response = await http.delete(
+      Uri.parse(url + "publications/" + postId ),
+      headers: {
+        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+      },
+    );
+
+    return response;
+  }
+
   Future<http.Response> fetchConnectedUserTimeline() async {
 
     final prefs = await SharedPreferences.getInstance();

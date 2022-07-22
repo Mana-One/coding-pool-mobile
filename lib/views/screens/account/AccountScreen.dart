@@ -15,6 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
+
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -60,12 +62,6 @@ class _AccountScreenState extends State<AccountScreen> {
     connectedUserStats = userController.getConnectedUserStats();
     connectedUserPostsNumber = postController.getConnectedUserPostsNumber();
 
-    setState(
-        () {
-          print(connectedUserStats);
-        }
-    );
-
     print('Account screen');
 
     return Scaffold(
@@ -74,8 +70,8 @@ class _AccountScreenState extends State<AccountScreen> {
             FutureBuilder(
                 future: connectedUserStats,
                 builder: (BuildContext context,
-                    AsyncSnapshot snapshot) {
-                  print(snapshot.error);
+                    AsyncSnapshot<UserStats> snapshot) {
+                  //globals.connectedUserStats = snapshot.data!;
                   return snapshot.hasData
                       ? Container(
                     decoration: BoxDecoration(

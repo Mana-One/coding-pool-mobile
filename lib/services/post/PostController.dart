@@ -18,6 +18,20 @@ class PostController {
     }
   }
 
+  Future<void> deletePost(String postId) async {
+
+    final response = await postService.deletePost(postId);
+
+    print(response.statusCode);
+    print(response.body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print('Success delete post !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to delete post');
+    }
+  }
+
   Future<List<PostData>> fetchConnectedUserTimeline() async {
     List<PostData> posts = [];
 
@@ -34,7 +48,7 @@ class PostController {
       posts.add(postData);
     }
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeess fetch my timeline');
+      print('Success fetch my timeline');
       return posts;
     } else {
       throw Exception('Failed to fetch own timeline');
@@ -47,7 +61,7 @@ class PostController {
     Map<String, dynamic> map = jsonDecode(response.body);
     postsNb = map['total'] ;
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeess get my posts number');
+      print('Success get my posts number');
       return postsNb;
     } else {
       throw Exception('Failed to get own posts number');
@@ -86,7 +100,7 @@ class PostController {
     Map<String, dynamic> map = jsonDecode(response.body);
     postsNb = map['total'] ;
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeess get posts number');
+      print('Success get posts number');
       return postsNb;
     } else {
       throw Exception('Failed to get posts number');
@@ -112,7 +126,7 @@ class PostController {
     print(response.statusCode);
 
   if (response.statusCode == 200 || response.statusCode == 201) {
-      print('succeeeess fetch home timeline');
+      print('success fetch home timeline');
       return posts;
     } else {
       throw Exception('Failed to fetch home timeline');

@@ -27,7 +27,7 @@ class CommentService {
     return response;
   }
 
-  Future<http.Response> UncommentPost(String commentId) async {
+  Future<http.Response> uncommentPost(String commentId) async {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');

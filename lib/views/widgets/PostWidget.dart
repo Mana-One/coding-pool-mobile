@@ -1,16 +1,20 @@
 import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/services/like/LikeService.dart';
+import 'package:coding_pool_v0/services/post/PostController.dart';
+import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostDetailsWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:coding_pool_v0/models/Globals.dart' as globals;
+
 
 class PostWidget extends StatefulWidget {
 
-  const PostWidget(this.createdAt, this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
+  const PostWidget(this.createdAt, this.postId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
 
-  final String publicationId;
+  final String postId;
   final Author author;
   final String content;
   final int nbLikes;
@@ -19,33 +23,36 @@ class PostWidget extends StatefulWidget {
   final String createdAt;
 
   @override
-  State<PostWidget> createState() => _PostWidgetState(this.createdAt, this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
+  State<PostWidget> createState() => _PostWidgetState(this.createdAt, this.postId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 }
 
 class _PostWidgetState extends State<PostWidget> {
 
-  LikeController likeController = LikeController();
-
+  final String postId;
   final String createdAt;
-  final String publicationId;
   final Author author;
   final String content;
   int nbLikes;
   final int nbComments;
   bool isLiked;
 
-  _PostWidgetState(this.createdAt, this.publicationId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
+  LikeController likeController = LikeController();
+  PostController postController = PostController();
+  UserController userController = UserController();
+
+
+  _PostWidgetState(this.createdAt, this.postId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
   @override
   Widget build(BuildContext context) {
 
-    double cellContentWidth = MediaQuery.of(context).size.width - 110;
+    double cellContentWidth = MediaQuery.of(context).size.width - 140;
 
     print(author.picture);
 
     return Material(
       child: InkWell(
-        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked)));},
+        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(postId, author, content, nbLikes, nbComments, isLiked)));},
         child: Container(
           color: Colors.grey.shade200,
           margin: EdgeInsets.all(5.0),
@@ -100,11 +107,32 @@ class _PostWidgetState extends State<PostWidget> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: cellContentWidth,
-                      margin: EdgeInsets.only(top: 10.0),
-                      child: Text(content)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                          width: cellContentWidth,
+                          margin: EdgeInsets.only(top: 10.0),
+                          child: Text(content)
+                      ),
+                      FutureBuilder(
+                          future: _isMe(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<bool> snapshot) {
+                            return snapshot.data == true
+                                ?
+                            IconButton(onPressed: () {
+                              deletePost(postId);
+                            },
+                                icon: Icon(Icons.delete_outline, color: Colors.deepOrange.shade900)
+                            ) : IconButton(onPressed: () {
+                              //deleteComment(commentId);
+                            },
+                                icon: Icon(Icons.delete_outline, color: Colors.grey[200],));
+                          })
+                    ],
                   ),
+
                   Row(
                     children: [
                       Container(
@@ -118,12 +146,12 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       IconButton( onPressed: () => like(), icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
                       Text(nbLikes.toString()),
-                      IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(publicationId, author, content, nbLikes, nbComments, isLiked))), icon: Icon(Icons.insert_comment)),
+                      IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(postId, author, content, nbLikes, nbComments, isLiked))), icon: Icon(Icons.insert_comment)),
                       Text(nbComments.toString()),
                     ],
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -135,15 +163,24 @@ class _PostWidgetState extends State<PostWidget> {
     setState(() {
       if( isLiked ) {
         this.isLiked = false;
-        likeController.unlikePost(publicationId);
+        likeController.unlikePost(postId);
         this.nbLikes --;
       }
       else {
         this.isLiked = true;
-        likeController.likePost(publicationId);
+        likeController.likePost(postId);
         this.nbLikes ++;
       }
     });
+  }
+  deletePost(String postId) {
+    postController.deletePost(postId);
+  }
+
+  Future<bool> _isMe() async {
+    final response = await userController.getConnectedUserStats();
+    final id = response.id;
+    return id == author.id;
   }
 
 }

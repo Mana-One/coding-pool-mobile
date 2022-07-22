@@ -25,7 +25,7 @@ class CommentController {
 
   Future<void> uncommentPost(String commentId) async {
 
-    final response = await commentService.UncommentPost(commentId);
+    final response = await commentService.uncommentPost(commentId);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Succeeeeeeeesssssssssss delete comment');
