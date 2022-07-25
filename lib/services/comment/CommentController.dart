@@ -16,7 +16,7 @@ class CommentController {
     final response = await commentService.commentPost(publicationId, content);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeesssssssssss comment post');
+      print('Success comment post');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to comment post');
@@ -28,7 +28,7 @@ class CommentController {
     final response = await commentService.uncommentPost(commentId);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeesssssssssss delete comment');
+      print('Success delete comment');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to delete post comment');
@@ -45,14 +45,9 @@ class CommentController {
 
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
-      print(mapPost);
-
       CommentData comment = CommentData.fromJson(mapPost);
-      print(comment.content);
       comments.add(comment);
     }
-
-    print(response.body);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success get post comments');

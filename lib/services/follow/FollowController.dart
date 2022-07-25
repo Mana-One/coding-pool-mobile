@@ -14,7 +14,7 @@ class FollowController {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
 
-      print('Succeeeeeeeesssssssssss follow user');
+      print('Success follow user');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to follow user');
@@ -26,7 +26,7 @@ class FollowController {
     final response = await followService.unfollowUser(userId);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeesssssssssss unfollow user');
+      print('Success unfollow user');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to unfollow user');

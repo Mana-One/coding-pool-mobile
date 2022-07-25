@@ -84,6 +84,9 @@ flutter:
     - lib/assets/images/logo_no_text.svg
     - lib/assets/images/logo_text_black.svg
     - lib/assets/images/frisePsi_original.svg
+    - lib/assets/images/paolo.jpeg
+    - lib/assets/images/wissam.jpeg
+    - lib/assets/images/redha.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

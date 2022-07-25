@@ -23,32 +23,10 @@ class AuthenticationService {
     request.fields['email'] = user.email;
     request.fields['password'] = user.password;
     request.fields['picture'] = '';
-    /*if(user.picture != null) {
-      request.files.add(
-          await http.MultipartFile.fromPath(
-            'picture',
-            user.picture.path,
-          )
-      );
-    } else {
-      request.files.add(
-          await http.MultipartFile.fromPath(
-            'picture',
-            null,
-          )
-      );
-    }*/
     var response = await request.send();
     print(response.statusCode);
     return response;
   }
-
-  /*Future<http.Response> signUp(UserSignUp user) async {
-    final response = await http.post(Uri.parse(url + "accounts/register"),
-        body: { 'email': user.email, 'username': user.username, 'password': user.password, 'picture': user.picture}
-    );
-    return response;
-  }*/
 
   Future<http.Response> checkUsername(String username) async {
     final response = await http.get(Uri.parse(url + "accounts/check-username/" + username));

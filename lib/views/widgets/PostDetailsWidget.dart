@@ -101,7 +101,7 @@ class _PostDetailsWidgetState extends State<PostDetailsWidget> {
                                         height: 5.0,
                                       ),
                                       Container(
-                                        margin: EdgeInsets.all(10),
+                                        margin: EdgeInsets.all(20),
                                         child: Text(content, style: TextStyle(fontSize: 18),),
                                       ),
                                       SizedBox(

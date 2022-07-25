@@ -21,8 +21,6 @@ class SearchService {
       },
     );
 
-    print("response search : " + response.body);
-
     return response;
   }
 

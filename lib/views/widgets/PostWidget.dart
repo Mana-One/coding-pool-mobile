@@ -1,12 +1,11 @@
 import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/services/like/LikeController.dart';
-import 'package:coding_pool_v0/services/like/LikeService.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
+import 'package:coding_pool_v0/views/Home.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostDetailsWidget.dart';
 import 'package:flutter/material.dart';
-import 'package:coding_pool_v0/models/Globals.dart' as globals;
 
 
 class PostWidget extends StatefulWidget {
@@ -47,8 +46,6 @@ class _PostWidgetState extends State<PostWidget> {
   Widget build(BuildContext context) {
 
     double cellContentWidth = MediaQuery.of(context).size.width - 140;
-
-    print(author.picture);
 
     return Material(
       child: InkWell(
@@ -175,6 +172,7 @@ class _PostWidgetState extends State<PostWidget> {
   }
   deletePost(String postId) {
     postController.deletePost(postId);
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 
   Future<bool> _isMe() async {

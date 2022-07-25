@@ -1,22 +1,13 @@
-import 'dart:io';
-
-import 'package:coding_pool_v0/models/Globals.dart';
 import 'package:coding_pool_v0/models/PostData.dart';
-import 'package:coding_pool_v0/models/UserInfos.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
-import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
-import 'package:coding_pool_v0/views/Home.dart';
 import 'package:coding_pool_v0/views/screens/account/UserStatsScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostCreationWidget.dart';
 import 'package:coding_pool_v0/views/widgets/PostWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:coding_pool_v0/models/Globals.dart' as globals;
-
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);

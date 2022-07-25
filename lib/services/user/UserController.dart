@@ -15,35 +15,38 @@ class UserController {
 
   Future<UserStats> getConnectedUserStats() async {
 
-    print('user controller');
-
     final response = await userService.getConnectedUserStats();
 
-    Map<String, dynamic> map;
-    map = jsonDecode(response.body);
-    return UserStats.fromJson(map);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      return UserStats.fromJson(map);
+    } else {
+      throw Exception('Failed to fetch connected user stats');
+    }
   }
 
   Future<UserStats> getUserStats(String userId) async {
 
     final response = await userService.getUserStats(userId);
-    Map<String, dynamic> map = jsonDecode(response.body);
-    return UserStats.fromJson(map);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Map<String, dynamic> map = jsonDecode(response.body);
+      return UserStats.fromJson(map);
+    } else {
+      throw Exception('Failed to fetch user stats');
+    }
 
   }
 
   Future<UserInfos> getConnectedUserInfos() async {
     final response = await userService.getConnectedUserInfos();
 
-    Map<String, dynamic> map = jsonDecode(response.body);
-
     if (response.statusCode == 200 || response.statusCode == 201) {
-
-      print('Succeeeeeeeess fetch connected user infos');
+      Map<String, dynamic> map = jsonDecode(response.body);
+      print('Success fetch connected user infos');
       return UserInfos.fromJson(map);
-
     } else {
-      throw Exception('Failed to fetch own infos');
+      throw Exception('Failed to fetch connected user infos');
     }
   }
 
@@ -59,14 +62,13 @@ class UserController {
     }
   }
 
-  Future<void> changeUserInfos(String username, String email, String picture) async {
+  Future<String> changeUserInfos(String username, String email, String picture) async {
 
     final response = await userService.changeUserInfos(username, email, picture);
 
-    print(response.stream);
-
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success change user infos');
+      return "OK";
     }
     else {
       throw Exception('Failed to change user infos');

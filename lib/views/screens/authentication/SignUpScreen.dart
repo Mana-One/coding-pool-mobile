@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:coding_pool_v0/models/SignUp.dart';
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:flutter/material.dart';

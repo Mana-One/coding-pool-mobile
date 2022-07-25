@@ -25,7 +25,7 @@ class LikeController {
     final response = await likeService.unlikePost(postId);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeesssssssssss unlike post');
+      print('Success unlike post');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to unlike post');

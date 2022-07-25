@@ -158,7 +158,7 @@ class _PasswordEditScreenState extends State<PasswordEditScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 5,
+                          height: 50,
                         ),
 
                         ElevatedButton(

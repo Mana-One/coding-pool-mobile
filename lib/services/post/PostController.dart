@@ -11,7 +11,7 @@ class PostController {
     final response = await postService.createPost(content);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Succeeeeeeeess create post');
+      print('Succeess create post');
       return jsonDecode(response.body) ;
     } else {
       throw Exception('Failed to create post');
@@ -22,10 +22,8 @@ class PostController {
 
     final response = await postService.deletePost(postId);
 
-    print(response.statusCode);
-    print(response.body);
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print('Success delete post !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+      print('Success delete post');
       return jsonDecode(response.body);
     } else {
       throw Exception('Failed to delete post');
@@ -44,7 +42,6 @@ class PostController {
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
       PostData postData = PostData.fromJson(mapPost);
-      print(postData.content);
       posts.add(postData);
     }
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -80,7 +77,6 @@ class PostController {
     for(int i=0; i<listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
       PostData postData = PostData.fromJson(mapPost);
-      print(postData.content);
       posts.add(postData);
     }
 
@@ -120,12 +116,9 @@ class PostController {
       Map<String, dynamic> mapPost = listResponse[i];
       PostData postData = PostData.fromJson(mapPost);
       posts.add(postData);
-      print(postData.author);
     };
 
-    print(response.statusCode);
-
-  if (response.statusCode == 200 || response.statusCode == 201) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       print('success fetch home timeline');
       return posts;
     } else {

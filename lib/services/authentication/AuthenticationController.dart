@@ -21,7 +21,7 @@ class AuthenticationController with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       globals.token = map['access_token'];
-      print('success signIn ' + globals.token.toString());
+      print('success signIn ');
       return globals.token.toString();
     } else {
       throw Exception('Failed to sign in');
@@ -53,7 +53,6 @@ class AuthenticationController with ChangeNotifier {
     globals.isUsernameUsed = isUsed;
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print(isUsed.toString());
       return isUsed;
     }
     else {

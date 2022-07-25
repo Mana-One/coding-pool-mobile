@@ -81,7 +81,6 @@ class PostService {
         HttpHeaders.authorizationHeader: 'Bearer '+ globals.token.toString(),
       },
     );
-    print(response.body);
 
     return response;
   }

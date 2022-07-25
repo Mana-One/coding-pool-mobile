@@ -1,12 +1,8 @@
 import 'package:coding_pool_v0/services/authentication/AuthenticationController.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-
-import 'package:coding_pool_v0/models/Globals.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:coding_pool_v0/views/Home.dart';
-import 'package:coding_pool_v0/views/screens/account/AccountScreen.dart';
-import 'package:flutter/material.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,6 +22,8 @@ class _InfosEditScreenState extends State<InfosEditScreen> {
   final usernameText = TextEditingController();
   String _email = '';
   final emailText = TextEditingController();
+  final RegExp emailRegEx = RegExp(r"[a-z0-9\._-]+@[a-z0-9\._-]+\.[a-z]+");
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   late Future<void> futureEditPassword;
   late Future<bool> username;
@@ -69,12 +67,21 @@ class _InfosEditScreenState extends State<InfosEditScreen> {
 
   }
 
+  late Future<String> changeInfos;
+
   updateInfos() {
     if(_picture != null) {
-      userController.changeUserInfos(_username, _email, _picture!.path);
+      setState(() {
+        changeInfos = userController.changeUserInfos(_username, _email, _picture!.path);
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+
+    } else {
+      setState(() {
+        changeInfos = userController.changeUserInfos(_username, _email, '');
+      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     }
-    userController.changeUserInfos(_username, _email, '');
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 
 
@@ -98,104 +105,116 @@ class _InfosEditScreenState extends State<InfosEditScreen> {
               padding: EdgeInsets.symmetric(
                   horizontal: 5.0
               ),
-              child: Column(
-                  children: [
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('Username : '),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    TextFormField(
-                      onChanged: (value) => setState(() {
-                        _username = value;
-                        username = authenticationController.checkUsername(value);
-                      }),
-                      validator: (value) => username != false ? 'Username already exists, please enter another' : null,
-                      controller: usernameText,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your new username here',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text('Username'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        onChanged: (value) => setState(() {
+                          _username = value;
+                          username = authenticationController.checkUsername(value);
+                        }),
+                        controller: usernameText,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your new username here',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.blue.shade900),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('Email : '),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    TextFormField(
-                      onChanged: (value) => setState(() {
-                        _email = value;
-                      }),
-                      controller: emailText,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your email here',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: BorderSide(color: Colors.blue.shade900),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Email'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      TextFormField(
+                        onChanged: (value) => setState(() {
+                          _email = value;
+                        }),
+                        validator: (value) => value!.isEmpty || !emailRegEx.hasMatch(value) ? 'Please enter a valid email' : null,
+                        controller: emailText,
+                        decoration: InputDecoration(
+                          hintText: 'Enter your new email here',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.grey),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: BorderSide(color: Colors.blue.shade900),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('Picture'),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            pickImage(ImageSource.gallery);
-                          },
-                          child: Text('Pick from gallery', style: TextStyle(color: Colors.white),),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            pickImage(ImageSource.camera);
-                          },
-                          child: Text('Pick from camera', style: TextStyle(color: Colors.white),),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        updateInfos();
-                        usernameText.clear();
-                        emailText.clear();
-                      },
-                      child: Text('Save', style: TextStyle(color: Colors.white),),
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
-                          textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                  ]
-              ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Picture'),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              pickImage(ImageSource.gallery);
+                            },
+                            child: Text('Pick from gallery', style: TextStyle(color: Colors.white),),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
+                                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              pickImage(ImageSource.camera);
+                            },
+                            child: Text('Pick from camera', style: TextStyle(color: Colors.white),),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
+                                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if(_formKey.currentState!.validate()) {
+                            updateInfos();
+                            usernameText.clear();
+                            emailText.clear();
+                          }
+
+                        },
+                        child: Text('Save', style: TextStyle(color: Colors.white),),
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
+                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ]
+                ),
+              )
             ),
           ),
         ),

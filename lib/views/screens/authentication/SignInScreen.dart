@@ -162,26 +162,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 SizedBox(
                   height: 10.0,
                 ),
-                /*RichText(
-                      text: TextSpan(
-                        text: 'Forgot you password? ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15.0
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Change it here.\n',
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 15.0,
-                              fontStyle: FontStyle.italic,
-                              decorationStyle: TextDecorationStyle.dashed
-                            )
-                          ),
-                        ]
-                      ),
-                  ),*/
                 Row(
                   children: [
                     Text(
