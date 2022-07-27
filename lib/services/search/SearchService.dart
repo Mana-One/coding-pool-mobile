@@ -10,18 +10,16 @@ class SearchService {
   String url = "https://api.coding-pool.ovh/";
 
   Future<http.Response> searchUser(String user) async {
-
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await http.get(
       Uri.parse(url + "users/search?username=$user&limit=20&offset=0"),
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+        HttpHeaders.authorizationHeader: 'Bearer ' + token.toString(),
       },
     );
 
     return response;
   }
-
 }

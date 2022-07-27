@@ -14,9 +14,9 @@ class InfosEditScreen extends StatefulWidget {
 }
 
 class _InfosEditScreenState extends State<InfosEditScreen> {
-
   UserController userController = UserController();
-  AuthenticationController authenticationController = AuthenticationController();
+  AuthenticationController authenticationController =
+      AuthenticationController();
 
   String _username = '';
   final usernameText = TextEditingController();
@@ -52,9 +52,166 @@ class _InfosEditScreenState extends State<InfosEditScreen> {
     return true;
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        elevation: 0,
+        title: Text(
+          'Edit Account Informations',
+          style: TextStyle(color: Colors.blue.shade900),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Colors.deepOrange.shade900,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+      ),
+      body: Container(
+        child: Scaffold(
+          body: Center(
+            child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('Username'),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      onChanged: (value) => setState(() {
+                        _username = value;
+                        username =
+                            authenticationController.checkUsername(value);
+                      }),
+                      controller: usernameText,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your new username here',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.blue.shade900),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('Email'),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    TextFormField(
+                      onChanged: (value) => setState(() {
+                        _email = value;
+                      }),
+                      validator: (value) =>
+                          value!.isEmpty || !emailRegEx.hasMatch(value)
+                              ? 'Please enter a valid email'
+                              : null,
+                      controller: emailText,
+                      decoration: InputDecoration(
+                        hintText: 'Enter your new email here',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.blue.shade900),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text('Picture'),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            pickImage(ImageSource.gallery);
+                          },
+                          child: Text(
+                            'Pick from gallery',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.blue.shade900),
+                              textStyle: MaterialStateProperty.all(
+                                  TextStyle(fontSize: 15))),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            pickImage(ImageSource.camera);
+                          },
+                          child: Text(
+                            'Pick from camera',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.blue.shade900),
+                              textStyle: MaterialStateProperty.all(
+                                  TextStyle(fontSize: 15))),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          updateInfos();
+                          usernameText.clear();
+                          emailText.clear();
+                        }
+                      },
+                      child: Text(
+                        'Save',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue.shade900),
+                          textStyle: MaterialStateProperty.all(
+                              TextStyle(fontSize: 15))),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ]),
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+
   Future pickImage(ImageSource imageSource) async {
     final image = await _picker.pickImage(source: imageSource);
-    if(image == null) return '';
+    if (image == null) return '';
 
     final imageTemporary = File(image.path);
 
@@ -63,19 +220,18 @@ class _InfosEditScreenState extends State<InfosEditScreen> {
     setState(() {
       this.image = imageTemporary;
       this._picture = PickedFile(image.path);
-    } );
-
+    });
   }
 
   late Future<String> changeInfos;
 
   updateInfos() {
-    if(_picture != null) {
+    if (_picture != null) {
       setState(() {
-        changeInfos = userController.changeUserInfos(_username, _email, _picture!.path);
+        changeInfos =
+            userController.changeUserInfos(_username, _email, _picture!.path);
       });
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-
     } else {
       setState(() {
         changeInfos = userController.changeUserInfos(_username, _email, '');
@@ -84,141 +240,4 @@ class _InfosEditScreenState extends State<InfosEditScreen> {
     }
   }
 
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-        title: Text('Edit Account Informations', style: TextStyle(color: Colors.blue.shade900),),
-        centerTitle: true,
-        leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: Colors.deepOrange.shade900,),
-            onPressed: () { Navigator.pop(context); }
-        ),
-      ),
-      body: Container(
-        child: Scaffold(
-          body: Center(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 5.0
-              ),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                    children: [
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text('Username'),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      TextFormField(
-                        onChanged: (value) => setState(() {
-                          _username = value;
-                          username = authenticationController.checkUsername(value);
-                        }),
-                        controller: usernameText,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your new username here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(color: Colors.blue.shade900),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text('Email'),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      TextFormField(
-                        onChanged: (value) => setState(() {
-                          _email = value;
-                        }),
-                        validator: (value) => value!.isEmpty || !emailRegEx.hasMatch(value) ? 'Please enter a valid email' : null,
-                        controller: emailText,
-                        decoration: InputDecoration(
-                          hintText: 'Enter your new email here',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(color: Colors.blue.shade900),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text('Picture'),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              pickImage(ImageSource.gallery);
-                            },
-                            child: Text('Pick from gallery', style: TextStyle(color: Colors.white),),
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
-                                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              pickImage(ImageSource.camera);
-                            },
-                            child: Text('Pick from camera', style: TextStyle(color: Colors.white),),
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
-                                textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if(_formKey.currentState!.validate()) {
-                            updateInfos();
-                            usernameText.clear();
-                            emailText.clear();
-                          }
-
-                        },
-                        child: Text('Save', style: TextStyle(color: Colors.white),),
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
-                            textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                    ]
-                ),
-              )
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

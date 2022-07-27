@@ -2,7 +2,6 @@ import 'package:coding_pool_v0/models/Author.dart';
 import 'package:coding_pool_v0/services/like/LikeController.dart';
 import 'package:coding_pool_v0/services/post/PostController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
-import 'package:coding_pool_v0/views/Home.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:coding_pool_v0/views/widgets/PostDetailsWidget.dart';
 import 'package:flutter/material.dart';
@@ -39,17 +38,16 @@ class _PostWidgetState extends State<PostWidget> {
   PostController postController = PostController();
   UserController userController = UserController();
 
-
   _PostWidgetState(this.createdAt, this.postId, this.author, this.content, this.nbLikes, this.nbComments, this.isLiked);
 
   @override
   Widget build(BuildContext context) {
 
-    double cellContentWidth = MediaQuery.of(context).size.width - 140;
+    double cellContentWidth = MediaQuery.of(context).size.width - 180;
 
     return Material(
       child: InkWell(
-        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(postId, author, content, nbLikes, nbComments, isLiked)));},
+        onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(createdAt, postId, author, content, nbLikes, nbComments, isLiked)));},
         child: Container(
           color: Colors.grey.shade200,
           margin: EdgeInsets.all(5.0),
@@ -112,7 +110,7 @@ class _PostWidgetState extends State<PostWidget> {
                           margin: EdgeInsets.only(top: 10.0),
                           child: Text(content)
                       ),
-                      FutureBuilder(
+                      /*FutureBuilder(
                           future: _isMe(),
                           builder: (BuildContext context,
                               AsyncSnapshot<bool> snapshot) {
@@ -120,13 +118,17 @@ class _PostWidgetState extends State<PostWidget> {
                                 ?
                             IconButton(onPressed: () {
                               deletePost(postId);
+                              *//*Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) => AccountScreen()));*//*
                             },
                                 icon: Icon(Icons.delete_outline, color: Colors.deepOrange.shade900)
                             ) : IconButton(onPressed: () {
                               //deleteComment(commentId);
                             },
                                 icon: Icon(Icons.delete_outline, color: Colors.grey[200],));
-                          })
+                          })*/
                     ],
                   ),
 
@@ -143,7 +145,7 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                       IconButton( onPressed: () => like(), icon: !isLiked ? Icon(Icons.thumb_up_alt_outlined) : Icon(Icons.thumb_up_alt, color: Colors.deepOrange[900],)),
                       Text(nbLikes.toString()),
-                      IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(postId, author, content, nbLikes, nbComments, isLiked))), icon: Icon(Icons.insert_comment)),
+                      IconButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PostDetailsWidget(createdAt, postId, author, content, nbLikes, nbComments, isLiked))), icon: Icon(Icons.insert_comment)),
                       Text(nbComments.toString()),
                     ],
                   ),
@@ -172,7 +174,7 @@ class _PostWidgetState extends State<PostWidget> {
   }
   deletePost(String postId) {
     postController.deletePost(postId);
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    //Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
 
   Future<bool> _isMe() async {

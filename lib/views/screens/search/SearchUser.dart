@@ -4,7 +4,6 @@ import 'package:coding_pool_v0/views/widgets/UserSearchWidget.dart';
 import 'package:flutter/material.dart';
 
 class SearchUser extends SearchDelegate {
-
   SearchController searchController = SearchController();
 
   late Future<List<User>> searchedUsers;

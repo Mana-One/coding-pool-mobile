@@ -1,18 +1,13 @@
-import 'package:coding_pool_v0/services/comment/CommentService.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
+import 'package:coding_pool_v0/services/comment/CommentService.dart';
 import '../../models/CommentData.dart';
-import 'package:coding_pool_v0/models/Globals.dart' as globals;
-
 
 class CommentController {
   CommentController();
+
   CommentService commentService = CommentService();
 
   Future<void> commentPost(String publicationId, String content) async {
-
     final response = await commentService.commentPost(publicationId, content);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -24,7 +19,6 @@ class CommentController {
   }
 
   Future<void> uncommentPost(String commentId) async {
-
     final response = await commentService.uncommentPost(commentId);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -36,14 +30,13 @@ class CommentController {
   }
 
   Future<List<CommentData>> getPostComments(String publicationId) async {
-
     final response = await commentService.getPublicationComments(publicationId);
 
     Map<String, dynamic> map = jsonDecode(response.body);
-    List<dynamic> listResponse = map['data'] ;
+    List<dynamic> listResponse = map['data'];
     List<CommentData> comments = [];
 
-    for(int i=0; i<listResponse.length; i++) {
+    for (int i = 0; i < listResponse.length; i++) {
       Map<String, dynamic> mapPost = listResponse[i];
       CommentData comment = CommentData.fromJson(mapPost);
       comments.add(comment);
@@ -55,6 +48,5 @@ class CommentController {
     } else {
       throw Exception('Failed to fetch own timeline');
     }
-
   }
 }

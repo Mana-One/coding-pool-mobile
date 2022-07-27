@@ -1,6 +1,4 @@
 import 'package:coding_pool_v0/views/Sign.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:flutter/material.dart';
 
 void main() => runApp(App());
@@ -17,11 +15,3 @@ class App extends StatelessWidget {
     );
   }
 }
-
-/*
-MaterialApp(
-
-      title: 'Coding Pool',
-      home: Sign(),
-    );
- */

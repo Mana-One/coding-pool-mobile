@@ -8,14 +8,13 @@ class LikeService {
   String url = "https://api.coding-pool.ovh/";
 
   Future<http.Response> likePost(String publicationId) async {
-
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await http.post(
       Uri.parse(url + "likes/" + publicationId),
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+        HttpHeaders.authorizationHeader: 'Bearer ' + token.toString(),
       },
     );
 
@@ -23,15 +22,14 @@ class LikeService {
   }
 
   Future<http.Response> unlikePost(String publicationId) async {
-
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     final response = await http.delete(
       Uri.parse(url + "likes/" + publicationId),
-      body: { 'publicationId': publicationId},
+      body: {'publicationId': publicationId},
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer '+ token.toString(),
+        HttpHeaders.authorizationHeader: 'Bearer ' + token.toString(),
       },
     );
 

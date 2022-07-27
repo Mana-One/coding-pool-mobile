@@ -9,7 +9,6 @@ class Sign extends StatefulWidget {
 }
 
 class _SignState extends State<Sign> {
-
   @override
   void initState() {
     super.initState();
@@ -20,4 +19,3 @@ class _SignState extends State<Sign> {
     return SignInScreen();
   }
 }
-

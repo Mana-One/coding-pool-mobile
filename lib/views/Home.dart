@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -15,10 +14,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _selectedIndex = 0;
 
-  static const TextStyle optionStyle = TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black);
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Colors.black);
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomeScreen(),
@@ -66,10 +65,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.grey,
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             label: 'Search',
@@ -95,8 +91,8 @@ class _HomeState extends State<Home> {
 
 final String assetName = 'lib/assets/images/logo_text_black.svg';
 final Widget svgLogoText = SvgPicture.asset(
-    assetName,
-    semanticsLabel: 'Acme Logo',
+  assetName,
+  semanticsLabel: 'Acme Logo',
   height: 50,
   width: 100,
 );

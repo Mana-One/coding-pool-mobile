@@ -11,17 +11,20 @@ import 'package:flutter_svg/svg.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'UserStatsScreen.dart';
 
-
 class UserAccountScreen extends StatefulWidget {
   const UserAccountScreen(this.author);
 
   final Author author;
 
   @override
-  State<UserAccountScreen> createState() => _UserAccountScreenState(this.author);
+  State<UserAccountScreen> createState() =>
+      _UserAccountScreenState(this.author);
 }
 
 class _UserAccountScreenState extends State<UserAccountScreen> {
+
+  final Author author;
+  _UserAccountScreenState(this.author);
 
   UserController userController = UserController();
   PostController postController = PostController();
@@ -31,20 +34,12 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
   late Future<UserStats> userStats;
   late Future<int> userPostsNumber;
 
-  final Author author;
-  _UserAccountScreenState(this.author);
-
-  late final futurePost;
-  late final futureStats;
-
   bool isFollowed = false;
   int nbFollowers = 0;
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    print("BACK BUTTON!"); // Do some stuff.
     return true;
   }
-
 
   @override
   void initState() {
@@ -58,25 +53,22 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
     super.dispose();
   }
 
-
   follow() {
     setState(() {
-      if( isFollowed ) {
+      if (isFollowed) {
         this.isFollowed = false;
         followController.unfollowUser(author.id);
-        this.nbFollowers --;
-      }
-      else {
+        this.nbFollowers--;
+      } else {
         this.isFollowed = true;
         followController.followUser(author.id);
-        this.nbFollowers ++;
+        this.nbFollowers++;
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     userPosts = postController.fetchUserTimeline(this.author.id);
     userStats = userController.getUserStats(this.author.id);
     userPostsNumber = postController.getUserPostsNumber(this.author.id);
@@ -85,227 +77,242 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
 
     return FutureBuilder(
         future: userStats,
-        builder: (BuildContext context,
-            AsyncSnapshot<UserStats> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<UserStats> snapshot) {
           return snapshot.data != null
               ? Scaffold(
-              body: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Colors.blueGrey,Colors.grey]
-                        )
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      height: 250.0,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  body: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Colors.blueGrey, Colors.grey])),
+                      child: Container(
+                        width: double.infinity,
+                        height: 250.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: Icon(Icons.arrow_back_ios, color: Colors.deepOrange[900], size: 30.0,),
-                              ),
-                            ),
-                            Column(
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  height: 20,
+                                Container(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.deepOrange[900],
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    Container(
+                                      width: 80,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          //Image.network(snapshot.data!.picture, ).image, _picture == null ? AssetImage('lib/assets/images/bouee.png') : Image.file(File(_picture!.path)).image,
+                                          image: DecorationImage(
+                                              image: Image.network(
+                                                      snapshot.data!.picture)
+                                                  .image,
+                                              fit: BoxFit.fill)),
+                                      //child: Image.network(snapshot.data!.picture),
+                                    ),
+                                    SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Text(
+                                      author.username,
+                                      style: TextStyle(
+                                          fontSize: 25.0, color: Colors.white),
+                                    ),
+                                  ],
                                 ),
                                 Container(
-                                  width: 80,
-                                  height: 80,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      //Image.network(snapshot.data!.picture, ).image, _picture == null ? AssetImage('lib/assets/images/bouee.png') : Image.file(File(_picture!.path)).image,
-                                      image: DecorationImage(image : Image.network(snapshot.data!.picture).image, fit: BoxFit.fill)
-                                      ),
-                                  //child: Image.network(snapshot.data!.picture),
-                                ),
-                                SizedBox(
-                                  height: 8.0,
-                                ),
-                                Text(
-                                  author.username, style: TextStyle(
-                                    fontSize: 25.0,
-                                    color: Colors.white
-                                ),
-                                ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => Home()));
+                                    },
+                                    icon: Icon(
+                                      Icons.home,
+                                      color: Colors.deepOrange[900],
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
-                            Container(
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-                                },
-                                icon: Icon(Icons.home, color: Colors.deepOrange[900], size: 30.0,),
-                              ),
-                            )
-                          ],
-                        ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Card(
-                            margin: EdgeInsets.all(10.0),
-                            clipBehavior: Clip.antiAlias,
-                            color: Colors.white,
-                            elevation: 5.0,
-                            child: Padding(
-                              padding: const EdgeInsets.all( 10.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "Posts",
-                                            style: TextStyle(
-                                              color: Colors.blueGrey,
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Card(
+                              margin: EdgeInsets.all(10.0),
+                              clipBehavior: Clip.antiAlias,
+                              color: Colors.white,
+                              elevation: 5.0,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                        child: Column(
+                                      children: [
+                                        Text(
+                                          "Posts",
+                                          style: TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          FutureBuilder(
-                                              future: userPostsNumber,
-                                              builder: (BuildContext context,
-                                                  AsyncSnapshot<int> snapshot) {
-                                                return snapshot.data != null
-                                                    ? Text(
-                                                  snapshot.data.toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    color: Colors.grey,
-                                                  ),
-                                                )
-                                                    : Container(
-                                                  /*alignment: Alignment.center,
+                                        ),
+                                        SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        FutureBuilder(
+                                            future: userPostsNumber,
+                                            builder: (BuildContext context,
+                                                AsyncSnapshot<int> snapshot) {
+                                              return snapshot.data != null
+                                                  ? Text(
+                                                      snapshot.data.toString(),
+                                                      style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        color: Colors.grey,
+                                                      ),
+                                                    )
+                                                  : Container(
+                                                      /*alignment: Alignment.center,
                                                   child: const CircularProgressIndicator(
                                                     color: Color(3),
-                                                  )*/);
-                                              }),
-                                        ],
-                                      )
-                                  ),
-                                  Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "Followers",
-                                            style: TextStyle(
-                                              color: Colors.blueGrey,
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                                  )*/
+                                                      );
+                                            }),
+                                      ],
+                                    )),
+                                    Expanded(
+                                        child: Column(
+                                      children: [
+                                        Text(
+                                          "Followers",
+                                          style: TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          SizedBox(
-                                            height: 5.0,
+                                        ),
+                                        SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        Text(
+                                          snapshot.data!.followers.toString(),
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.grey,
                                           ),
-                                          Text(
-                                            snapshot.data!.followers.toString(),
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.grey,
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                  ),
-                                  Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "Following",
-                                            style: TextStyle(
-                                              color: Colors.blueGrey,
-                                              fontSize: 15.0,
-                                              fontWeight: FontWeight.bold,
-                                            ),
+                                        )
+                                      ],
+                                    )),
+                                    Expanded(
+                                        child: Column(
+                                      children: [
+                                        Text(
+                                          "Following",
+                                          style: TextStyle(
+                                            color: Colors.blueGrey,
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
                                           ),
-                                          SizedBox(
-                                            height: 5.0,
+                                        ),
+                                        SizedBox(
+                                          height: 5.0,
+                                        ),
+                                        Text(
+                                          snapshot.data!.following.toString(),
+                                          style: TextStyle(
+                                            fontSize: 15.0,
+                                            color: Colors.grey,
                                           ),
-                                          Text(
-                                            snapshot.data!.following.toString(),
-                                            style: TextStyle(
-                                              fontSize: 15.0,
-                                              color: Colors.grey,
-                                            ),
-                                          )
-                                        ],
-                                      )
-                                  ),
-                                ],
+                                        )
+                                      ],
+                                    )),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        margin: new EdgeInsets.only(right: 10),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if(snapshot.data!.isFollowing) {
-                              this.isFollowed = true;
-                            }
-                            else {
-                              this.isFollowed = false;
-                            }
-                            follow();
-                          },
-                          child: snapshot.data!.isFollowing ? Text('Unfollow') : Text('Follow'),
-                          style: ElevatedButton.styleFrom(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          margin: new EdgeInsets.only(right: 10),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              if (snapshot.data!.isFollowing) {
+                                this.isFollowed = true;
+                              } else {
+                                this.isFollowed = false;
+                              }
+                              follow();
+                            },
+                            child: snapshot.data!.isFollowing
+                                ? Text('Unfollow')
+                                : Text('Follow'),
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.deepOrange[900],
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 5, vertical: 5),
+                                textStyle: TextStyle(
+                                    fontSize: 15, fontWeight: FontWeight.bold)),
+                          ),
+                        ),
+                        Container(
+                          margin: new EdgeInsets.only(right: 10, left: 15),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserStatsScreen(
+                                          userStats: snapshot.data!)));
+                            },
+                            child: Row(
+                              children: [
+                                Text('Stats'),
+                              ],
+                            ),
+                            style: ElevatedButton.styleFrom(
                               primary: Colors.deepOrange[900],
-                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 5, vertical: 5),
                               textStyle: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)),
-
-                        ),
-                      ),
-                      Container(
-                        margin: new EdgeInsets.only(right: 10, left: 15),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => UserStatsScreen(userStats: snapshot.data!)));
-                          },
-                          child: Row(
-                            children: [
-                              Text('Stats'),
-                            ],
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.deepOrange[900],
-                            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                            textStyle: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                                  fontSize: 15, fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
+                      ],
+                    ),
+                    Expanded(
                       flex: 1,
                       child: FutureBuilder(
                           future: userPosts,
@@ -313,95 +320,102 @@ class _UserAccountScreenState extends State<UserAccountScreen> {
                               AsyncSnapshot<List<PostData>> snapshot) {
                             return snapshot.data != null
                                 ? ListView(
-                              children: [
-                                for (var itemPost
-                                in snapshot.data as List<PostData>)
-                                  PostWidget(itemPost.createdAt, itemPost.id, itemPost.author, itemPost.content, itemPost.likes, itemPost.comments, itemPost.isLiked),
-                              ],
-                            )
+                                    children: [
+                                      for (var itemPost
+                                          in snapshot.data as List<PostData>)
+                                        PostWidget(
+                                            itemPost.createdAt,
+                                            itemPost.id,
+                                            itemPost.author,
+                                            itemPost.content,
+                                            itemPost.likes,
+                                            itemPost.comments,
+                                            itemPost.isLiked),
+                                    ],
+                                  )
                                 : Container(
-                                alignment: Alignment.center,
-                                child: const CircularProgressIndicator(
-                                  color: Color(3),
-                                ));
+                                    alignment: Alignment.center,
+                                    child: const CircularProgressIndicator(
+                                      color: Color(3),
+                                    ));
                           }),
-                  ),
-                ],
-              )
-          )
-              : Scaffold(
-            body: Column(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [Colors.blueGrey,Colors.grey]
-                      )
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    height: 220.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(Icons.arrow_back_ios, color: Colors.deepOrange[900], size: 30.0,),
-                            ),
-                          ),
-
-                          Column(
-                            children: [
-                              Container(
-                                width: 250,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    image: DecorationImage(image : Image.network(author.picture).image, fit: BoxFit.fill)
-                                ),
-                              ),
-
-                              SizedBox(
-                                height: 8.0,
-                              ),
-                              Text(
-                                author.username, style: TextStyle(
-                                  fontSize: 25.0,
-                                  color: Colors.white
-                              ),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            width: 40,
-                          )
-                        ],
-                      ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                      ],
                     ),
-                  ),
-                ),
-                Container(
-                    alignment: Alignment.center,
-                    child: const CircularProgressIndicator(
-                      color: Color(3),
-                    )
-                ),
-              ],
-            )
-
-          );
+                  ],
+                ))
+              : Scaffold(
+                  body: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [Colors.blueGrey, Colors.grey])),
+                      child: Container(
+                        width: double.infinity,
+                        height: 220.0,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_back_ios,
+                                      color: Colors.deepOrange[900],
+                                      size: 30.0,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Container(
+                                      width: 250,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          image: DecorationImage(
+                                              image:
+                                                  Image.network(author.picture)
+                                                      .image,
+                                              fit: BoxFit.fill)),
+                                    ),
+                                    SizedBox(
+                                      height: 8.0,
+                                    ),
+                                    Text(
+                                      author.username,
+                                      style: TextStyle(
+                                          fontSize: 25.0, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 40,
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+                        alignment: Alignment.center,
+                        child: const CircularProgressIndicator(
+                          color: Color(3),
+                        )),
+                  ],
+                ));
         });
   }
 }

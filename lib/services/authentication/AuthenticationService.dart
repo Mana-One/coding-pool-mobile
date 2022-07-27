@@ -8,17 +8,15 @@ class AuthenticationService {
   String url = "https://api.coding-pool.ovh/";
 
   Future<http.Response> signIn(UserSignIn user) async {
-    final response = await http.post(
-        Uri.parse(url + "auth/login"),
-        body: { 'email': user.email, 'password': user.password}
-    );
+    final response = await http.post(Uri.parse(url + "auth/login"),
+        body: {'email': user.email, 'password': user.password});
 
     return response;
   }
 
   Future<http.StreamedResponse> signUp(UserSignUp user) async {
-
-    var request = http.MultipartRequest('POST', Uri.parse(url + "accounts/register"));
+    var request =
+        http.MultipartRequest('POST', Uri.parse(url + "accounts/register"));
     request.fields['username'] = user.username;
     request.fields['email'] = user.email;
     request.fields['password'] = user.password;
@@ -29,8 +27,8 @@ class AuthenticationService {
   }
 
   Future<http.Response> checkUsername(String username) async {
-    final response = await http.get(Uri.parse(url + "accounts/check-username/" + username));
+    final response =
+        await http.get(Uri.parse(url + "accounts/check-username/" + username));
     return response;
   }
-
 }

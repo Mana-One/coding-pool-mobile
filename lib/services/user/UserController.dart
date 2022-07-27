@@ -1,20 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:coding_pool_v0/models/ChangePassword.dart';
+import 'package:coding_pool_v0/models/UserInfos.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/user/UserService.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../models/UserInfos.dart';
 
 class UserController {
   UserController();
+
   UserService userService = UserService();
 
   Future<UserStats> getConnectedUserStats() async {
-
     final response = await userService.getConnectedUserStats();
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -26,7 +21,6 @@ class UserController {
   }
 
   Future<UserStats> getUserStats(String userId) async {
-
     final response = await userService.getUserStats(userId);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -35,7 +29,6 @@ class UserController {
     } else {
       throw Exception('Failed to fetch user stats');
     }
-
   }
 
   Future<UserInfos> getConnectedUserInfos() async {
@@ -51,7 +44,6 @@ class UserController {
   }
 
   Future<void> changeUserPassword(ChangePassword changePassword) async {
-
     final response = await userService.changeUserPassword(changePassword);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -62,17 +54,16 @@ class UserController {
     }
   }
 
-  Future<String> changeUserInfos(String username, String email, String picture) async {
-
-    final response = await userService.changeUserInfos(username, email, picture);
+  Future<String> changeUserInfos(
+      String username, String email, String picture) async {
+    final response =
+        await userService.changeUserInfos(username, email, picture);
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print('Success change user infos');
       return "OK";
-    }
-    else {
+    } else {
       throw Exception('Failed to change user infos');
     }
   }
-
 }

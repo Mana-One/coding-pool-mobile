@@ -8,10 +8,10 @@ import 'AuthenticationService.dart';
 
 class AuthenticationController with ChangeNotifier {
   AuthenticationController();
+
   AuthenticationService authenticationService = AuthenticationService();
 
   Future<String> signIn(UserSignIn user) async {
-
     final response = await authenticationService.signIn(user);
     Map<String, dynamic> map = jsonDecode(response.body);
 
@@ -29,7 +29,6 @@ class AuthenticationController with ChangeNotifier {
   }
 
   Future<String> signUp(UserSignUp userSignUp) async {
-
     final response = await authenticationService.signUp(userSignUp);
 
     print(response.statusCode);
@@ -43,7 +42,6 @@ class AuthenticationController with ChangeNotifier {
   }
 
   Future<bool> checkUsername(String username) async {
-
     bool isUsed;
 
     final response = await authenticationService.checkUsername(username);
@@ -54,10 +52,8 @@ class AuthenticationController with ChangeNotifier {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       return isUsed;
-    }
-    else {
+    } else {
       throw Exception('Failed to check username');
     }
   }
-
 }

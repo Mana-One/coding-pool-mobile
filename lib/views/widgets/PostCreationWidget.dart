@@ -11,7 +11,6 @@ class PostCreationWidget extends StatefulWidget {
 }
 
 class _PostCreationWidgetState extends State<PostCreationWidget> {
-
   PostController postController = PostController();
 
   String _postContent = '';
@@ -35,7 +34,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
   }
 
   publish() {
-    if(_postContent == '') return;
+    if (_postContent == '') return;
     postController.createPost(_postContent);
     Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
   }
@@ -54,7 +53,7 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
             ),
             Container(
               width: 350,
-              margin: EdgeInsets.only(left: 5.0,bottom: 10.0),
+              margin: EdgeInsets.only(left: 5.0, bottom: 10.0),
               child: TextFormField(
                 onChanged: (value) => setState(() => _postContent = value),
                 controller: postText,
@@ -76,17 +75,20 @@ class _PostCreationWidgetState extends State<PostCreationWidget> {
             Container(
               child: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.blue.shade900),
-                      textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
+                      backgroundColor:
+                          MaterialStateProperty.all(Colors.blue.shade900),
+                      textStyle:
+                          MaterialStateProperty.all(TextStyle(fontSize: 15))),
                   onPressed: () {
                     publish();
                     postText.clear();
                   },
-                  child: Text('Publish', style: TextStyle(color: Colors.white),)
-              ),
+                  child: Text(
+                    'Publish',
+                    style: TextStyle(color: Colors.white),
+                  )),
             )
           ],
-        )
-    );
+        ));
   }
 }

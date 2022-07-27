@@ -1,32 +1,41 @@
+import 'package:coding_pool_v0/models/Author.dart';
+import 'package:coding_pool_v0/models/PostData.dart';
 import 'package:coding_pool_v0/models/UserStats.dart';
 import 'package:coding_pool_v0/services/comment/CommentController.dart';
 import 'package:coding_pool_v0/services/user/UserController.dart';
 import 'package:coding_pool_v0/views/screens/account/UserAccountScreen.dart';
 import 'package:flutter/material.dart';
 
-import '../../models/Author.dart';
-
-
 class CommentWidget extends StatefulWidget {
-  const CommentWidget({Key? key, required this.commentId, required this.user, required this.content, required this.createdAt}) : super(key: key);
+  const CommentWidget(
+      {Key? key,
+      required this.post,
+      required this.commentId,
+      required this.user,
+      required this.content,
+      required this.createdAt})
+      : super(key: key);
 
+  final PostData post;
   final String commentId;
   final Author user;
   final String content;
   final String createdAt;
 
   @override
-  State<CommentWidget> createState() => _CommentWidgetState(this.commentId, this.user, this.content, this.createdAt);
+  State<CommentWidget> createState() => _CommentWidgetState(
+      this.post, this.commentId, this.user, this.content, this.createdAt);
 }
 
 class _CommentWidgetState extends State<CommentWidget> {
-
+  final PostData post;
   final String commentId;
   final Author user;
   final String content;
   final String createdAt;
 
-  _CommentWidgetState(this.commentId, this.user, this.content, this.createdAt);
+  _CommentWidgetState(
+      this.post, this.commentId, this.user, this.content, this.createdAt);
 
   CommentController commentController = CommentController();
   UserController userController = UserController();
@@ -35,12 +44,11 @@ class _CommentWidgetState extends State<CommentWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     print('comment widget');
 
     return InkWell(
       child: Card(
-        color: Colors.grey[200],
+        color: Colors.grey[100],
         child: Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,39 +66,34 @@ class _CommentWidgetState extends State<CommentWidget> {
                         height: 50,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            image: DecorationImage(image : user.picture != ''
-                                ? Image.network(
-                              user.picture,
-                              height: 60,
-                              width: 60,
-                              fit: BoxFit.fill,
-                            ).image
-                                : Image(
-                              alignment: Alignment.center,
-                              image: AssetImage('lib/assets/images/bouee.png'),
-                              height: 80,
-                              width: 80,
-                            ).image,
-                                fit: BoxFit.fill
-                            )
-                        ),
-                        /*child: user.picture != '' ?
-                        Image.network(
-                          user.picture,
-                          height: 45,
-                          width: 45,
-                          fit: BoxFit.fill,
-                        ) :
-                        Image(
-                          alignment: Alignment.center,
-                          image: AssetImage('lib/assets/images/bouee.png'),
-                          height: 45,
-                          width: 45,
-                        ),*/
+                            image: DecorationImage(
+                                image: user.picture != ''
+                                    ? Image.network(
+                                        user.picture,
+                                        height: 60,
+                                        width: 60,
+                                        fit: BoxFit.fill,
+                                      ).image
+                                    : Image(
+                                        alignment: Alignment.center,
+                                        image: AssetImage(
+                                            'lib/assets/images/bouee.png'),
+                                        height: 80,
+                                        width: 80,
+                                      ).image,
+                                fit: BoxFit.fill)),
                       ),
                       Container(
-                        //child: Text(username.username, style: TextStyle(color: Colors.blue[900]), textAlign: TextAlign.left,),
-                        child: TextButton(onPressed: () { Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(user)));}, child: Text(user.username, style: TextStyle(color: Colors.blue[900]))),
+                        child: TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          UserAccountScreen(user)));
+                            },
+                            child: Text(user.username,
+                                style: TextStyle(color: Colors.blue[900]))),
                       ),
                     ],
                   ),
@@ -99,14 +102,16 @@ class _CommentWidgetState extends State<CommentWidget> {
                     children: [
                       Container(
                           margin: EdgeInsets.only(left: 5.0, top: 10.0),
-                          child: Text(content)
-                      ),
+                          child: Text(content)),
                       Container(
                         margin: EdgeInsets.only(left: 5.0, top: 10.0),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(createdAt.substring(0,10), style: TextStyle(color: Colors.grey),),
+                            Text(
+                              createdAt.substring(0, 10),
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           ],
                         ),
                       )
@@ -116,19 +121,22 @@ class _CommentWidgetState extends State<CommentWidget> {
               ),
               FutureBuilder(
                   future: _isMe(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<bool> snapshot) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
                     return snapshot.data == true
-                        ?
-                    IconButton(onPressed: () {
-                      deleteComment(commentId);
-                    },
-                        icon: Icon(Icons.delete_outline, color: Colors.deepOrange.shade900)
-                    ) : IconButton(onPressed: () {
-                      //deleteComment(commentId);
-                    },
-                        icon: Icon(Icons.delete_outline, color: Colors.grey[200],));
-                  })
+                        ? IconButton(
+                            onPressed: () {
+                              deleteComment(commentId);
+                            },
+                            icon: Icon(Icons.delete_outline,
+                                color: Colors.deepOrange.shade900))
+                        : IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.delete_outline,
+                              color: Colors.grey[200],
+                            ));
+                      })
             ],
           ),
         ),

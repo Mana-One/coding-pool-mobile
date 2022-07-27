@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class UserSearchWidget extends StatefulWidget {
   final User user;
+
   const UserSearchWidget(this.user);
 
   @override
@@ -13,6 +14,7 @@ class UserSearchWidget extends StatefulWidget {
 
 class _UserSearchWidgetState extends State<UserSearchWidget> {
   User user;
+
   _UserSearchWidgetState(this.user);
 
   @override
@@ -20,7 +22,16 @@ class _UserSearchWidgetState extends State<UserSearchWidget> {
     return Container(
       child: Card(
         child: ListTile(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => UserAccountScreen(Author(username: user.username, id: user.id, picture: user.picture)))),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserAccountScreen(Author(
+                      username: user.username,
+                      id: user.id,
+                      picture: user.picture)
+                  )
+              )
+          ),
           title: Row(
             children: [
               Container(
@@ -30,7 +41,8 @@ class _UserSearchWidgetState extends State<UserSearchWidget> {
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
-                  child: Image.network(user.picture,
+                  child: Image.network(
+                    user.picture,
                     height: 80,
                     width: 80,
                     fit: BoxFit.fill,
@@ -40,7 +52,10 @@ class _UserSearchWidgetState extends State<UserSearchWidget> {
               SizedBox(
                 width: 50,
               ),
-              Text(user.username, style: TextStyle(fontWeight: FontWeight.w600),),
+              Text(
+                user.username,
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
             ],
           ),
         ),

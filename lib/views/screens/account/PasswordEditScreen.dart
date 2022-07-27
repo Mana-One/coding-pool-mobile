@@ -38,7 +38,7 @@ class _PasswordEditScreenState extends State<PasswordEditScreen> {
   }
 
   bool myInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
-    print("BACK BUTTON!"); // Do some stuff.
+    print("BACK BUTTON!");
     return true;
   }
 
